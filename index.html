@@ -515,7 +515,7 @@ document.getElementById('shareBtn').addEventListener('click',async()=>{const dat
 
 
 /* ===== 全程互动地图 ===== */
-let tripMap=null, tripMapReady=false, currentMapDay='all';
+var tripMap=null, tripMapReady=false, currentMapDay='all';
 const mapRouteLayers={}, mapAllLayers=[], mapMarkerLayers=[], mapDayLayers={d1:[],d2:[],d3:[],d4:[],d5:[],d6:[],d7:[],d8:[]};
 const MAP_POINTS={
   hgh:{name:'杭州萧山机场',lat:30.2295,lng:120.4345,codes:['1.1','8.4']},
