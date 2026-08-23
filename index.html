@@ -92,6 +92,14 @@ body.time-picker-open{overflow:hidden}
 .photo-sync-note{font-size:calc(11px + var(--font-step, 0px));color:var(--muted);padding:10px 2px 2px}.photo-sync-note strong{color:var(--ink)}
 @media(max-width:520px){.photo-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.photo-lightbox{padding:12px}.photo-lightbox-inner{max-height:94vh}.photo-toolbar-row .photo-btn{flex:1}.photo-select{min-width:120px}}
 
+/* cloud sync */
+.cloud-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:11px 13px;margin:12px 0;box-shadow:var(--shadow)}
+.cloud-status-wrap{display:flex;align-items:center;gap:9px;min-width:0}.cloud-dot{width:10px;height:10px;border-radius:50%;background:#aaa;flex:0 0 auto}.cloud-dot.online{background:#3f8b6d}.cloud-dot.syncing{background:#c98b3c}.cloud-dot.error{background:#b95548}.cloud-text{min-width:0}.cloud-text strong{display:block;font-size:calc(13px + var(--font-step, 0px))}.cloud-text small{display:block;color:var(--muted);font-size:calc(10px + var(--font-step, 0px));white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:58vw}
+.cloud-settings-btn{border:1px solid var(--line);background:#fff;border-radius:11px;padding:9px 11px;font-weight:900;font-size:calc(11px + var(--font-step, 0px));white-space:nowrap}
+.cloud-overlay{position:fixed;inset:0;z-index:120;background:rgba(20,18,16,.58);display:none;align-items:flex-end;justify-content:center;padding:14px}.cloud-overlay.open{display:flex}.cloud-sheet{width:min(720px,100%);max-height:88vh;overflow:auto;background:#fffdf9;border-radius:22px;padding:16px;box-shadow:0 20px 60px rgba(0,0,0,.25)}.cloud-sheet-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px}.cloud-sheet-head strong{font-size:calc(18px + var(--font-step, 0px))}.cloud-sheet-head small{display:block;color:var(--muted);margin-top:3px}.cloud-close{width:40px;height:40px;border:1px solid var(--line);background:#fff;border-radius:50%;font-size:20px;font-weight:900}.cloud-grid{display:grid;grid-template-columns:1fr;gap:10px}.cloud-field label{display:block;font-size:calc(11px + var(--font-step, 0px));font-weight:900;margin:0 0 5px}.cloud-field input{width:100%;border:1px solid #ded6ca;background:#fff;border-radius:11px;padding:11px 12px;font-size:16px;outline:none}.cloud-field input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(189,109,58,.09)}.cloud-help{background:#f8f3eb;border:1px solid var(--line);border-radius:12px;padding:10px;font-size:calc(11px + var(--font-step, 0px));color:var(--muted);line-height:1.6}.cloud-help strong{color:var(--ink)}.cloud-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.cloud-actions button{flex:1 1 145px;min-height:44px;border:1px solid var(--line);background:#fff;border-radius:11px;padding:9px;font-weight:900;font-size:calc(11px + var(--font-step, 0px))}.cloud-actions .primary{background:var(--accent2);border-color:var(--accent2);color:#fff}.cloud-actions .danger{color:#9d4638;background:#fff5f1}.cloud-account{margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}.cloud-account-state{font-size:calc(11px + var(--font-step, 0px));color:var(--muted);margin-bottom:8px}.cloud-migrate{margin-top:12px;background:#f2f7f4;border:1px solid #cee3d8;border-radius:13px;padding:11px}.cloud-migrate strong{display:block;margin-bottom:4px}.cloud-migrate small{color:#567365;line-height:1.5}.cloud-migrate button{width:100%;margin-top:9px;min-height:44px;border:0;border-radius:11px;background:#3f7665;color:#fff;font-weight:900;font-size:calc(12px + var(--font-step, 0px))}
+.nav-refresh-state{font-size:calc(10px + var(--font-step, 0px));color:var(--muted);margin-top:5px}
+@media(min-width:640px){.cloud-grid{grid-template-columns:1fr 1fr}.cloud-field.wide{grid-column:1/-1}.cloud-overlay{align-items:center}.cloud-text small{max-width:420px}}
+
 </style>
 <script>
 try{document.documentElement.dataset.fontSize=localStorage.getItem('qinggan_font_size_v1')||'normal';}
@@ -116,6 +124,11 @@ catch(e){document.documentElement.dataset.fontSize='normal';}
       <button class="font-size-btn" type="button" data-font-size="large" aria-pressed="false">大字 A+</button>
       <button class="font-size-btn" type="button" data-font-size="xlarge" aria-pressed="false">特大 A++</button>
     </div>
+  </div>
+
+  <div class="cloud-bar" id="cloudBar">
+    <div class="cloud-status-wrap"><span class="cloud-dot" id="cloudDot"></span><div class="cloud-text"><strong id="cloudStatus">☁️ 云同步未连接</strong><small id="cloudStatusDetail">本机修改仍会保留；连接后可与家人共享行程和照片</small></div></div>
+    <button class="cloud-settings-btn" id="cloudSettingsBtn" type="button">同步设置</button>
   </div>
 
   <div class="route">
@@ -153,7 +166,7 @@ catch(e){document.documentElement.dataset.fontSize='normal';}
           <div class="item"><div class="time">18:10</div><div class="dot"></div><div class="desc">入住酒店 → 晚饭 → 早点休息</div></div>
         </div>
         <div class="hotel"><strong>🏨 西宁海湖新区国投广场亚朵S酒店</strong>建议家庭房 · 免费停车优先</div>
-        <div class="actions"><a class="btn primary nav" data-place="西宁海湖新区国投广场亚朵S酒店">高德驾车 · 酒店</a><a class="btn" href="https://www.12306.cn/" target="_blank">12306</a></div>
+        <div class="actions"><a class="btn primary nav" data-nav-key="d1-hotel" data-nav-source="hotel" data-place="西宁海湖新区国投广场亚朵S酒店">高德驾车 · 酒店</a><a class="btn" href="https://www.12306.cn/" target="_blank">12306</a></div>
         </div>
       </article>
 
@@ -162,16 +175,16 @@ catch(e){document.documentElement.dataset.fontSize='normal';}
         <div class="day-body"><div class="timeline">
           <div class="item"><div class="time">07:30</div><div class="dot"></div><div class="desc">起床、早餐</div></div>
           <div class="item"><div class="time">08:30</div><div class="dot"></div><div class="desc">西宁出发</div></div>
-          <div class="item"><div class="time">11:00</div><div class="dot"></div><div class="desc">青海湖二郎剑景区<small>慢慢看湖 2 小时，不加长时间游船</small></div></div>
+          <div class="item"><div class="time">11:00</div><div class="dot"></div><div class="desc" data-nav-stop="qhh">青海湖二郎剑景区<small>慢慢看湖 2 小时，不加长时间游船</small></div></div>
           <div class="item"><div class="time">13:00</div><div class="dot"></div><div class="desc">午餐</div></div>
           <div class="item"><div class="time">13:45</div><div class="dot"></div><div class="desc">出发前往茶卡</div></div>
           <div class="item"><div class="time">16:10</div><div class="dot"></div><div class="desc">茶卡镇入住、放行李</div></div>
-          <div class="item"><div class="time">17:00</div><div class="dot"></div><div class="desc">茶卡盐湖<small>玩到约 19:30，傍晚光线更柔和</small></div></div>
+          <div class="item"><div class="time">17:00</div><div class="dot"></div><div class="desc" data-nav-stop="chaka">茶卡盐湖<small>玩到约 19:30，傍晚光线更柔和</small></div></div>
           <div class="item"><div class="time">20:15</div><div class="dot"></div><div class="desc">回酒店、晚饭</div></div>
         </div>
         <div class="note">海拔提示：青海湖和茶卡约 3000 m 上下。今天不跑跳、不饮酒，出现明显不适就减少停留。</div>
         <div class="hotel"><strong>🏨 茶卡盐湖君道酒店</strong>优先三人房 / 亲子房</div>
-        <div class="actions"><a class="btn primary nav" data-place="青海湖二郎剑景区">高德驾车 · 青海湖</a><a class="btn nav" data-place="茶卡盐湖景区">高德驾车 · 茶卡</a></div>
+        <div class="actions"><a class="btn primary nav" data-nav-key="d2-qhh" data-nav-stop="qhh" data-place="青海湖二郎剑景区">高德驾车 · 青海湖</a><a class="btn nav" data-nav-key="d2-chaka" data-nav-stop="chaka" data-place="茶卡盐湖景区">高德驾车 · 茶卡</a></div>
         </div>
       </article>
 
@@ -184,11 +197,11 @@ catch(e){document.documentElement.dataset.fontSize='normal';}
           <div class="item"><div class="time">12:00</div><div class="dot"></div><div class="desc">德令哈附近午餐</div></div>
           <div class="item"><div class="time">14:30</div><div class="dot"></div><div class="desc">抵达大柴旦，办理入住</div></div>
           <div class="item"><div class="time">15:00</div><div class="dot"></div><div class="desc">午休约 1 小时</div></div>
-          <div class="item"><div class="time">16:30</div><div class="dot"></div><div class="desc">大柴旦翡翠湖<small>游览约 2 小时</small></div></div>
+          <div class="item"><div class="time">16:30</div><div class="dot"></div><div class="desc" data-nav-stop="emerald">大柴旦翡翠湖<small>游览约 2 小时</small></div></div>
           <div class="item"><div class="time">19:20</div><div class="dot"></div><div class="desc">回酒店、晚饭</div></div>
         </div>
         <div class="hotel"><strong>🏨 大柴旦丽呈华廷酒店（翡翠步行街店）</strong>优先三床房；供氧/加湿设施更适合父母同行</div>
-        <div class="actions"><a class="btn primary nav" data-place="大柴旦翡翠湖旅游景区">高德驾车 · 翡翠湖</a></div>
+        <div class="actions"><a class="btn primary nav" data-nav-key="d3-emerald" data-nav-stop="emerald" data-place="大柴旦翡翠湖旅游景区">高德驾车 · 翡翠湖</a></div>
         </div>
       </article>
 
@@ -200,12 +213,12 @@ catch(e){document.documentElement.dataset.fontSize='normal';}
           <div class="item"><div class="time">12:30</div><div class="dot"></div><div class="desc">阿克塞附近午餐</div></div>
           <div class="item"><div class="time">14:30</div><div class="dot"></div><div class="desc">抵达敦煌，办理入住</div></div>
           <div class="item"><div class="time">15:00</div><div class="dot"></div><div class="desc">午休 1.5 小时</div></div>
-          <div class="item"><div class="time">17:00</div><div class="dot"></div><div class="desc">出发前往鸣沙山月牙泉</div></div>
+          <div class="item"><div class="time">17:00</div><div class="dot"></div><div class="desc" data-nav-stop="mingsha">出发前往鸣沙山月牙泉</div></div>
           <div class="item"><div class="time">17:30</div><div class="dot"></div><div class="desc">入园<small>慢慢玩到日落后；务必在当日停止检票前进园</small></div></div>
           <div class="item"><div class="time">21:00</div><div class="dot"></div><div class="desc">回敦煌市区吃饭</div></div>
         </div>
         <div class="hotel"><strong>🏨 敦煌沙州夜市北门亚朵酒店</strong>家庭房 · 连住 2 晚，不换酒店</div>
-        <div class="actions"><a class="btn primary nav" data-place="鸣沙山月牙泉景区">高德驾车 · 鸣沙山</a><a class="btn nav" data-place="敦煌沙州夜市">高德驾车 · 沙州夜市</a></div>
+        <div class="actions"><a class="btn primary nav" data-nav-key="d4-mingsha" data-nav-stop="mingsha" data-place="鸣沙山月牙泉景区">高德驾车 · 鸣沙山</a><a class="btn nav" data-nav-key="d4-night" data-place="敦煌沙州夜市">高德驾车 · 沙州夜市</a></div>
         </div>
       </article>
 
@@ -214,7 +227,7 @@ catch(e){document.documentElement.dataset.fontSize='normal';}
         <div class="day-body"><div class="timeline">
           <div class="item"><div class="time">07:30</div><div class="dot"></div><div class="desc">起床、早餐</div></div>
           <div class="item"><div class="time">08:20</div><div class="dot"></div><div class="desc">酒店出发</div></div>
-          <div class="item"><div class="time">08:40</div><div class="dot"></div><div class="desc">到莫高窟数字展示中心<small>建议至少提前 30 分钟抵达</small></div></div>
+          <div class="item"><div class="time">08:40</div><div class="dot"></div><div class="desc" data-nav-stop="mogao">到莫高窟数字展示中心<small>建议至少提前 30 分钟抵达</small></div></div>
           <div class="item"><div class="time">09:00</div><div class="dot"></div><div class="desc">常规参观<small>数字展示 + 实体洞窟；具体入场时间以预约票为准</small></div></div>
           <div class="item"><div class="time">12:30</div><div class="dot"></div><div class="desc">结束参观，返回市区</div></div>
           <div class="item"><div class="time">13:10</div><div class="dot"></div><div class="desc">午饭</div></div>
@@ -222,7 +235,7 @@ catch(e){document.documentElement.dataset.fontSize='normal';}
           <div class="item"><div class="time">17:30</div><div class="dot"></div><div class="desc">自由活动<small>沙州夜市 / 咖啡 / 酒店休息，今天不再加远途景点</small></div></div>
         </div>
         <div class="note">莫高窟是本次最需要提前锁定的门票。2026 旺季实行实名分时预约；常规参观每日限量。</div>
-        <div class="actions"><a class="btn primary nav" data-place="莫高窟数字展示中心">高德驾车 · 莫高窟</a><a class="btn" href="https://www.dha.ac.cn/" target="_blank">敦煌研究院官网</a></div>
+        <div class="actions"><a class="btn primary nav" data-nav-key="d5-mogao" data-nav-stop="mogao" data-place="莫高窟数字展示中心">高德驾车 · 莫高窟</a><a class="btn" href="https://www.dha.ac.cn/" target="_blank">敦煌研究院官网</a></div>
         </div>
       </article>
 
@@ -233,12 +246,12 @@ catch(e){document.documentElement.dataset.fontSize='normal';}
           <div class="item"><div class="time">09:30</div><div class="dot"></div><div class="desc">敦煌出发</div></div>
           <div class="item"><div class="time">11:30</div><div class="dot"></div><div class="desc">瓜州附近休息、午餐</div></div>
           <div class="item"><div class="time">14:30</div><div class="dot"></div><div class="desc">抵达嘉峪关酒店，稍休息</div></div>
-          <div class="item"><div class="time">15:45</div><div class="dot"></div><div class="desc">嘉峪关关城<small>只看关城本体，不加第一墩/悬壁长城</small></div></div>
+          <div class="item"><div class="time">15:45</div><div class="dot"></div><div class="desc" data-nav-stop="jiayuguan">嘉峪关关城<small>只看关城本体，不加第一墩/悬壁长城</small></div></div>
           <div class="item"><div class="time">18:15</div><div class="dot"></div><div class="desc">返回市区</div></div>
           <div class="item"><div class="time">19:00</div><div class="dot"></div><div class="desc">晚饭、休息</div></div>
         </div>
         <div class="hotel"><strong>🏨 全季酒店（嘉峪关迎宾湖店）</strong>家庭房 · 免费停车优先</div>
-        <div class="actions"><a class="btn primary nav" data-place="嘉峪关关城景区">高德驾车 · 嘉峪关</a></div>
+        <div class="actions"><a class="btn primary nav" data-nav-key="d6-jiayuguan" data-nav-stop="jiayuguan" data-place="嘉峪关关城景区">高德驾车 · 嘉峪关</a></div>
         </div>
       </article>
 
@@ -249,13 +262,13 @@ catch(e){document.documentElement.dataset.fontSize='normal';}
           <div class="item"><div class="time">10:00</div><div class="dot"></div><div class="desc">嘉峪关出发</div></div>
           <div class="item"><div class="time">12:30</div><div class="dot"></div><div class="desc">七彩丹霞附近午饭</div></div>
           <div class="item"><div class="time">13:30</div><div class="dot"></div><div class="desc">休息、喝咖啡，不急着进景区</div></div>
-          <div class="item"><div class="time">15:00</div><div class="dot"></div><div class="desc">张掖七彩丹霞<small>下午光线更适合看颜色和层次</small></div></div>
+          <div class="item"><div class="time">15:00</div><div class="dot"></div><div class="desc" data-nav-stop="danxia">张掖七彩丹霞<small>下午光线更适合看颜色和层次</small></div></div>
           <div class="item"><div class="time">18:40</div><div class="dot"></div><div class="desc">离开景区，前往张掖市区</div></div>
           <div class="item"><div class="time">19:30</div><div class="dot"></div><div class="desc">入住酒店</div></div>
           <div class="item"><div class="time">20:30</div><div class="dot"></div><div class="desc">如租车公司支持，今晚完成异地还车</div></div>
         </div>
         <div class="hotel"><strong>🏨 建国璞隐（张掖西站大佛寺店）</strong>家庭房 · 靠近张掖西站</div>
-        <div class="actions"><a class="btn primary nav" data-place="张掖七彩丹霞旅游景区">高德驾车 · 七彩丹霞</a><a class="btn nav" data-place="张掖西站">高德驾车 · 张掖西站</a></div>
+        <div class="actions"><a class="btn primary nav" data-nav-key="d7-danxia" data-nav-stop="danxia" data-place="张掖七彩丹霞旅游景区">高德驾车 · 七彩丹霞</a><a class="btn nav" data-nav-key="d7-zhangye" data-place="张掖西站">高德驾车 · 张掖西站</a></div>
         </div>
       </article>
 
@@ -300,7 +313,7 @@ catch(e){document.documentElement.dataset.fontSize='normal';}
     </section>
 
     <section id="photos" class="section">
-      <div class="photo-callout"><h3>📷 旅途相册</h3><p>把沿途照片按天放进行程里。每张照片都可以写一句备注，点开可看大图；当日照片也会同步显示在对应的每日行程卡片底部。</p><small>照片会自动压缩后保存在当前手机/浏览器，不会自动上传到 GitHub。</small></div>
+      <div class="photo-callout"><h3>📷 旅途相册</h3><p>把沿途照片按天放进行程里。每张照片都可以写一句备注，点开可看大图；当日照片也会同步显示在对应的每日行程卡片底部。</p><small>照片会自动压缩；连接云同步后上传到家庭云相册，未连接时仍保存在当前手机。</small></div>
       <div class="photo-toolbar">
         <div class="photo-toolbar-row">
           <select id="photoFilter" class="photo-select" aria-label="筛选照片"><option value="all">查看：全部照片</option><option value="d1">第1天 · 杭州→兰州→西宁</option><option value="d2">第2天 · 西宁→青海湖→茶卡</option><option value="d3">第3天 · 茶卡→大柴旦→翡翠湖</option><option value="d4">第4天 · 大柴旦→敦煌→鸣沙山</option><option value="d5">第5天 · 莫高窟·敦煌休息</option><option value="d6">第6天 · 敦煌→嘉峪关</option><option value="d7">第7天 · 嘉峪关→丹霞→张掖</option><option value="d8">第8天 · 张掖→兰州→杭州</option></select>
@@ -316,7 +329,7 @@ catch(e){document.documentElement.dataset.fontSize='normal';}
         <input type="file" id="photoBackupInput" accept="application/json" hidden>
       </div>
       <div id="photoGallery"></div>
-      <div class="photo-sync-note"><strong>纪念保存：</strong>“导出相册备份”会把已压缩照片和备注一起保存成一个 JSON 文件，可用于换手机恢复。由于本站是 GitHub Pages 静态网页，手机里新增的照片不会自动写回 GitHub 公网页面。</div>
+      <div class="photo-sync-note"><strong>纪念保存：</strong>“导出相册备份”仍可作为离线保险。连接云同步后，照片原图（压缩版）和备注会存入家庭云相册，家人登录同一家庭账号即可看到。</div>
     </section>
 
     <section id="transport" class="section">
@@ -471,6 +484,24 @@ catch(e){document.documentElement.dataset.fontSize='normal';}
   </div>
 </div>
 
+<div class="cloud-overlay" id="cloudOverlay" aria-hidden="true">
+  <div class="cloud-sheet" role="dialog" aria-modal="true" aria-labelledby="cloudTitle">
+    <div class="cloud-sheet-head"><div><strong id="cloudTitle">☁️ 家庭云同步</strong><small>行程 / 费用 / 待办自动同步；照片存入私有云相册</small></div><button class="cloud-close" id="cloudCloseBtn" type="button" aria-label="关闭">×</button></div>
+    <div class="cloud-help"><strong>第一次设置：</strong>先按我提供的 Supabase 初始化脚本创建数据库和私有相册。这里只填写 <strong>Project URL</strong> 和 <strong>Publishable key</strong>；不要填写 service_role key。三台手机使用同一个家庭邮箱和密码登录即可共享。</div>
+    <div class="cloud-grid" style="margin-top:12px">
+      <div class="cloud-field wide"><label for="cloudUrlInput">Supabase Project URL</label><input id="cloudUrlInput" inputmode="url" placeholder="https://xxxx.supabase.co"></div>
+      <div class="cloud-field wide"><label for="cloudKeyInput">Supabase Publishable key</label><input id="cloudKeyInput" autocomplete="off" placeholder="sb_publishable_... 或 anon key"></div>
+      <div class="cloud-field"><label for="cloudEmailInput">家庭邮箱</label><input id="cloudEmailInput" type="email" autocomplete="username" placeholder="family@example.com"></div>
+      <div class="cloud-field"><label for="cloudPasswordInput">家庭密码</label><input id="cloudPasswordInput" type="password" autocomplete="current-password" placeholder="至少 6 位"></div>
+      <div class="cloud-field wide"><label for="amapKeyInput">高德 Web 服务 Key（用于编辑后重新解析导航地址）</label><input id="amapKeyInput" autocomplete="off" placeholder="可稍后填写；未填写时，地址变化会退化为高德搜索"></div>
+    </div>
+    <div class="cloud-actions"><button id="cloudSaveConfigBtn" type="button">保存配置</button><button class="primary" id="cloudLoginBtn" type="button">登录并连接</button><button id="cloudSignupBtn" type="button">首次注册家庭账号</button><button id="cloudLogoutBtn" type="button">退出登录</button></div>
+    <div class="cloud-account"><div class="cloud-account-state" id="cloudAccountState">尚未连接</div></div>
+    <div class="cloud-migrate" id="cloudMigrateBox"><strong>已有本机修改？</strong><small>你当前手机已经修改过的行程、费用、待办和本地照片不会因为更新网页而消失。连接云端后点下面按钮，把这台手机现有内容作为家庭云端初始版本。</small><button id="cloudMigrateBtn" type="button">上传本机现有数据和照片到云端</button></div>
+    <div class="cloud-actions"><button id="cloudPullBtn" type="button">从云端重新读取</button><button id="cloudFullBackupBtn" type="button">导出本机完整备份</button></div>
+  </div>
+</div>
+
 <div class="time-picker-overlay" id="timePickerOverlay" aria-hidden="true">
   <div class="time-picker-sheet" role="dialog" aria-modal="true" aria-labelledby="timePickerTitle">
     <div class="time-picker-head">
@@ -490,7 +521,6 @@ catch(e){document.documentElement.dataset.fontSize='normal';}
 <div class="edit-tools" id="editTools">
   <button class="toolbtn" id="exportBtn">导出修改</button>
   <button class="toolbtn" id="importBtn">导入修改</button>
-  <button class="toolbtn warn" id="resetBtn">恢复默认</button>
   <input type="file" id="importFile" accept="application/json" hidden>
 </div>
 <div class="toast" id="toast">已保存</div>
@@ -498,6 +528,7 @@ catch(e){document.documentElement.dataset.fontSize='normal';}
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 const FONT_KEY='qinggan_font_size_v1';
+var cloudReady=false, cloudClient=null, cloudUser=null, cloudPushTimer=null, cloudPollTimer=null, cloudApplying=false, cloudLastPhotoRefresh=0;
 const VALID_FONT_SIZES=new Set(['normal','large','xlarge']);
 function setTripFontSize(size,announce=true){
   if(!VALID_FONT_SIZES.has(size)) size='normal';
@@ -533,38 +564,98 @@ const AMAP_NAV_TARGETS={
   '西宁海湖新区国投广场亚朵S酒店':{lat:36.649859,lng:101.712647,name:'西宁海湖新区国投广场亚朵S酒店'},
   '青海湖二郎剑景区':{lat:36.578633,lng:100.495767,name:'青海湖二郎剑景区'},
   '茶卡盐湖景区':{lat:36.759910,lng:99.078336,name:'茶卡盐湖景区'},
+  '茶卡盐湖':{lat:36.759910,lng:99.078336,name:'茶卡盐湖景区'},
   '大柴旦翡翠湖旅游景区':{lat:37.8428,lng:95.2050,name:'大柴旦翡翠湖旅游景区'},
+  '大柴旦翡翠湖':{lat:37.8428,lng:95.2050,name:'大柴旦翡翠湖旅游景区'},
   '鸣沙山月牙泉景区':{lat:40.0888,lng:94.6754,name:'鸣沙山月牙泉景区'},
+  '鸣沙山月牙泉':{lat:40.0888,lng:94.6754,name:'鸣沙山月牙泉景区'},
   '敦煌沙州夜市':{lat:40.140389,lng:94.665799,name:'敦煌沙州夜市'},
   '莫高窟数字展示中心':{lat:40.162823,lng:94.765090,name:'敦煌莫高窟数字展示中心（正常观影入口）'},
+  '莫高窟':{lat:40.162823,lng:94.765090,name:'敦煌莫高窟数字展示中心（正常观影入口）'},
   '嘉峪关关城景区':{lat:39.803676,lng:98.224201,name:'嘉峪关关城景区'},
+  '嘉峪关关城':{lat:39.803676,lng:98.224201,name:'嘉峪关关城景区'},
   '张掖七彩丹霞旅游景区':{lat:38.972010,lng:100.062804,name:'张掖七彩丹霞景区'},
+  '张掖七彩丹霞':{lat:38.972010,lng:100.062804,name:'张掖七彩丹霞景区'},
+  '七彩丹霞':{lat:38.972010,lng:100.062804,name:'张掖七彩丹霞景区'},
   '张掖西站':{lat:38.9157,lng:100.4092,name:'张掖西站'}
 };
+const NAV_KEY='qinggan_nav_cache_v2';
+let navGeoCache={};
+try{navGeoCache=JSON.parse(localStorage.getItem(NAV_KEY)||'{}')||{};}catch(e){navGeoCache={};}
 function amapDriveURL(target){
   const to=[target.lng,target.lat,target.name].join(',');
   return 'https://uri.amap.com/navigation?from=&to='+encodeURIComponent(to)+'&mode=car&policy=0&src=qinggan-family-trip&callnative=1';
 }
-function bindNav(){
-  document.querySelectorAll('.nav').forEach(a=>{
-    const place=a.dataset.place||'';
-    const target=AMAP_NAV_TARGETS[place];
-    if(target){
-      a.href=amapDriveURL(target);
-      a.dataset.driveReady='1';
-      a.title='高德驾车：当前位置 → '+target.name;
-      a.setAttribute('aria-label','高德驾车，从当前位置前往'+target.name);
-    }else{
-      a.href='https://uri.amap.com/search?keyword='+encodeURIComponent(place)+'&callnative=1';
-      a.title='在高德地图中查看'+place;
-    }
-    a.target='_blank';
-    a.rel='noopener noreferrer';
-  });
+function plainEditableText(el){
+  if(!el) return '';
+  const clone=el.cloneNode(true);clone.querySelectorAll('small,.item-edit-actions').forEach(x=>x.remove());
+  return (clone.textContent||'').replace(/^\s*[🏨📍🚗]\s*/,'').replace(/^(?:出发前往|前往|抵达|到达|到)\s*/,'').replace(/\s+/g,' ').trim();
 }
+function resolveNavPlace(a){
+  const day=a.closest('.day');
+  if(day && a.dataset.navSource==='hotel'){
+    const strong=day.querySelector('.hotel strong');
+    const txt=plainEditableText(strong||day.querySelector('.hotel'));
+    if(txt) return txt;
+  }
+  if(day && a.dataset.navStop){
+    const el=day.querySelector('[data-nav-stop="'+CSS.escape(a.dataset.navStop)+'"]');
+    const txt=plainEditableText(el);
+    if(txt) return txt;
+  }
+  return (a.dataset.place||'').trim();
+}
+function applyNavTarget(a,target,place){
+  if(target && Number.isFinite(Number(target.lng)) && Number.isFinite(Number(target.lat))){
+    const t={lng:Number(target.lng),lat:Number(target.lat),name:target.name||place};
+    a.href=amapDriveURL(t);a.dataset.driveReady='1';
+    a.title='高德驾车：当前位置 → '+t.name;a.setAttribute('aria-label','高德驾车，从当前位置前往'+t.name);
+  }else{
+    a.href='https://uri.amap.com/search?keyword='+encodeURIComponent(place)+'&callnative=1';
+    delete a.dataset.driveReady;a.title='地址已变化：在高德中重新搜索 '+place;a.setAttribute('aria-label','在高德地图中重新搜索'+place);
+  }
+  a.target='_blank';a.rel='noopener noreferrer';a.dataset.currentPlace=place;
+}
+async function geocodeAmapPlace(place){
+  const key=(localStorage.getItem('qinggan_amap_web_key_v1')||'').trim();
+  if(!key||!place) return null;
+  try{
+    const u='https://restapi.amap.com/v3/geocode/geo?output=JSON&address='+encodeURIComponent(place)+'&key='+encodeURIComponent(key);
+    const r=await fetch(u,{cache:'no-store'});if(!r.ok) throw new Error('HTTP '+r.status);
+    const data=await r.json();const g=data?.geocodes?.[0];if(!g?.location) throw new Error(data?.info||'未找到地址');
+    const [lng,lat]=g.location.split(',').map(Number);if(!Number.isFinite(lng)||!Number.isFinite(lat)) throw new Error('坐标无效');
+    return {lng,lat,name:place,formattedAddress:g.formatted_address||place,updatedAt:Date.now()};
+  }catch(e){console.warn('高德地址解析失败',place,e);return null;}
+}
+let navRefreshPromise=Promise.resolve();
+function refreshDynamicNavTargets(forceChanged=false){
+  navRefreshPromise=navRefreshPromise.then(async()=>{
+    let changed=false;
+    for(const a of document.querySelectorAll('.nav')){
+      const place=resolveNavPlace(a);if(!place) continue;
+      const key=a.dataset.navKey||('static-'+place);
+      let target=null;const cached=navGeoCache[key];
+      if(!forceChanged && cached?.place===place) target=cached;
+      if(!target && AMAP_NAV_TARGETS[place]) target={...AMAP_NAV_TARGETS[place],place};
+      const placeChanged=!cached||cached.place!==place;
+      if((placeChanged||forceChanged) && (localStorage.getItem('qinggan_amap_web_key_v1')||'').trim()){
+        const fresh=await geocodeAmapPlace(place);
+        if(fresh){target={...fresh,place};navGeoCache[key]=target;changed=true;}
+      }
+      if(!target && cached?.place===place) target=cached;
+      if(target && (!navGeoCache[key]||navGeoCache[key].place!==place)){
+        navGeoCache[key]={...target,place};changed=true;
+      }
+      applyNavTarget(a,target,place);
+    }
+    if(changed){localStorage.setItem(NAV_KEY,JSON.stringify(navGeoCache));scheduleCloudStatePush();}
+  });
+  return navRefreshPromise;
+}
+function bindNav(){refreshDynamicNavTargets(false);}
 bindNav();
 
-for(let i=1;i<=10;i++){const el=document.getElementById('c'+i);if(!el) continue;const k='qinggan_'+el.id;el.checked=localStorage.getItem(k)==='1';el.addEventListener('change',()=>localStorage.setItem(k,el.checked?'1':'0'));}
+for(let i=1;i<=10;i++){const el=document.getElementById('c'+i);if(!el) continue;const k='qinggan_'+el.id;el.checked=localStorage.getItem(k)==='1';el.addEventListener('change',()=>{localStorage.setItem(k,el.checked?'1':'0');scheduleCloudStatePush();});}
 
 function ymd(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 const today=ymd(new Date()); const todayCard=document.querySelector('.day[data-date="'+today+'"]'); if(todayCard) todayCard.classList.add('today');
@@ -706,9 +797,12 @@ function photoDB(){
   });
   return photoDBPromise;
 }
-async function photoGetAll(){const db=await photoDB();return new Promise((resolve,reject)=>{const tx=db.transaction(PHOTO_STORE,'readonly'),req=tx.objectStore(PHOTO_STORE).getAll();req.onsuccess=()=>resolve(req.result||[]);req.onerror=()=>reject(req.error);});}
-async function photoPut(rec){const db=await photoDB();return new Promise((resolve,reject)=>{const tx=db.transaction(PHOTO_STORE,'readwrite');tx.objectStore(PHOTO_STORE).put(rec);tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error);});}
-async function photoDelete(id){const db=await photoDB();return new Promise((resolve,reject)=>{const tx=db.transaction(PHOTO_STORE,'readwrite');tx.objectStore(PHOTO_STORE).delete(id);tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error);});}
+async function localPhotoGetAll(){const db=await photoDB();return new Promise((resolve,reject)=>{const tx=db.transaction(PHOTO_STORE,'readonly'),req=tx.objectStore(PHOTO_STORE).getAll();req.onsuccess=()=>resolve(req.result||[]);req.onerror=()=>reject(req.error);});}
+async function localPhotoPut(rec){const db=await photoDB();return new Promise((resolve,reject)=>{const tx=db.transaction(PHOTO_STORE,'readwrite');tx.objectStore(PHOTO_STORE).put(rec);tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error);});}
+async function localPhotoDelete(id){const db=await photoDB();return new Promise((resolve,reject)=>{const tx=db.transaction(PHOTO_STORE,'readwrite');tx.objectStore(PHOTO_STORE).delete(id);tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error);});}
+async function photoGetAll(){return cloudReady?cloudPhotoGetAll():localPhotoGetAll();}
+async function photoPut(rec){if(cloudReady){const out=await cloudPhotoPut(rec);if(rec?.blob){try{await localPhotoPut(rec);}catch(e){}}return out;}return localPhotoPut(rec);}
+async function photoDelete(id){if(cloudReady){await cloudPhotoDelete(id);try{await localPhotoDelete(id);}catch(e){}return;}return localPhotoDelete(id);}
 function uidPhoto(){return 'p_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8)}
 function blobToDataURL(blob){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=()=>reject(r.error);r.readAsDataURL(blob);});}
 function dataURLToBlob(dataURL){const [head,body]=dataURL.split(',');const mime=(head.match(/data:([^;]+)/)||[])[1]||'image/jpeg';const bin=atob(body);const arr=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);return new Blob([arr],{type:mime});}
@@ -729,14 +823,15 @@ function setupDayPhotoAreas(){
     body.appendChild(box);
   });
 }
-function photoThumbURL(blob){return URL.createObjectURL(blob)}
+function photoThumbURL(source){if(source?.cloudUrl)return source.cloudUrl;const blob=source?.blob||source;return URL.createObjectURL(blob)}
+function maybeRevokePhotoURL(url){if(typeof url==='string'&&url.startsWith('blob:'))URL.revokeObjectURL(url)}
 function photoRecordById(id){return photoRecords.find(x=>x.id===id)}
 function sortedPhotos(records=photoRecords){return [...records].sort((a,b)=>(a.createdAt||0)-(b.createdAt||0));}
 function renderDayPhotoStrips(){
   document.querySelectorAll('[data-photo-thumbs]').forEach(box=>{
     const d=box.dataset.photoThumbs, list=sortedPhotos(photoRecords.filter(x=>x.day===d));box.innerHTML='';
     if(!list.length){box.innerHTML='<div class="day-photo-empty">旅行中拍的照片可以放在这里。</div>';return;}
-    list.slice(0,12).forEach(rec=>{const b=document.createElement('button');b.type='button';b.className='day-photo-thumb';b.dataset.photoId=rec.id;const img=document.createElement('img');const url=photoThumbURL(rec.blob);img.src=url;img.alt=rec.caption||PHOTO_DAY_META[d].title;img.onload=()=>URL.revokeObjectURL(url);b.appendChild(img);box.appendChild(b);});
+    list.slice(0,12).forEach(rec=>{const b=document.createElement('button');b.type='button';b.className='day-photo-thumb';b.dataset.photoId=rec.id;const img=document.createElement('img');const url=photoThumbURL(rec);img.src=url;img.alt=rec.caption||PHOTO_DAY_META[d].title;img.onload=()=>maybeRevokePhotoURL(url);b.appendChild(img);box.appendChild(b);});
     if(list.length>12){const more=document.createElement('button');more.type='button';more.className='day-photo-thumb';more.style.cssText='display:flex;align-items:center;justify-content:center;font-size:calc(12px + var(--font-step, 0px));font-weight:900;color:var(--accent2);background:#fffaf2';more.textContent='+'+(list.length-12);more.addEventListener('click',()=>{document.querySelector('[data-tab="photos"]').click();document.getElementById('photoFilter').value=d;renderPhotoGallery();});box.appendChild(more);}
   });
 }
@@ -744,24 +839,24 @@ function renderPhotoGallery(){
   const host=document.getElementById('photoGallery'); if(!host) return; const filter=document.getElementById('photoFilter')?.value||'all';host.innerHTML='';
   const days=filter==='all'?Object.keys(PHOTO_DAY_META):[filter];
   days.forEach(d=>{const list=sortedPhotos(photoRecords.filter(x=>x.day===d));if(filter==='all'&&!list.length)return;const group=document.createElement('div');group.className='photo-day-group';group.innerHTML='<div class="photo-day-head"><div><strong>'+PHOTO_DAY_META[d].title+'</strong><br><span>'+PHOTO_DAY_META[d].date+'</span></div><span>'+list.length+' 张</span></div><div class="photo-grid"></div>';const grid=group.querySelector('.photo-grid');
-    if(!list.length){grid.outerHTML='<div class="photo-empty">还没有照片。可以点“导入照片”，或回到每日行程在当天底部添加。</div>';}else list.forEach(rec=>{const card=document.createElement('button');card.type='button';card.className='photo-card';card.dataset.photoId=rec.id;const img=document.createElement('img');const url=photoThumbURL(rec.blob);img.src=url;img.alt=rec.caption||PHOTO_DAY_META[d].title;img.onload=()=>URL.revokeObjectURL(url);card.appendChild(img);const code=document.createElement('span');code.className='photo-code';code.textContent=d.toUpperCase().replace('D','Day ');card.appendChild(code);if(rec.caption){const cap=document.createElement('span');cap.className='photo-cap';cap.textContent=rec.caption;card.appendChild(cap);}grid.appendChild(card);});host.appendChild(group);});
+    if(!list.length){grid.outerHTML='<div class="photo-empty">还没有照片。可以点“导入照片”，或回到每日行程在当天底部添加。</div>';}else list.forEach(rec=>{const card=document.createElement('button');card.type='button';card.className='photo-card';card.dataset.photoId=rec.id;const img=document.createElement('img');const url=photoThumbURL(rec);img.src=url;img.alt=rec.caption||PHOTO_DAY_META[d].title;img.onload=()=>maybeRevokePhotoURL(url);card.appendChild(img);const code=document.createElement('span');code.className='photo-code';code.textContent=d.toUpperCase().replace('D','Day ');card.appendChild(code);if(rec.caption){const cap=document.createElement('span');cap.className='photo-cap';cap.textContent=rec.caption;card.appendChild(cap);}grid.appendChild(card);});host.appendChild(group);});
   if(!host.children.length) host.innerHTML='<div class="photo-empty">还没有导入照片。旅行中可以随手把每天拍的照片放进来。</div>';
-  const bytes=photoRecords.reduce((n,x)=>n+(x.blob?.size||0),0),mb=(bytes/1024/1024).toFixed(bytes>1024*1024?1:2);document.getElementById('photoStats').textContent=photoRecords.length+' 张照片 · 约 '+mb+' MB 本地存储';
+  const bytes=photoRecords.reduce((n,x)=>n+(x.blob?.size||x.size||0),0),mb=(bytes/1024/1024).toFixed(bytes>1024*1024?1:2);document.getElementById('photoStats').textContent=photoRecords.length+' 张照片 · 约 '+mb+' MB '+(cloudReady?'云端相册':'本地存储');
   renderDayPhotoStrips();
 }
-async function refreshPhotos(){try{photoRecords=await photoGetAll();renderPhotoGallery();}catch(e){console.error(e);const host=document.getElementById('photoGallery');if(host)host.innerHTML='<div class="photo-empty">当前浏览器无法保存照片。请改用 Safari / Chrome 后再试。</div>';}}
+async function refreshPhotos(){try{photoRecords=await photoGetAll();renderPhotoGallery();}catch(e){console.error(e);const host=document.getElementById('photoGallery');if(host)host.innerHTML='<div class="photo-empty">照片读取失败。请检查网络或改用 Safari / Chrome 后再试。</div>';}}
 function choosePhotosForDay(day){pendingPhotoDay=day||'d1';const target=document.getElementById('photoTargetDay');if(target)target.value=pendingPhotoDay;const input=document.getElementById('photoInput');if(input){input.value='';input.click();}}
 async function importPhotoFiles(files,day){if(!files?.length)return;const arr=[...files].slice(0,30);showToast('正在处理 '+arr.length+' 张照片…');let ok=0;for(const f of arr){if(!f.type.startsWith('image/'))continue;try{const blob=await compressPhoto(f);await photoPut({id:uidPhoto(),day,caption:'',name:f.name||'',createdAt:Date.now()+ok,blob});ok++;}catch(e){console.error(e);}}await refreshPhotos();showToast('已加入 '+ok+' 张照片');}
 function openPhoto(id){
   const rec=photoRecordById(id);if(!rec)return;const filter=document.getElementById('photoFilter')?.value||'all';const scope=filter==='all'?sortedPhotos(photoRecords):sortedPhotos(photoRecords.filter(x=>x.day===filter));currentPhotoIds=scope.map(x=>x.id);currentPhotoIndex=Math.max(0,currentPhotoIds.indexOf(id));updatePhotoLightbox();const lb=document.getElementById('photoLightbox');lb.classList.add('open');lb.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';
 }
 let lightboxURL=null;
-function updatePhotoLightbox(){const id=currentPhotoIds[currentPhotoIndex],rec=photoRecordById(id);if(!rec)return;if(lightboxURL)URL.revokeObjectURL(lightboxURL);lightboxURL=photoThumbURL(rec.blob);document.getElementById('photoLightboxImg').src=lightboxURL;document.getElementById('photoLightboxTitle').textContent=PHOTO_DAY_META[rec.day].title;document.getElementById('photoLightboxCount').textContent=(currentPhotoIndex+1)+' / '+currentPhotoIds.length;document.getElementById('photoCaptionInput').value=rec.caption||'';document.getElementById('photoPrevBtn').style.visibility=currentPhotoIds.length>1?'visible':'hidden';document.getElementById('photoNextBtn').style.visibility=currentPhotoIds.length>1?'visible':'hidden';}
-function closePhotoLightbox(){const lb=document.getElementById('photoLightbox');lb.classList.remove('open');lb.setAttribute('aria-hidden','true');document.body.style.overflow='';if(lightboxURL){URL.revokeObjectURL(lightboxURL);lightboxURL=null;}}
+function updatePhotoLightbox(){const id=currentPhotoIds[currentPhotoIndex],rec=photoRecordById(id);if(!rec)return;if(lightboxURL)maybeRevokePhotoURL(lightboxURL);lightboxURL=photoThumbURL(rec);document.getElementById('photoLightboxImg').src=lightboxURL;document.getElementById('photoLightboxTitle').textContent=PHOTO_DAY_META[rec.day].title;document.getElementById('photoLightboxCount').textContent=(currentPhotoIndex+1)+' / '+currentPhotoIds.length;document.getElementById('photoCaptionInput').value=rec.caption||'';document.getElementById('photoPrevBtn').style.visibility=currentPhotoIds.length>1?'visible':'hidden';document.getElementById('photoNextBtn').style.visibility=currentPhotoIds.length>1?'visible':'hidden';}
+function closePhotoLightbox(){const lb=document.getElementById('photoLightbox');lb.classList.remove('open');lb.setAttribute('aria-hidden','true');document.body.style.overflow='';if(lightboxURL){maybeRevokePhotoURL(lightboxURL);lightboxURL=null;}}
 function stepPhoto(delta){if(!currentPhotoIds.length)return;currentPhotoIndex=(currentPhotoIndex+delta+currentPhotoIds.length)%currentPhotoIds.length;updatePhotoLightbox();}
 async function saveCurrentPhotoCaption(){const id=currentPhotoIds[currentPhotoIndex],rec=photoRecordById(id);if(!rec)return;rec.caption=document.getElementById('photoCaptionInput').value.trim();await photoPut(rec);await refreshPhotos();showToast('照片备注已保存');}
 async function deleteCurrentPhoto(){const id=currentPhotoIds[currentPhotoIndex];if(!id||!confirm('删除这张照片吗？'))return;await photoDelete(id);currentPhotoIds.splice(currentPhotoIndex,1);await refreshPhotos();if(!currentPhotoIds.length){closePhotoLightbox();showToast('照片已删除');return;}currentPhotoIndex=Math.min(currentPhotoIndex,currentPhotoIds.length-1);updatePhotoLightbox();showToast('照片已删除');}
-async function exportPhotoBackup(){if(!photoRecords.length){alert('还没有照片可以导出。');return;}showToast('正在生成相册备份…');const records=[];for(const rec of sortedPhotos()){records.push({id:rec.id,day:rec.day,caption:rec.caption||'',name:rec.name||'',createdAt:rec.createdAt||Date.now(),data:await blobToDataURL(rec.blob)});}const payload={type:'qinggan-trip-photo-backup',version:1,exportedAt:new Date().toISOString(),records};const blob=new Blob([JSON.stringify(payload)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='青甘旅行相册备份-'+ymd(new Date())+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500);showToast('相册备份已导出');}
+async function exportPhotoBackup(){if(!photoRecords.length){alert('还没有照片可以导出。');return;}showToast('正在生成相册备份…');const records=[];for(const rec of sortedPhotos()){let blob=rec.blob;if(!blob&&cloudReady&&rec.filePath){const dl=await cloudClient.storage.from('trip-photos').download(rec.filePath);if(dl.error)throw dl.error;blob=dl.data;}if(!blob)continue;records.push({id:rec.id,day:rec.day,caption:rec.caption||'',name:rec.name||'',createdAt:rec.createdAt||Date.now(),data:await blobToDataURL(blob)});}const payload={type:'qinggan-trip-photo-backup',version:1,exportedAt:new Date().toISOString(),records};const blob=new Blob([JSON.stringify(payload)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='青甘旅行相册备份-'+ymd(new Date())+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500);showToast('相册备份已导出');}
 async function importPhotoBackupFile(file){try{const data=JSON.parse(await file.text());if(data.type!=='qinggan-trip-photo-backup'||!Array.isArray(data.records))throw new Error();if(photoRecords.length&&!confirm('导入会把备份照片合并到当前相册，继续吗？'))return;let n=0;for(const x of data.records){if(!PHOTO_DAY_META[x.day]||!x.data)continue;await photoPut({id:x.id||uidPhoto(),day:x.day,caption:x.caption||'',name:x.name||'',createdAt:x.createdAt||Date.now()+n,blob:dataURLToBlob(x.data)});n++;}await refreshPhotos();showToast('已导入 '+n+' 张照片');}catch(e){console.error(e);alert('相册备份导入失败，请选择本网页导出的相册备份 JSON 文件。');}}
 setupDayPhotoAreas();
 document.addEventListener('click',e=>{const add=e.target.closest('.day-photo-add');if(add){choosePhotosForDay(add.dataset.photoDay);return;}const thumb=e.target.closest('[data-photo-id]');if(thumb){openPhoto(thumb.dataset.photoId);}});
@@ -801,7 +896,7 @@ function createCustomCostRow(category,data={}){
   return row;
 }
 
-function saveCosts(){
+function saveCostsLocal(){
   const b=document.getElementById('budgetInput'); if(b) costState.budget=Number(b.value||0);
   const items={};
   document.querySelectorAll('.cost-item').forEach(row=>{
@@ -819,6 +914,7 @@ function saveCosts(){
   }));
   localStorage.setItem(COST_KEY,JSON.stringify(costState));
 }
+function saveCosts(){saveCostsLocal();scheduleCloudStatePush();}
 function calcCosts(){
   let grand=0;
   document.querySelectorAll('.cost-group').forEach(group=>{
@@ -885,12 +981,13 @@ function cleanTimelineHTML(timeline){
   clone.querySelectorAll('.time').forEach(x=>{x.removeAttribute('tabindex');x.removeAttribute('role');x.removeAttribute('aria-label');});
   return clone.innerHTML;
 }
-function saveState(silent=false){
+function saveStateLocal(silent=false){
   editableFields.forEach(el=>editState.fields[el.dataset.editKey]=el.innerHTML);
   document.querySelectorAll('.day').forEach(day=>{const t=day.querySelector('.timeline');if(t) editState.timelines[day.dataset.date]=cleanTimelineHTML(t);});
   localStorage.setItem(EDIT_KEY,JSON.stringify(editState));
-  if(!silent) showToast('已保存到本机');
+  if(!silent) showToast(cloudReady?'已保存，正在同步':'已保存到本机');
 }
+function saveState(silent=false){saveStateLocal(silent);scheduleCloudStatePush();if(!silent)refreshDynamicNavTargets(false);}
 let toastTimer;
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),1300);}
 
@@ -1032,16 +1129,196 @@ editBtn.addEventListener('click',()=>setEditMode(!document.body.classList.contai
 // Export/import makes it possible to move edits between phones.
 document.getElementById('exportBtn').addEventListener('click',()=>{
   saveState(true);
-  saveCosts(); const payload={type:'qinggan-trip-edits',version:4,exportedAt:new Date().toISOString(),editState,costState,checks:{}};
+  saveCosts(); const payload={type:'qinggan-trip-edits',version:5,exportedAt:new Date().toISOString(),editState,costState,navGeoCache,checks:{}};
   for(let i=1;i<=10;i++){const el=document.getElementById('c'+i);if(el) payload.checks[el.id]=el.checked;}
   const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='青甘行程修改-'+ymd(new Date())+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);showToast('修改数据已导出');
 });
 document.getElementById('importBtn').addEventListener('click',()=>document.getElementById('importFile').click());
 document.getElementById('importFile').addEventListener('change',async e=>{
   const f=e.target.files&&e.target.files[0];if(!f) return;
-  try{const data=JSON.parse(await f.text());if(data.type!=='qinggan-trip-edits'||!data.editState) throw new Error();localStorage.setItem(EDIT_KEY,JSON.stringify(data.editState));if(data.checks) Object.entries(data.checks).forEach(([id,v])=>localStorage.setItem('qinggan_'+id,v?'1':'0'));if(data.costState) localStorage.setItem(COST_KEY,JSON.stringify(data.costState));alert('导入成功，页面将重新加载。');location.reload();}catch(err){alert('导入失败：请选择本网页导出的 JSON 文件。');}finally{e.target.value='';}
+  try{const data=JSON.parse(await f.text());if(data.type!=='qinggan-trip-edits'||!data.editState) throw new Error();localStorage.setItem(EDIT_KEY,JSON.stringify(data.editState));if(data.checks) Object.entries(data.checks).forEach(([id,v])=>localStorage.setItem('qinggan_'+id,v?'1':'0'));if(data.costState) localStorage.setItem(COST_KEY,JSON.stringify(data.costState));if(data.navGeoCache)localStorage.setItem(NAV_KEY,JSON.stringify(data.navGeoCache));alert('导入成功，页面将重新加载。');location.reload();}catch(err){alert('导入失败：请选择本网页导出的 JSON 文件。');}finally{e.target.value='';}
 });
-document.getElementById('resetBtn').addEventListener('click',()=>{if(confirm('确定恢复网页默认行程？自定义行程会被清除，但已填写费用会保留。')){localStorage.removeItem(EDIT_KEY);location.reload();}});
+
+/* ===== 家庭云同步 / Supabase ===== */
+const CLOUD_CONFIG_KEY='qinggan_cloud_config_v1';
+const CLOUD_LAST_KEY='qinggan_cloud_last_v1';
+let cloudConfig={url:'',key:'',email:''};
+try{cloudConfig=Object.assign(cloudConfig,JSON.parse(localStorage.getItem(CLOUD_CONFIG_KEY)||'{}'));}catch(e){}
+let cloudLastKnownUpdatedAt=localStorage.getItem(CLOUD_LAST_KEY)||'';
+function setCloudStatus(kind,title,detail){
+  const dot=document.getElementById('cloudDot'),a=document.getElementById('cloudStatus'),b=document.getElementById('cloudStatusDetail');
+  if(dot){dot.className='cloud-dot'+(kind?' '+kind:'');}if(a)a.textContent=title;if(b)b.textContent=detail||'';
+}
+function openCloudSettings(){
+  document.getElementById('cloudUrlInput').value=cloudConfig.url||'';
+  document.getElementById('cloudKeyInput').value=cloudConfig.key||'';
+  document.getElementById('cloudEmailInput').value=cloudConfig.email||'';
+  document.getElementById('cloudPasswordInput').value='';
+  document.getElementById('amapKeyInput').value=localStorage.getItem('qinggan_amap_web_key_v1')||'';
+  const box=document.getElementById('cloudOverlay');box.classList.add('open');box.setAttribute('aria-hidden','false');
+}
+function closeCloudSettings(){const box=document.getElementById('cloudOverlay');box.classList.remove('open');box.setAttribute('aria-hidden','true');}
+function saveCloudConfigFromForm(){
+  cloudConfig.url=(document.getElementById('cloudUrlInput').value||'').trim().replace(/\/$/,'');
+  cloudConfig.key=(document.getElementById('cloudKeyInput').value||'').trim();
+  cloudConfig.email=(document.getElementById('cloudEmailInput').value||'').trim();
+  localStorage.setItem(CLOUD_CONFIG_KEY,JSON.stringify(cloudConfig));
+  localStorage.setItem('qinggan_amap_web_key_v1',(document.getElementById('amapKeyInput').value||'').trim());
+  showToast('云配置已保存');
+}
+async function makeCloudClient(){
+  if(cloudClient) return cloudClient;
+  if(!cloudConfig.url||!cloudConfig.key) throw new Error('请先填写 Supabase Project URL 和 Publishable key');
+  const mod=await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+  cloudClient=mod.createClient(cloudConfig.url,cloudConfig.key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+  return cloudClient;
+}
+function currentChecks(){const checks={};for(let i=1;i<=10;i++){const el=document.getElementById('c'+i);if(el)checks[el.id]=!!el.checked;}return checks;}
+function collectTripCloudPayload(){
+  saveStateLocal(true);saveCostsLocal();
+  return {version:1,editState,costState,navGeoCache,checks:currentChecks()};
+}
+function applyTripCloudPayload(payload){
+  if(!payload||typeof payload!=='object')return false;
+  if(payload.editState)localStorage.setItem(EDIT_KEY,JSON.stringify(payload.editState));
+  if(payload.costState)localStorage.setItem(COST_KEY,JSON.stringify(payload.costState));
+  if(payload.navGeoCache)localStorage.setItem(NAV_KEY,JSON.stringify(payload.navGeoCache));
+  if(payload.checks)Object.entries(payload.checks).forEach(([id,v])=>localStorage.setItem('qinggan_'+id,v?'1':'0'));
+  return true;
+}
+async function localHasMeaningfulData(){
+  let meaningful=false;
+  try{const e=JSON.parse(localStorage.getItem(EDIT_KEY)||'{}');meaningful=meaningful||Object.keys(e.fields||{}).length>0||Object.keys(e.timelines||{}).length>0;}catch(e){}
+  try{const c=JSON.parse(localStorage.getItem(COST_KEY)||'{}');meaningful=meaningful||(c.budget!==undefined&&Number(c.budget)!==20000)||Object.values(c.items||{}).some(x=>Number(x?.price||0)>0)||((c.customItems||[]).length>0);}catch(e){}
+  meaningful=meaningful||Object.values(currentChecks()).some(Boolean);
+  try{meaningful=meaningful||(await localPhotoGetAll()).length>0;}catch(e){}
+  return meaningful;
+}
+async function fetchCloudState(){
+  if(!cloudReady||!cloudUser)return null;
+  const {data,error}=await cloudClient.from('trip_state').select('payload,updated_at').eq('user_id',cloudUser.id).maybeSingle();
+  if(error)throw error;return data||null;
+}
+async function cloudPushStateNow(){
+  if(!cloudReady||!cloudUser||cloudApplying)return;
+  try{
+    setCloudStatus('syncing','☁️ 正在同步','正在把这台手机的修改保存到家庭云端…');
+    const payload=collectTripCloudPayload(),updated_at=new Date().toISOString();
+    const {error}=await cloudClient.from('trip_state').upsert({user_id:cloudUser.id,payload,updated_at},{onConflict:'user_id'});
+    if(error)throw error;cloudLastKnownUpdatedAt=updated_at;localStorage.setItem(CLOUD_LAST_KEY,updated_at);
+    setCloudStatus('online','✓ 已同步',cloudConfig.email||'家庭账号已连接');
+  }catch(e){console.error(e);setCloudStatus('error','⚠️ 同步失败',e.message||'请检查网络和 Supabase 设置');}
+}
+function scheduleCloudStatePush(){
+  if(!cloudReady||cloudApplying)return;clearTimeout(cloudPushTimer);cloudPushTimer=setTimeout(cloudPushStateNow,900);
+}
+async function cloudPullAndMaybeApply(force=false){
+  if(!cloudReady||!cloudUser)return;
+  try{
+    const row=await fetchCloudState();if(!row)return;
+    const remote=JSON.stringify(row.payload||{}),local=JSON.stringify(collectTripCloudPayload());
+    if(force||remote!==local){
+      cloudApplying=true;applyTripCloudPayload(row.payload);cloudLastKnownUpdatedAt=row.updated_at||'';localStorage.setItem(CLOUD_LAST_KEY,cloudLastKnownUpdatedAt);
+      setCloudStatus('online','✓ 已读取云端','正在载入家人最新修改…');setTimeout(()=>location.reload(),250);return;
+    }
+    cloudLastKnownUpdatedAt=row.updated_at||cloudLastKnownUpdatedAt;setCloudStatus('online','✓ 已同步',cloudConfig.email||'家庭账号已连接');
+  }catch(e){console.error(e);setCloudStatus('error','⚠️ 读取云端失败',e.message||'请检查网络');}
+}
+async function cloudPoll(){
+  if(!cloudReady||document.hidden)return;
+  try{const row=await fetchCloudState();if(!row)return;if(row.updated_at&&row.updated_at!==cloudLastKnownUpdatedAt){const remote=JSON.stringify(row.payload||{}),local=JSON.stringify(collectTripCloudPayload());cloudLastKnownUpdatedAt=row.updated_at;localStorage.setItem(CLOUD_LAST_KEY,row.updated_at);if(remote!==local&&!document.body.classList.contains('editing')){cloudApplying=true;applyTripCloudPayload(row.payload);setCloudStatus('syncing','☁️ 收到家人修改','正在更新页面…');setTimeout(()=>location.reload(),300);}}}catch(e){console.warn('cloud poll',e);}
+}
+async function afterCloudSignedIn(user){
+  cloudUser=user;cloudReady=true;document.getElementById('cloudAccountState').textContent='已登录：'+(user.email||cloudConfig.email||'家庭账号');
+  setCloudStatus('online','☁️ 云端已连接','正在检查家庭最新版本…');
+  if(cloudPollTimer)clearInterval(cloudPollTimer);cloudPollTimer=setInterval(cloudPoll,12000);
+  await refreshPhotos();
+  const row=await fetchCloudState();
+  if(!row){
+    setCloudStatus('online','☁️ 已连接，尚未初始化','请点“上传本机现有数据和照片到云端”建立家庭初始版本');return;
+  }
+  const remote=JSON.stringify(row.payload||{}),local=JSON.stringify(collectTripCloudPayload());
+  cloudLastKnownUpdatedAt=row.updated_at||'';localStorage.setItem(CLOUD_LAST_KEY,cloudLastKnownUpdatedAt);
+  if(remote===local){setCloudStatus('online','✓ 已同步',cloudConfig.email||'家庭账号已连接');return;}
+  if(await localHasMeaningfulData()){
+    setCloudStatus('syncing','☁️ 本机与云端内容不同','若这是你已修改过的手机，请先点“上传本机现有数据”；否则点“从云端重新读取”');
+  }else{cloudApplying=true;applyTripCloudPayload(row.payload);setTimeout(()=>location.reload(),250);}
+}
+async function initializeCloud(){
+  if(!cloudConfig.url||!cloudConfig.key){setCloudStatus('','☁️ 云同步未连接','先在“同步设置”中完成一次 Supabase 配置');return;}
+  try{const c=await makeCloudClient();const {data,error}=await c.auth.getSession();if(error)throw error;if(data?.session?.user)await afterCloudSignedIn(data.session.user);else setCloudStatus('','☁️ 已配置，未登录','打开“同步设置”，用家庭账号登录');}
+  catch(e){console.error(e);setCloudStatus('error','⚠️ 云配置不可用',e.message||'请检查 Project URL / key');}
+}
+async function cloudLogin(signup=false){
+  saveCloudConfigFromForm();const email=cloudConfig.email,password=document.getElementById('cloudPasswordInput').value||'';
+  if(!email||password.length<6){alert('请输入家庭邮箱和至少 6 位密码。');return;}
+  try{
+    setCloudStatus('syncing','☁️ 正在连接','正在验证家庭账号…');const c=await makeCloudClient();
+    const result=signup?await c.auth.signUp({email,password}):await c.auth.signInWithPassword({email,password});
+    if(result.error)throw result.error;
+    if(result.data?.session?.user){await afterCloudSignedIn(result.data.session.user);closeCloudSettings();}
+    else{document.getElementById('cloudAccountState').textContent='注册成功。若 Supabase 开启了邮箱确认，请先到邮箱确认后再登录。';setCloudStatus('','☁️ 等待邮箱确认','确认后回到网页登录即可');}
+  }catch(e){console.error(e);alert((signup?'注册':'登录')+'失败：'+(e.message||'未知错误'));setCloudStatus('error','⚠️ 连接失败',e.message||'请检查账号和配置');}
+}
+async function cloudLogout(){try{if(cloudClient)await cloudClient.auth.signOut();}catch(e){}cloudReady=false;cloudUser=null;if(cloudPollTimer)clearInterval(cloudPollTimer);setCloudStatus('','☁️ 已退出云同步','本机内容仍保留');document.getElementById('cloudAccountState').textContent='已退出登录';await refreshPhotos();}
+
+/* 云相册 */
+async function cloudPhotoGetAll(){
+  if(!cloudReady||!cloudUser)return localPhotoGetAll();
+  const {data,error}=await cloudClient.from('trip_photos').select('id,day,caption,file_path,original_name,created_at,size_bytes').eq('user_id',cloudUser.id).order('created_at',{ascending:true});
+  if(error)throw error;const rows=data||[];
+  return Promise.all(rows.map(async x=>{let cloudUrl='';try{const r=await cloudClient.storage.from('trip-photos').createSignedUrl(x.file_path,86400);if(!r.error)cloudUrl=r.data.signedUrl;}catch(e){}return{id:x.id,day:x.day,caption:x.caption||'',name:x.original_name||'',createdAt:Number(x.created_at)||Date.now(),filePath:x.file_path,size:Number(x.size_bytes)||0,cloudUrl};}));
+}
+function photoExt(blob){const t=(blob?.type||'image/jpeg').toLowerCase();if(t.includes('png'))return'png';if(t.includes('webp'))return'webp';return'jpg';}
+async function cloudPhotoPut(rec){
+  if(!cloudReady||!cloudUser)throw new Error('云端未连接');
+  let path=rec.filePath||'';
+  if(rec.blob){path=path||(`${cloudUser.id}/${rec.id}.${photoExt(rec.blob)}`);const up=await cloudClient.storage.from('trip-photos').upload(path,rec.blob,{contentType:rec.blob.type||'image/jpeg',upsert:true,cacheControl:'3600'});if(up.error)throw up.error;}
+  if(!path){const old=photoRecords.find(x=>x.id===rec.id);path=old?.filePath||'';}
+  if(!path)throw new Error('照片文件路径缺失');
+  const row={id:rec.id,user_id:cloudUser.id,day:rec.day,caption:rec.caption||'',file_path:path,original_name:rec.name||'',created_at:Number(rec.createdAt)||Date.now(),size_bytes:Number(rec.blob?.size||rec.size||0)};
+  const {error}=await cloudClient.from('trip_photos').upsert(row,{onConflict:'id'});if(error)throw error;return row;
+}
+async function cloudPhotoDelete(id){
+  const rec=photoRecords.find(x=>x.id===id);if(!rec)return;const {error}=await cloudClient.from('trip_photos').delete().eq('id',id).eq('user_id',cloudUser.id);if(error)throw error;if(rec.filePath){const r=await cloudClient.storage.from('trip-photos').remove([rec.filePath]);if(r.error)console.warn(r.error);}
+}
+async function migrateLocalPhotosToCloud(){
+  const local=await localPhotoGetAll();if(!local.length)return 0;
+  const {data,error}=await cloudClient.from('trip_photos').select('id').eq('user_id',cloudUser.id);if(error)throw error;const exists=new Set((data||[]).map(x=>x.id));let n=0;
+  for(const rec of local){if(exists.has(rec.id))continue;setCloudStatus('syncing','☁️ 正在上传旧照片',`${n+1} / ${local.length}`);await cloudPhotoPut(rec);n++;}
+  return n;
+}
+async function migrateLocalToCloud(){
+  if(!cloudReady){alert('请先登录云端。');return;}
+  if(!confirm('将这台手机当前的行程、费用、待办和本地照片作为家庭云端版本上传。继续吗？'))return;
+  try{setCloudStatus('syncing','☁️ 正在迁移','先保存行程和费用…');await cloudPushStateNow();const n=await migrateLocalPhotosToCloud();await refreshPhotos();setCloudStatus('online','✓ 本机内容已上传',`已迁移 ${n} 张本地照片；以后修改会自动同步`);showToast('已迁移到家庭云端');}
+  catch(e){console.error(e);alert('迁移失败：'+(e.message||'未知错误'));setCloudStatus('error','⚠️ 迁移失败',e.message||'请检查网络');}
+}
+async function exportFullLocalBackup(){
+  try{
+    saveStateLocal(true);saveCostsLocal();const records=[];let photos=[];
+    if(cloudReady)photos=await cloudPhotoGetAll();else photos=await localPhotoGetAll();
+    for(const rec of photos){let blob=rec.blob;if(!blob&&cloudReady&&rec.filePath){const dl=await cloudClient.storage.from('trip-photos').download(rec.filePath);if(dl.error)throw dl.error;blob=dl.data;}if(blob)records.push({id:rec.id,day:rec.day,caption:rec.caption||'',name:rec.name||'',createdAt:rec.createdAt||Date.now(),data:await blobToDataURL(blob)});}
+    const payload={type:'qinggan-trip-full-backup',version:1,exportedAt:new Date().toISOString(),editState,costState,navGeoCache,checks:currentChecks(),photos:records};
+    const blob=new Blob([JSON.stringify(payload)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='青甘旅行完整备份-'+ymd(new Date())+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500);showToast('完整备份已导出');
+  }catch(e){console.error(e);alert('完整备份失败：'+(e.message||'未知错误'));}
+}
+
+document.getElementById('cloudSettingsBtn').addEventListener('click',openCloudSettings);
+document.getElementById('cloudCloseBtn').addEventListener('click',closeCloudSettings);
+document.getElementById('cloudOverlay').addEventListener('click',e=>{if(e.target.id==='cloudOverlay')closeCloudSettings();});
+document.getElementById('cloudSaveConfigBtn').addEventListener('click',()=>{saveCloudConfigFromForm();cloudClient=null;initializeCloud();});
+document.getElementById('cloudLoginBtn').addEventListener('click',()=>cloudLogin(false));
+document.getElementById('cloudSignupBtn').addEventListener('click',()=>cloudLogin(true));
+document.getElementById('cloudLogoutBtn').addEventListener('click',cloudLogout);
+document.getElementById('cloudMigrateBtn').addEventListener('click',migrateLocalToCloud);
+document.getElementById('cloudPullBtn').addEventListener('click',async()=>{if(!cloudReady){alert('请先登录云端。');return;}if(confirm('从云端重新读取会覆盖这台手机尚未同步的本机修改，继续吗？'))await cloudPullAndMaybeApply(true);});
+document.getElementById('cloudFullBackupBtn').addEventListener('click',exportFullLocalBackup);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)cloudPoll();});
+window.addEventListener('online',()=>{if(cloudReady){setCloudStatus('syncing','☁️ 网络已恢复','正在检查家人最新修改…');cloudPoll();}});
+window.addEventListener('offline',()=>setCloudStatus('error','☁️ 当前离线','修改仍会保存在本机，联网后再同步'));
+initializeCloud();
+
 
 // If old state restored links inside editable blocks, ensure nav links still work.
 bindNav();
