@@ -5,24 +5,87 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#f6f3ed" />
 <title>青甘家庭自驾 · 2026.08.24–08.31</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
 <style>
 :root{
   --bg:#f6f3ed;--card:#fffdf9;--ink:#24231f;--muted:#77736a;--line:#e8e1d7;
   --accent:#bd6d3a;--accent2:#3c7167;--soft:#f1e6dc;--green:#e5f0ec;--shadow:0 8px 28px rgba(54,45,34,.08);
+  --font-step:0px;
 }
+html[data-font-size="normal"]{--font-step:0px}
+html[data-font-size="large"]{--font-step:2px}
+html[data-font-size="xlarge"]{--font-step:4px}
+.font-toolbar{background:#fffdf9;border:1px solid var(--line);border-radius:18px;padding:12px 13px;margin:0 0 14px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:var(--shadow)}
+.font-toolbar-label{min-width:0}.font-toolbar-label strong{display:block;font-size:calc(14px + var(--font-step, 0px));line-height:1.25}.font-toolbar-label small{display:block;color:var(--muted);font-size:calc(11px + var(--font-step, 0px));margin-top:3px}
+.font-size-buttons{display:flex;gap:6px;flex:0 0 auto}.font-size-btn{min-height:44px;min-width:58px;border:1px solid #d9d0c5;background:#fff;border-radius:12px;padding:8px 10px;color:var(--ink);font-size:calc(14px + var(--font-step, 0px));font-weight:900;line-height:1;cursor:pointer}.font-size-btn.active{background:var(--ink);color:#fff;border-color:var(--ink)}.font-size-btn:focus-visible{outline:3px solid rgba(60,113,103,.28);outline-offset:2px}
+html[data-font-size="xlarge"] .font-toolbar{align-items:flex-start}
+@media(max-width:520px){.font-toolbar{align-items:stretch;flex-direction:column}.font-size-buttons{display:grid;grid-template-columns:repeat(3,1fr);width:100%}.font-size-btn{width:100%;min-width:0}}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",Segoe UI,sans-serif;line-height:1.55}
-a{color:inherit}.wrap{max-width:820px;margin:auto;padding:0 14px 92px}.hero{padding:34px 4px 20px}.eyebrow{font-size:12px;letter-spacing:.12em;color:var(--accent2);font-weight:700}.hero h1{font-size:32px;line-height:1.15;margin:8px 0 10px}.hero p{margin:0;color:var(--muted);font-size:14px}.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.chip{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 11px;font-size:12px;box-shadow:0 2px 10px rgba(50,40,30,.03)}
-.route{background:linear-gradient(135deg,#fffdf9,#f7eee4);border:1px solid var(--line);border-radius:22px;padding:18px;margin-bottom:16px;box-shadow:var(--shadow)}.route-title{font-size:13px;font-weight:800;color:var(--muted);margin-bottom:12px}.route-line{display:flex;gap:8px;overflow:auto;padding-bottom:2px;scrollbar-width:none}.route-line::-webkit-scrollbar{display:none}.stop{display:flex;align-items:center;white-space:nowrap;font-size:13px;font-weight:700}.stop:not(:last-child)::after{content:"→";margin-left:8px;color:#b6a99b}.stop b{width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block;margin-right:6px}
-.tabs{position:sticky;top:0;z-index:20;background:rgba(246,243,237,.92);backdrop-filter:blur(14px);display:flex;gap:8px;padding:10px 0 12px;overflow:auto}.tab{border:1px solid var(--line);background:var(--card);padding:9px 13px;border-radius:999px;font-size:13px;font-weight:700;white-space:nowrap}.tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}
-.section{display:none}.section.active{display:block}.day{background:var(--card);border:1px solid var(--line);border-radius:20px;margin:0 0 14px;overflow:hidden;box-shadow:var(--shadow)}.day.today{outline:3px solid rgba(189,109,58,.22)}.day-head{padding:17px 17px 15px;display:flex;justify-content:space-between;gap:12px;cursor:pointer}.day-kicker{font-size:12px;font-weight:800;color:var(--accent)}.day h2{font-size:20px;margin:3px 0 3px}.sub{font-size:12px;color:var(--muted)}.badge{align-self:flex-start;background:var(--green);color:var(--accent2);padding:7px 9px;border-radius:11px;font-size:11px;font-weight:800;white-space:nowrap}.day-body{border-top:1px solid var(--line);padding:8px 16px 16px}.timeline{position:relative;margin:4px 0}.item{display:grid;grid-template-columns:56px 16px 1fr;gap:8px;padding:9px 0}.time{font-weight:800;font-size:13px}.dot{width:10px;height:10px;border-radius:50%;background:var(--accent);margin-top:5px;position:relative}.dot:after{content:"";position:absolute;width:2px;background:var(--line);top:12px;bottom:-20px;left:4px}.item:last-child .dot:after{display:none}.desc{font-size:14px}.desc small{display:block;color:var(--muted);margin-top:2px}.note{background:#fff6e9;border:1px solid #f1ddbf;padding:12px;border-radius:14px;font-size:13px;margin:10px 0}.hotel{background:#f6f8f7;border:1px solid #dfe8e4;padding:12px;border-radius:14px;font-size:13px}.hotel strong{display:block;margin-bottom:3px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:1px solid var(--line);background:#fff;padding:9px 11px;border-radius:11px;font-size:12px;font-weight:800}.btn.primary{background:var(--accent2);color:white;border-color:var(--accent2)}
-.panel{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}.panel h3{margin:0 0 10px;font-size:18px}.row{display:flex;justify-content:space-between;gap:14px;padding:11px 0;border-bottom:1px solid var(--line);font-size:13px}.row:last-child{border-bottom:0}.row .l{font-weight:800}.row .r{text-align:right;color:var(--muted)}
-.check{display:flex;gap:10px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--line)}.check:last-child{border-bottom:0}.check input{margin-top:4px;width:18px;height:18px;accent-color:var(--accent2)}.check label{font-size:14px}.check label small{display:block;color:var(--muted)}
-.callout{background:linear-gradient(135deg,#304f49,#456f66);color:#fff;border-radius:20px;padding:17px;margin-bottom:14px}.callout h3{margin:0 0 6px}.callout p{margin:0;opacity:.88;font-size:13px}
-.source{font-size:12px;color:var(--muted);padding:7px 0}.source a{color:var(--accent2)}
-.bottom{position:fixed;left:0;right:0;bottom:0;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:linear-gradient(180deg,rgba(246,243,237,0),rgba(246,243,237,.98) 28%);z-index:30}.bottom-inner{max-width:820px;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:9px}.bigbtn{border:0;border-radius:15px;padding:13px;font-weight:900;font-size:14px;background:var(--ink);color:#fff}.bigbtn.alt{background:var(--card);color:var(--ink);border:1px solid var(--line)}
-@media(min-width:700px){.hero h1{font-size:42px}.wrap{padding-left:20px;padding-right:20px}.day-body{padding:10px 22px 20px}.day-head{padding:20px 22px}.item{grid-template-columns:68px 18px 1fr}}
+a{color:inherit}.wrap{max-width:820px;margin:auto;padding:0 14px 92px}.hero{padding:34px 4px 20px}.eyebrow{font-size:calc(12px + var(--font-step, 0px));letter-spacing:.12em;color:var(--accent2);font-weight:700}.hero h1{font-size:calc(32px + var(--font-step, 0px));line-height:1.15;margin:8px 0 10px}.hero p{margin:0;color:var(--muted);font-size:calc(14px + var(--font-step, 0px))}.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.chip{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 11px;font-size:calc(12px + var(--font-step, 0px));box-shadow:0 2px 10px rgba(50,40,30,.03)}
+.route{background:linear-gradient(135deg,#fffdf9,#f7eee4);border:1px solid var(--line);border-radius:22px;padding:18px;margin-bottom:16px;box-shadow:var(--shadow)}.route-title{font-size:calc(13px + var(--font-step, 0px));font-weight:800;color:var(--muted);margin-bottom:12px}.route-line{display:flex;gap:8px;overflow:auto;padding-bottom:2px;scrollbar-width:none}.route-line::-webkit-scrollbar{display:none}.stop{display:flex;align-items:center;white-space:nowrap;font-size:calc(13px + var(--font-step, 0px));font-weight:700}.stop:not(:last-child)::after{content:"→";margin-left:8px;color:#b6a99b}.stop b{width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block;margin-right:6px}
+.tabs{position:sticky;top:0;z-index:20;background:rgba(246,243,237,.92);backdrop-filter:blur(14px);display:flex;gap:8px;padding:10px 0 12px;overflow:auto}.tab{border:1px solid var(--line);background:var(--card);padding:9px 13px;border-radius:999px;font-size:calc(13px + var(--font-step, 0px));font-weight:700;white-space:nowrap}.tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.section{display:none}.section.active{display:block}.day{background:var(--card);border:1px solid var(--line);border-radius:20px;margin:0 0 14px;overflow:hidden;box-shadow:var(--shadow)}.day.today{outline:3px solid rgba(189,109,58,.22)}.day-head{padding:17px 17px 15px;display:flex;justify-content:space-between;gap:12px;cursor:pointer}.day-kicker{font-size:calc(12px + var(--font-step, 0px));font-weight:800;color:var(--accent)}.day h2{font-size:calc(20px + var(--font-step, 0px));margin:3px 0 3px}.sub{font-size:calc(12px + var(--font-step, 0px));color:var(--muted)}.badge{align-self:flex-start;background:var(--green);color:var(--accent2);padding:7px 9px;border-radius:11px;font-size:calc(11px + var(--font-step, 0px));font-weight:800;white-space:nowrap}.day-body{border-top:1px solid var(--line);padding:8px 16px 16px}.timeline{position:relative;margin:4px 0}.item{display:grid;grid-template-columns:56px 16px 1fr;gap:8px;padding:9px 0}.time{font-weight:800;font-size:calc(13px + var(--font-step, 0px))}.dot{width:10px;height:10px;border-radius:50%;background:var(--accent);margin-top:5px;position:relative}.dot:after{content:"";position:absolute;width:2px;background:var(--line);top:12px;bottom:-20px;left:4px}.item:last-child .dot:after{display:none}.desc{font-size:calc(14px + var(--font-step, 0px))}.desc small{display:block;color:var(--muted);margin-top:2px}.note{background:#fff6e9;border:1px solid #f1ddbf;padding:12px;border-radius:14px;font-size:calc(13px + var(--font-step, 0px));margin:10px 0}.hotel{background:#f6f8f7;border:1px solid #dfe8e4;padding:12px;border-radius:14px;font-size:calc(13px + var(--font-step, 0px))}.hotel strong{display:block;margin-bottom:3px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:1px solid var(--line);background:#fff;padding:9px 11px;border-radius:11px;font-size:calc(12px + var(--font-step, 0px));font-weight:800}.btn.primary{background:var(--accent2);color:white;border-color:var(--accent2)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}.panel h3{margin:0 0 10px;font-size:calc(18px + var(--font-step, 0px))}.row{display:flex;justify-content:space-between;gap:14px;padding:11px 0;border-bottom:1px solid var(--line);font-size:calc(13px + var(--font-step, 0px))}.row:last-child{border-bottom:0}.row .l{font-weight:800}.row .r{text-align:right;color:var(--muted)}
+.check{display:flex;gap:10px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--line)}.check:last-child{border-bottom:0}.check input{margin-top:4px;width:18px;height:18px;accent-color:var(--accent2)}.check label{font-size:calc(14px + var(--font-step, 0px))}.check label small{display:block;color:var(--muted)}
+.callout{background:linear-gradient(135deg,#304f49,#456f66);color:#fff;border-radius:20px;padding:17px;margin-bottom:14px}.callout h3{margin:0 0 6px}.callout p{margin:0;opacity:.88;font-size:calc(13px + var(--font-step, 0px))}
+.source{font-size:calc(12px + var(--font-step, 0px));color:var(--muted);padding:7px 0}.source a{color:var(--accent2)}
+.bottom{position:fixed;left:0;right:0;bottom:0;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:linear-gradient(180deg,rgba(246,243,237,0),rgba(246,243,237,.98) 28%);z-index:30}.bottom-inner{max-width:820px;margin:auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px}.bigbtn{border:0;border-radius:15px;padding:13px 8px;font-weight:900;font-size:calc(13px + var(--font-step, 0px));background:var(--ink);color:#fff}.bigbtn.alt{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+
+/* cost tracker */
+.cost-summary{background:linear-gradient(135deg,#2f514a,#466f66);color:#fff;border-radius:22px;padding:18px;margin-bottom:14px;box-shadow:var(--shadow)}
+.cost-summary .sum-title{font-size:calc(12px + var(--font-step, 0px));font-weight:800;letter-spacing:.08em;opacity:.78}.cost-summary .sum-total{font-size:calc(36px + var(--font-step, 0px));line-height:1.1;font-weight:950;margin:5px 0 14px}.cost-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.cost-grid.single{grid-template-columns:1fr}.cost-stat{background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.13);border-radius:13px;padding:10px}.cost-stat small{display:block;font-size:calc(11px + var(--font-step, 0px));opacity:.72}.cost-stat strong{display:block;margin-top:2px;font-size:calc(16px + var(--font-step, 0px))}.budget-line{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.16);font-size:calc(13px + var(--font-step, 0px))}.budget-input{width:118px;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.12);color:white;border-radius:10px;padding:8px 9px;font-size:calc(15px + var(--font-step, 0px));font-weight:900;text-align:right;outline:none}.budget-input::placeholder{color:rgba(255,255,255,.55)}
+.cost-group{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:15px;margin-bottom:14px;box-shadow:var(--shadow)}.cost-group-head{display:flex;justify-content:space-between;align-items:end;gap:10px;margin-bottom:8px}.cost-group h3{margin:0;font-size:calc(18px + var(--font-step, 0px))}.cost-group-total{font-size:calc(13px + var(--font-step, 0px));color:var(--accent2);font-weight:900}.cost-table-head,.cost-item{display:grid;grid-template-columns:minmax(0,1fr) 78px 48px 88px;gap:7px;align-items:center}.cost-table-head{font-size:calc(10px + var(--font-step, 0px));color:var(--muted);padding:4px 0 6px;border-bottom:1px solid var(--line);text-align:right}.cost-table-head span:first-child{text-align:left}.cost-item{padding:9px 0;border-bottom:1px solid var(--line)}.cost-item:last-child{border-bottom:0}.cost-name{font-size:calc(12px + var(--font-step, 0px));font-weight:800;min-width:0}.cost-name small{display:block;color:var(--muted);font-weight:500;margin-top:1px}.cost-input,.qty-input,.custom-name{width:100%;min-width:0;border:1px solid #ded6ca;background:#fff;border-radius:9px;padding:8px 6px;font-size:calc(13px + var(--font-step, 0px));outline:none}.cost-input{text-align:right;font-weight:800}.qty-input{text-align:center}.cost-input:focus,.qty-input:focus,.custom-name:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(189,109,58,.09)}.cost-subtotal{text-align:right;font-size:calc(12px + var(--font-step, 0px));font-weight:900;white-space:nowrap}.cost-hint{font-size:calc(11px + var(--font-step, 0px));color:var(--muted);margin-top:8px}.custom-name{font-weight:800}.custom-name-wrap{display:flex;align-items:center;gap:5px}.custom-name-wrap .custom-name{flex:1}.cost-delete{flex:0 0 30px;width:30px;height:34px;border:1px solid #ead4cf;background:#fff5f2;color:#a3483a;border-radius:9px;font-size:calc(16px + var(--font-step, 0px));font-weight:900;line-height:1}.cost-add{width:100%;margin-top:10px;border:1px dashed #cabdaf;background:#fffaf2;color:var(--accent);border-radius:11px;padding:9px;font-size:calc(12px + var(--font-step, 0px));font-weight:900}.cost-add:active{transform:scale(.99)}.cost-reset{width:100%;border:1px solid var(--line);background:var(--card);color:#8b4a3b;border-radius:13px;padding:11px;font-weight:900;margin-bottom:14px}.budget-ok{color:#d9f4e8}.budget-over{color:#ffd1c8}
+@media(max-width:430px){.cost-table-head,.cost-item{grid-template-columns:minmax(0,1fr) 72px 42px 76px;gap:5px}.cost-input,.qty-input{padding:7px 4px}.cost-summary .sum-total{font-size:calc(32px + var(--font-step, 0px))}}
+
+
+/* interactive trip map */
+.map-card{background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden;margin-bottom:14px;box-shadow:var(--shadow)}
+.map-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 14px;border-bottom:1px solid var(--line);flex-wrap:wrap}.map-toolbar strong{font-size:calc(15px + var(--font-step, 0px))}.map-toolbar small{display:block;color:var(--muted);font-size:calc(11px + var(--font-step, 0px));margin-top:2px}.map-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.map-day-select{min-height:38px;border:1px solid var(--line);background:#fff;border-radius:11px;padding:8px 30px 8px 10px;font-size:calc(12px + var(--font-step, 0px));font-weight:850;color:var(--text)}.map-fit{border:1px solid var(--line);background:#fff;border-radius:11px;padding:9px 11px;font-size:calc(12px + var(--font-step, 0px));font-weight:900;color:var(--accent2)}
+#tripMap{width:100%;height:520px;background:#ece8df;position:relative}.map-loading{height:520px;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--muted);font-size:calc(13px + var(--font-step, 0px))}.map-status{padding:10px 14px;border-top:1px solid var(--line);font-size:calc(11px + var(--font-step, 0px));color:var(--muted);background:#fffdfa}.map-legend{display:flex;gap:12px;flex-wrap:wrap;padding:10px 14px;border-top:1px solid var(--line);font-size:calc(11px + var(--font-step, 0px));color:var(--muted)}.legend-item{display:flex;align-items:center;gap:6px}.legend-line{width:24px;height:0;border-top:4px solid #b96a38;border-radius:999px}.legend-line.train{border-top:3px dashed #3d7167}.legend-line.flight{border-top:3px dotted #75679a}
+.route-days{display:grid;grid-template-columns:1fr;gap:9px}.route-day{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;display:grid;grid-template-columns:42px minmax(0,1fr) auto;gap:10px;align-items:center}.route-day-num{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:calc(12px + var(--font-step, 0px));font-weight:950}.route-day-info{min-width:0}.route-day-info strong{font-size:calc(13px + var(--font-step, 0px));display:block}.route-day-info small{display:block;color:var(--muted);font-size:calc(11px + var(--font-step, 0px));margin-top:2px}.route-day-btn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 9px;font-size:calc(11px + var(--font-step, 0px));font-weight:900;white-space:nowrap}.map-note{background:#fff6e9;border:1px solid #f1ddbf;padding:11px 12px;border-radius:14px;font-size:calc(12px + var(--font-step, 0px));color:#6f5a45;margin-bottom:14px}.leaflet-container{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}.leaflet-popup-content{font-size:calc(12px + var(--font-step, 0px));line-height:1.5}.map-pin{background:#24231f;color:#fff;border:2px solid white;min-width:34px!important;width:auto!important;height:28px!important;border-radius:999px;display:flex!important;align-items:center;justify-content:center;padding:0 7px;font-size:calc(10px + var(--font-step, 0px));font-weight:950;white-space:nowrap;box-shadow:0 3px 10px rgba(0,0,0,.24);box-sizing:border-box}.map-code-guide{background:#fff;border:1px solid var(--line);border-radius:14px;padding:11px 12px;margin:0 0 14px;font-size:calc(12px + var(--font-step, 0px));color:var(--muted);line-height:1.65}.map-code-guide strong{color:var(--text)}
+@media(max-width:430px){#tripMap,.map-loading{height:450px}.route-day{grid-template-columns:38px minmax(0,1fr) auto;gap:8px}.route-day-num{width:34px;height:34px}.route-day-btn{padding:7px 8px}}
+
+/* inline editor */
+.editing [contenteditable="true"]{outline:2px dashed rgba(189,109,58,.48);outline-offset:3px;border-radius:6px;background:#fffaf2;cursor:text}
+.editing .time[contenteditable="true"]{min-width:48px}
+.editing .desc[contenteditable="true"]{padding:2px 4px}
+.item-edit-actions{display:none;gap:5px;align-items:center;margin-top:7px}.editing .item-edit-actions{display:flex}.mini-edit{border:1px solid var(--line);background:#fff;border-radius:8px;padding:5px 7px;font-size:calc(11px + var(--font-step, 0px));font-weight:800;color:var(--muted)}.mini-edit.danger{color:#a33f31}
+.add-item{display:none;width:100%;margin:8px 0 2px;border:1px dashed #cabdaf;background:#fffaf2;border-radius:12px;padding:10px;font-weight:800;color:var(--accent)}.editing .add-item{display:block}
+.edit-tools{display:none;position:fixed;left:14px;right:14px;bottom:82px;z-index:36;max-width:792px;margin:auto;background:rgba(36,35,31,.96);color:white;border-radius:16px;padding:10px;box-shadow:0 12px 35px rgba(0,0,0,.22);gap:7px;grid-template-columns:1fr 1fr 1fr}.editing .edit-tools{display:grid}.toolbtn{border:0;border-radius:11px;background:#fff;color:#24231f;padding:9px 6px;font-size:calc(12px + var(--font-step, 0px));font-weight:900}.toolbtn.warn{background:#f5dfda;color:#7e3027}
+.edit-help{display:none;background:#fff6e9;border:1px solid #f1ddbf;border-radius:14px;padding:11px 12px;margin:0 0 14px;font-size:calc(12px + var(--font-step, 0px));color:#6f5a45}.editing .edit-help{display:block}
+.toast{position:fixed;left:50%;bottom:150px;transform:translateX(-50%) translateY(12px);background:#24231f;color:white;padding:9px 13px;border-radius:999px;font-size:calc(12px + var(--font-step, 0px));font-weight:800;opacity:0;pointer-events:none;transition:.2s;z-index:60;white-space:nowrap}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.editing .day-head{cursor:default}
+@media(min-width:700px){.hero h1{font-size:calc(42px + var(--font-step, 0px))}.wrap{padding-left:20px;padding-right:20px}.day-body{padding:10px 22px 20px}.day-head{padding:20px 22px}.item{grid-template-columns:68px 18px 1fr}}
 @media print{.tabs,.bottom{display:none}.section{display:block!important}.day{break-inside:avoid;box-shadow:none}.wrap{max-width:none}.day-body{display:block!important}}
+
+
+/* travel photo memories */
+.photo-callout{background:linear-gradient(135deg,#6d5546,#9b7259);color:#fff;border-radius:20px;padding:17px;margin-bottom:14px;box-shadow:var(--shadow)}
+.photo-callout h3{margin:0 0 6px}.photo-callout p{margin:0;opacity:.88;font-size:calc(13px + var(--font-step, 0px))}.photo-callout small{display:block;margin-top:8px;opacity:.72}
+.photo-toolbar{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:12px;margin-bottom:14px;box-shadow:var(--shadow)}
+.photo-toolbar-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.photo-toolbar-row+.photo-toolbar-row{margin-top:9px}
+.photo-select{min-height:42px;flex:1;min-width:130px;border:1px solid var(--line);background:#fff;border-radius:11px;padding:8px 30px 8px 10px;font-size:calc(13px + var(--font-step, 0px));font-weight:800;color:var(--ink)}
+.photo-btn{min-height:42px;border:1px solid var(--line);background:#fff;border-radius:11px;padding:9px 12px;font-size:calc(12px + var(--font-step, 0px));font-weight:900;color:var(--ink)}
+.photo-btn.primary{background:var(--accent2);color:#fff;border-color:var(--accent2)}.photo-btn.warn{color:#9c4d3b;background:#fff8f4}
+.photo-stats{font-size:calc(11px + var(--font-step, 0px));color:var(--muted);margin-top:9px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.photo-day-group{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:14px;margin-bottom:14px;box-shadow:var(--shadow)}
+.photo-day-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}.photo-day-head strong{font-size:calc(16px + var(--font-step, 0px))}.photo-day-head span{font-size:calc(11px + var(--font-step, 0px));color:var(--muted)}
+.photo-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.photo-card{position:relative;aspect-ratio:1/1;border-radius:12px;overflow:hidden;background:#eee8df;border:1px solid var(--line);cursor:pointer;padding:0}
+.photo-card img{width:100%;height:100%;object-fit:cover;display:block}.photo-card .photo-code{position:absolute;left:6px;top:6px;background:rgba(25,24,21,.72);color:#fff;font-size:calc(10px + var(--font-step, 0px));font-weight:900;border-radius:999px;padding:3px 6px;backdrop-filter:blur(6px)}
+.photo-card .photo-cap{position:absolute;left:0;right:0;bottom:0;padding:18px 7px 6px;background:linear-gradient(transparent,rgba(20,18,16,.75));color:#fff;font-size:calc(10px + var(--font-step, 0px));text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.photo-empty{border:1px dashed #d6c8b9;border-radius:13px;padding:18px;text-align:center;color:var(--muted);font-size:calc(12px + var(--font-step, 0px));background:#fffaf3}
+.day-memory{margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}.day-memory-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}.day-memory-head strong{font-size:calc(13px + var(--font-step, 0px))}.day-photo-add{border:1px solid var(--line);background:#fff;border-radius:10px;padding:7px 9px;font-size:calc(11px + var(--font-step, 0px));font-weight:900;color:var(--accent2)}
+.day-photo-thumbs{display:flex;gap:7px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}.day-photo-thumbs::-webkit-scrollbar{display:none}.day-photo-thumb{flex:0 0 74px;width:74px;height:74px;border-radius:11px;overflow:hidden;border:1px solid var(--line);background:#eee8df;padding:0}.day-photo-thumb img{width:100%;height:100%;object-fit:cover;display:block}.day-photo-empty{font-size:calc(11px + var(--font-step, 0px));color:var(--muted);padding:7px 0}
+.photo-lightbox{position:fixed;inset:0;z-index:90;background:rgba(20,18,16,.93);display:none;align-items:center;justify-content:center;padding:18px}.photo-lightbox.open{display:flex}.photo-lightbox-inner{width:min(720px,100%);max-height:92vh;display:flex;flex-direction:column;gap:10px}.photo-lightbox-img-wrap{position:relative;display:flex;align-items:center;justify-content:center;min-height:240px;max-height:70vh}.photo-lightbox img{max-width:100%;max-height:70vh;object-fit:contain;border-radius:14px;background:#111}.photo-close{position:absolute;right:0;top:-46px;width:40px;height:40px;border:1px solid rgba(255,255,255,.25);border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font-size:calc(20px + var(--font-step, 0px));font-weight:900}.photo-prev,.photo-next{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:48px;border:0;border-radius:12px;background:rgba(20,18,16,.58);color:#fff;font-size:calc(26px + var(--font-step, 0px))}.photo-prev{left:6px}.photo-next{right:6px}
+.photo-lightbox-meta{background:#fffdf9;border-radius:14px;padding:11px}.photo-lightbox-meta-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}.photo-lightbox-meta strong{font-size:calc(13px + var(--font-step, 0px))}.photo-caption-input{width:100%;border:1px solid #ded6ca;background:#fff;border-radius:10px;padding:9px 10px;font-size:calc(14px + var(--font-step, 0px));outline:none}.photo-caption-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(189,109,58,.09)}.photo-lightbox-actions{display:flex;gap:8px;margin-top:8px}.photo-lightbox-actions button{flex:1;border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px;font-size:calc(12px + var(--font-step, 0px));font-weight:900}.photo-lightbox-actions .danger{color:#9d4638;background:#fff5f1}
+.photo-sync-note{font-size:calc(11px + var(--font-step, 0px));color:var(--muted);padding:10px 2px 2px}.photo-sync-note strong{color:var(--ink)}
+@media(max-width:520px){.photo-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.photo-lightbox{padding:12px}.photo-lightbox-inner{max-height:94vh}.photo-toolbar-row .photo-btn{flex:1}.photo-select{min-width:120px}}
+
 </style>
+<script>
+try{document.documentElement.dataset.fontSize=localStorage.getItem('qinggan_font_size_v1')||'normal';}
+catch(e){document.documentElement.dataset.fontSize='normal';}
+</script>
 </head>
 <body>
 <div class="wrap">
@@ -35,6 +98,15 @@ a{color:inherit}.wrap{max-width:820px;margin:auto;padding:0 14px 92px}.hero{padd
     </div>
   </header>
 
+  <div class="font-toolbar" role="group" aria-label="字体大小">
+    <div class="font-toolbar-label"><strong>👓 字体大小</strong><small>选择后会自动记住，下次打开仍保持这个字号</small></div>
+    <div class="font-size-buttons">
+      <button class="font-size-btn" type="button" data-font-size="normal" aria-pressed="false">标准</button>
+      <button class="font-size-btn" type="button" data-font-size="large" aria-pressed="false">大字 A+</button>
+      <button class="font-size-btn" type="button" data-font-size="xlarge" aria-pressed="false">特大 A++</button>
+    </div>
+  </div>
+
   <div class="route">
     <div class="route-title">路线总览</div>
     <div class="route-line">
@@ -44,13 +116,18 @@ a{color:inherit}.wrap{max-width:820px;margin:auto;padding:0 14px 92px}.hero{padd
 
   <nav class="tabs">
     <button class="tab active" data-tab="days">每日行程</button>
+    <button class="tab" data-tab="map">地图</button>
+    <button class="tab" data-tab="photos">相册</button>
     <button class="tab" data-tab="transport">交通</button>
     <button class="tab" data-tab="hotels">住宿</button>
     <button class="tab" data-tab="todo">待办</button>
+    <button class="tab" data-tab="costs">费用</button>
     <button class="tab" data-tab="tips">注意事项</button>
   </nav>
 
   <main>
+    <div class="edit-help">✏️ <strong>编辑模式已开启：</strong>点虚线框里的文字直接修改；每个时间节点可以上移、下移或删除，也可以在每天底部新增一项。修改会自动保存在当前手机/浏览器。
+    </div>
     <section id="days" class="section active">
 
       <article class="day" data-date="2026-08-24">
@@ -186,6 +263,50 @@ a{color:inherit}.wrap{max-width:820px;margin:auto;padding:0 14px 92px}.hero{padd
       </article>
     </section>
 
+
+    <section id="map" class="section">
+      <div class="callout"><h3>🗺️ 全程互动地图</h3><p>可以拖动、双指缩放或使用地图左上角 ＋/－。自驾段会联网加载道路路线；飞机和高铁段用示意线展示。</p></div>
+      <div class="map-card">
+        <div class="map-toolbar"><div><strong>杭州 → 兰州 → 西宁 → 青甘自驾 → 张掖 → 兰州 → 杭州</strong><small>编号规则：1.1 = 第1天第1站；可按天筛选路线和标记</small></div><div class="map-controls"><label for="mapDaySelect" style="font-size:calc(11px + var(--font-step, 0px));font-weight:850;color:var(--muted)">查看范围</label><select id="mapDaySelect" class="map-day-select" aria-label="选择查看某一天路线"><option value="all">全部行程</option><option value="d1">第1天 · 杭州→兰州→西宁</option><option value="d2">第2天 · 西宁→青海湖→茶卡</option><option value="d3">第3天 · 茶卡→大柴旦→翡翠湖</option><option value="d4">第4天 · 大柴旦→敦煌→鸣沙山</option><option value="d5">第5天 · 敦煌→莫高窟→敦煌</option><option value="d6">第6天 · 敦煌→嘉峪关</option><option value="d7">第7天 · 嘉峪关→七彩丹霞→张掖</option><option value="d8">第8天 · 张掖→兰州→杭州</option></select><button class="map-fit" id="mapFitBtn" type="button">显示全程</button></div></div>
+        <div id="tripMap"><div class="map-loading">首次打开地图时会加载地图瓦片和自驾道路路线，请保持网络连接。</div></div>
+        <div class="map-legend"><span class="legend-item"><i class="legend-line"></i>自驾道路</span><span class="legend-item"><i class="legend-line train"></i>高铁 / 机场铁路（示意）</span><span class="legend-item"><i class="legend-line flight"></i>航班（示意）</span></div>
+        <div class="map-status" id="mapStatus">点击“地图”后开始加载路线。</div>
+      </div>
+      <div class="map-code-guide"><strong>地图编号说明</strong><br>编号采用“天数.顺序”：例如 <strong>1.1</strong> 表示第 1 天第 1 站（杭州萧山机场），<strong>2.2</strong> 表示第 2 天第 2 站（青海湖）。同一个地点若跨多天重复经过，地图只放一个定位点，点击后会显示全部对应编号。</div>
+      <div class="map-note">地图中的自驾线路由在线道路数据生成，仅用于看全程走向；施工、封路和临时交通管制请以出发当天高德/百度导航为准。飞机和高铁线路为示意，不代表真实航迹或铁路轨迹。</div>
+      <div class="route-days">
+        <div class="route-day" data-map-day="d1"><div class="route-day-num" style="background:#75679a">D1</div><div class="route-day-info"><strong>1.1 杭州萧山机场 → 1.2 兰州中川机场 → 1.3 兰州西站 → 1.4 西宁</strong><small>飞机 + 机场铁路 + 高铁</small></div><button class="route-day-btn" type="button">只看当天</button></div>
+        <div class="route-day" data-map-day="d2"><div class="route-day-num" style="background:#bd6d3a">D2</div><div class="route-day-info"><strong>2.1 西宁 → 2.2 青海湖 → 2.3 茶卡</strong><small>约 300 km · 驾驶约 5 h</small></div><button class="route-day-btn" type="button">只看当天</button></div>
+        <div class="route-day" data-map-day="d3"><div class="route-day-num" style="background:#4f7d72">D3</div><div class="route-day-info"><strong>3.1 茶卡 → 3.2 大柴旦 → 3.3 翡翠湖</strong><small>约 400 km · 驾驶约 4.5–5 h</small></div><button class="route-day-btn" type="button">只看当天</button></div>
+        <div class="route-day" data-map-day="d4"><div class="route-day-num" style="background:#8a6a4c">D4</div><div class="route-day-info"><strong>4.1 大柴旦 → 4.2 敦煌 → 4.3 鸣沙山</strong><small>驾驶约 4.5–5 h</small></div><button class="route-day-btn" type="button">只看当天</button></div>
+        <div class="route-day" data-map-day="d5"><div class="route-day-num" style="background:#77658b">D5</div><div class="route-day-info"><strong>5.1 敦煌 → 5.2 莫高窟 → 5.3 敦煌</strong><small>本地短途 · 休息日</small></div><button class="route-day-btn" type="button">只看当天</button></div>
+        <div class="route-day" data-map-day="d6"><div class="route-day-num" style="background:#5b7089">D6</div><div class="route-day-info"><strong>6.1 敦煌 → 6.2 嘉峪关</strong><small>约 370 km · 驾驶约 4–4.5 h</small></div><button class="route-day-btn" type="button">只看当天</button></div>
+        <div class="route-day" data-map-day="d7"><div class="route-day-num" style="background:#9b6b63">D7</div><div class="route-day-info"><strong>7.1 嘉峪关 → 7.2 七彩丹霞 → 7.3 张掖</strong><small>驾驶约 3 h</small></div><button class="route-day-btn" type="button">只看当天</button></div>
+        <div class="route-day" data-map-day="d8"><div class="route-day-num" style="background:#3d7167">D8</div><div class="route-day-info"><strong>8.1 张掖西站 → 8.2 兰州西站 → 8.3 兰州中川机场 → 8.4 杭州萧山机场</strong><small>高铁 + 机场铁路 + 飞机</small></div><button class="route-day-btn" type="button">只看当天</button></div>
+      </div>
+      <div class="actions" style="margin-top:12px"><a class="btn primary nav" data-place="青海湖二郎剑景区">高德查看青海湖</a><a class="btn nav" data-place="张掖七彩丹霞旅游景区">高德查看丹霞</a></div>
+    </section>
+
+    <section id="photos" class="section">
+      <div class="photo-callout"><h3>📷 旅途相册</h3><p>把沿途照片按天放进行程里。每张照片都可以写一句备注，点开可看大图；当日照片也会同步显示在对应的每日行程卡片底部。</p><small>照片会自动压缩后保存在当前手机/浏览器，不会自动上传到 GitHub。</small></div>
+      <div class="photo-toolbar">
+        <div class="photo-toolbar-row">
+          <select id="photoFilter" class="photo-select" aria-label="筛选照片"><option value="all">查看：全部照片</option><option value="d1">第1天 · 杭州→兰州→西宁</option><option value="d2">第2天 · 西宁→青海湖→茶卡</option><option value="d3">第3天 · 茶卡→大柴旦→翡翠湖</option><option value="d4">第4天 · 大柴旦→敦煌→鸣沙山</option><option value="d5">第5天 · 莫高窟·敦煌休息</option><option value="d6">第6天 · 敦煌→嘉峪关</option><option value="d7">第7天 · 嘉峪关→丹霞→张掖</option><option value="d8">第8天 · 张掖→兰州→杭州</option></select>
+          <select id="photoTargetDay" class="photo-select" aria-label="照片加入哪一天"><option value="d1">添加到：第1天</option><option value="d2">添加到：第2天</option><option value="d3">添加到：第3天</option><option value="d4">添加到：第4天</option><option value="d5">添加到：第5天</option><option value="d6">添加到：第6天</option><option value="d7">添加到：第7天</option><option value="d8">添加到：第8天</option></select>
+        </div>
+        <div class="photo-toolbar-row">
+          <button class="photo-btn primary" id="photoAddBtn" type="button">＋ 导入照片</button>
+          <button class="photo-btn" id="photoExportBtn" type="button">导出相册备份</button>
+          <button class="photo-btn" id="photoImportBtn" type="button">导入相册备份</button>
+        </div>
+        <div class="photo-stats"><span id="photoStats">0 张照片</span><span>建议分批导入，每次 10–20 张</span></div>
+        <input type="file" id="photoInput" accept="image/*" multiple hidden>
+        <input type="file" id="photoBackupInput" accept="application/json" hidden>
+      </div>
+      <div id="photoGallery"></div>
+      <div class="photo-sync-note"><strong>纪念保存：</strong>“导出相册备份”会把已压缩照片和备注一起保存成一个 JSON 文件，可用于换手机恢复。由于本站是 GitHub Pages 静态网页，手机里新增的照片不会自动写回 GitHub 公网页面。</div>
+    </section>
+
     <section id="transport" class="section">
       <div class="callout"><h3>交通逻辑</h3><p>杭州飞兰州 → 高铁到西宁 → 西宁取车 → 张掖异地还车 → 高铁回兰州 → 飞杭州。这样不需要最后再穿祁连山回西宁。</p></div>
       <div class="panel"><h3>✈️ 飞机</h3>
@@ -234,6 +355,78 @@ a{color:inherit}.wrap{max-width:820px;margin:auto;padding:0 14px 92px}.hero{padd
       </div>
     </section>
 
+
+    <section id="costs" class="section">
+      <div class="cost-summary">
+        <div class="sum-title">TRIP BUDGET · 实时汇总</div>
+        <div class="sum-total" id="grandTotal">¥0</div>
+        <div class="cost-grid single">
+          <div class="cost-stat"><small>预算余额</small><strong id="budgetRemain" class="budget-ok">¥20,000</strong></div>
+        </div>
+        <div class="budget-line"><span>旅行总预算</span><div><span>¥ </span><input id="budgetInput" class="budget-input" type="number" inputmode="decimal" min="0" step="1" value="20000"></div></div>
+      </div>
+
+      <div class="cost-group" data-category="transport">
+        <div class="cost-group-head"><h3>✈️🚄🚙 交通</h3><div class="cost-group-total">小计 <span>¥0</span></div></div>
+        <div class="cost-table-head"><span>项目</span><span>单价</span><span>数量</span><span>小计</span></div>
+        <div class="cost-item" data-id="flight-out"><div class="cost-name">杭州 → 兰州机票<small>单价按每人</small></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" inputmode="numeric" min="0" value="3"><div class="cost-subtotal">¥0</div></div>
+        <div class="cost-item" data-id="airport-lzx"><div class="cost-name">中川机场 → 兰州西<small>单价按每人</small></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" inputmode="numeric" min="0" value="3"><div class="cost-subtotal">¥0</div></div>
+        <div class="cost-item" data-id="train-lzx-xn"><div class="cost-name">兰州西 → 西宁<small>D2657，单价按每人</small></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" inputmode="numeric" min="0" value="3"><div class="cost-subtotal">¥0</div></div>
+        <div class="cost-item" data-id="rental"><div class="cost-name">SUV 租车<small>车辆租金</small></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div>
+        <div class="cost-item" data-id="rental-extra"><div class="cost-name">租车保障 / 异地还车费</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div>
+        <div class="cost-item" data-id="fuel"><div class="cost-name">油费</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div>
+        <div class="cost-item" data-id="road"><div class="cost-name">高速 / 停车</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div>
+        <div class="cost-item" data-id="train-zy-lz"><div class="cost-name">张掖西 → 兰州西<small>D2682，单价按每人</small></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="3" min="0"><div class="cost-subtotal">¥0</div></div>
+        <div class="cost-item" data-id="lzx-airport"><div class="cost-name">兰州西 → 中川机场<small>单价按每人</small></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="3" min="0"><div class="cost-subtotal">¥0</div></div>
+        <div class="cost-item" data-id="flight-back"><div class="cost-name">兰州 → 杭州机票<small>单价按每人</small></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="3" min="0"><div class="cost-subtotal">¥0</div></div>
+        <button class="cost-add" type="button" data-add-category="transport">＋ 新增项目</button>
+      </div>
+
+      <div class="cost-group" data-category="hotel">
+        <div class="cost-group-head"><h3>🏨 住宿</h3><div class="cost-group-total">小计 <span>¥0</span></div></div>
+        <div class="cost-table-head"><span>酒店</span><span>每晚房价</span><span>晚数</span><span>小计</span></div>
+        <div class="cost-item" data-id="hotel-xining"><div class="cost-name">8/24 西宁 · 亚朵S</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div>
+        <div class="cost-item" data-id="hotel-chaka"><div class="cost-name">8/25 茶卡 · 君道</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div>
+        <div class="cost-item" data-id="hotel-dachaidan"><div class="cost-name">8/26 大柴旦 · 丽呈华廷</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div>
+        <div class="cost-item" data-id="hotel-dunhuang"><div class="cost-name">8/27–28 敦煌 · 亚朵</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="2" min="0"><div class="cost-subtotal">¥0</div></div>
+        <div class="cost-item" data-id="hotel-jiayuguan"><div class="cost-name">8/29 嘉峪关 · 全季</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div>
+        <div class="cost-item" data-id="hotel-zhangye"><div class="cost-name">8/30 张掖 · 建国璞隐</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div>
+        <button class="cost-add" type="button" data-add-category="hotel">＋ 新增项目</button>
+      </div>
+
+      <div class="cost-group" data-category="tickets">
+        <div class="cost-group-head"><h3>🎟️ 门票 / 景交</h3><div class="cost-group-total">小计 <span>¥0</span></div></div>
+        <div class="cost-table-head"><span>项目</span><span>每人价格</span><span>人数</span><span>小计</span></div>
+        <div class="cost-item" data-id="ticket-qinghai"><div class="cost-name">青海湖</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="3" min="0"><div class="cost-subtotal">¥0</div></div>
+        <div class="cost-item" data-id="ticket-chaka"><div class="cost-name">茶卡盐湖<small>门票 / 小火车等可合并填</small></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="3" min="0"><div class="cost-subtotal">¥0</div></div>
+        <div class="cost-item" data-id="ticket-emerald"><div class="cost-name">大柴旦翡翠湖</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="3" min="0"><div class="cost-subtotal">¥0</div></div>
+        <div class="cost-item" data-id="ticket-mingsha"><div class="cost-name">鸣沙山月牙泉</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="3" min="0"><div class="cost-subtotal">¥0</div></div>
+        <div class="cost-item" data-id="ticket-mogao"><div class="cost-name">莫高窟</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="3" min="0"><div class="cost-subtotal">¥0</div></div>
+        <div class="cost-item" data-id="ticket-jiayuguan"><div class="cost-name">嘉峪关关城</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="3" min="0"><div class="cost-subtotal">¥0</div></div>
+        <div class="cost-item" data-id="ticket-danxia"><div class="cost-name">张掖七彩丹霞</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="3" min="0"><div class="cost-subtotal">¥0</div></div>
+        <button class="cost-add" type="button" data-add-category="tickets">＋ 新增项目</button>
+      </div>
+
+      <div class="cost-group" data-category="food">
+        <div class="cost-group-head"><h3>🍜 餐饮</h3><div class="cost-group-total">小计 <span>¥0</span></div></div>
+        <div class="cost-table-head"><span>日期</span><span>三人当天</span><span>次数</span><span>小计</span></div>
+        <div class="cost-item" data-id="food-d1"><div class="cost-name">Day 1 · 8/24</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div><div class="cost-item" data-id="food-d2"><div class="cost-name">Day 2 · 8/25</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div><div class="cost-item" data-id="food-d3"><div class="cost-name">Day 3 · 8/26</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div><div class="cost-item" data-id="food-d4"><div class="cost-name">Day 4 · 8/27</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div><div class="cost-item" data-id="food-d5"><div class="cost-name">Day 5 · 8/28</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div><div class="cost-item" data-id="food-d6"><div class="cost-name">Day 6 · 8/29</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div><div class="cost-item" data-id="food-d7"><div class="cost-name">Day 7 · 8/30</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div><div class="cost-item" data-id="food-d8"><div class="cost-name">Day 8 · 8/31</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div>
+        <button class="cost-add" type="button" data-add-category="food">＋ 新增项目</button>
+      </div>
+
+      <div class="cost-group" data-category="other">
+        <div class="cost-group-head"><h3>🧾 其他</h3><div class="cost-group-total">小计 <span>¥0</span></div></div>
+        <div class="cost-table-head"><span>项目</span><span>金额</span><span>数量</span><span>小计</span></div>
+        <div class="cost-item" data-id="other-snacks"><div class="cost-name">水 / 零食 / 补给</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div>
+        <div class="cost-item" data-id="other-shopping"><div class="cost-name"><input class="custom-name" value="其他费用 1" aria-label="其他费用名称"></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div>
+        <div class="cost-item" data-id="other-2"><div class="cost-name"><input class="custom-name" value="其他费用 2" aria-label="其他费用名称"></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div>
+        <div class="cost-item" data-id="other-3"><div class="cost-name"><input class="custom-name" value="其他费用 3" aria-label="其他费用名称"></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div>
+        <button class="cost-add" type="button" data-add-category="other">＋ 新增项目</button>
+        <div class="cost-hint">每个分类都可以自己新增项目；新增项目可改名称、价格和数量，也可以删除。所有金额都会自动保存在当前手机/浏览器。单价 × 数量 = 小计；如果某项直接填写总价，把数量保持为 1 即可。</div>
+      </div>
+      <button class="cost-reset" id="costResetBtn">清空全部费用（保留行程）</button>
+    </section>
+
     <section id="tips" class="section">
       <div class="panel"><h3>🧭 旅行原则</h3>
         <div class="row"><div class="l">驾驶</div><div class="r">两人轮换；约每 2 小时休息一次；不赶夜路</div></div>
@@ -250,21 +443,450 @@ a{color:inherit}.wrap{max-width:820px;margin:auto;padding:0 14px 92px}.hero{padd
   </main>
 </div>
 
-<div class="bottom"><div class="bottom-inner"><button class="bigbtn alt" id="shareBtn">分享行程</button><button class="bigbtn" id="todayBtn">查看当天</button></div></div>
+<div class="photo-lightbox" id="photoLightbox" aria-hidden="true">
+  <div class="photo-lightbox-inner">
+    <div class="photo-lightbox-img-wrap">
+      <button class="photo-close" id="photoCloseBtn" type="button" aria-label="关闭">×</button>
+      <button class="photo-prev" id="photoPrevBtn" type="button" aria-label="上一张">‹</button>
+      <img id="photoLightboxImg" alt="旅途照片">
+      <button class="photo-next" id="photoNextBtn" type="button" aria-label="下一张">›</button>
+    </div>
+    <div class="photo-lightbox-meta">
+      <div class="photo-lightbox-meta-row"><strong id="photoLightboxTitle">旅途照片</strong><span id="photoLightboxCount" style="font-size:calc(11px + var(--font-step, 0px));color:var(--muted)"></span></div>
+      <input id="photoCaptionInput" class="photo-caption-input" maxlength="120" placeholder="给这张照片写一句话……">
+      <div class="photo-lightbox-actions"><button id="photoSaveCaptionBtn" type="button">保存备注</button><button id="photoDeleteBtn" class="danger" type="button">删除照片</button></div>
+    </div>
+  </div>
+</div>
+
+<div class="edit-tools" id="editTools">
+  <button class="toolbtn" id="exportBtn">导出修改</button>
+  <button class="toolbtn" id="importBtn">导入修改</button>
+  <button class="toolbtn warn" id="resetBtn">恢复默认</button>
+  <input type="file" id="importFile" accept="application/json" hidden>
+</div>
+<div class="toast" id="toast">已保存</div>
+<div class="bottom"><div class="bottom-inner"><button class="bigbtn alt" id="editBtn">编辑行程</button><button class="bigbtn alt" id="shareBtn">分享行程</button><button class="bigbtn" id="todayBtn">查看当天</button></div></div>
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
+const FONT_KEY='qinggan_font_size_v1';
+const VALID_FONT_SIZES=new Set(['normal','large','xlarge']);
+function setTripFontSize(size,announce=true){
+  if(!VALID_FONT_SIZES.has(size)) size='normal';
+  document.documentElement.dataset.fontSize=size;
+  try{localStorage.setItem(FONT_KEY,size);}catch(e){}
+  document.querySelectorAll('.font-size-btn').forEach(btn=>{
+    const active=btn.dataset.fontSize===size;
+    btn.classList.toggle('active',active);
+    btn.setAttribute('aria-pressed',active?'true':'false');
+  });
+  if(typeof tripMap!=='undefined'&&tripMap) setTimeout(()=>tripMap.invalidateSize(),80);
+  if(announce&&typeof showToast==='function'){
+    const label=size==='xlarge'?'特大字号':size==='large'?'大字号':'标准字号';
+    showToast('已切换为'+label);
+  }
+}
+let initialFontSize='normal';
+try{initialFontSize=localStorage.getItem(FONT_KEY)||document.documentElement.dataset.fontSize||'normal';}catch(e){}
+setTripFontSize(initialFontSize,false);
+document.querySelectorAll('.font-size-btn').forEach(btn=>btn.addEventListener('click',()=>setTripFontSize(btn.dataset.fontSize)));
+
 const tabs=[...document.querySelectorAll('.tab')], sections=[...document.querySelectorAll('.section')];
-tabs.forEach(t=>t.addEventListener('click',()=>{tabs.forEach(x=>x.classList.remove('active'));sections.forEach(s=>s.classList.remove('active'));t.classList.add('active');document.getElementById(t.dataset.tab).classList.add('active');window.scrollTo({top:document.querySelector('.tabs').offsetTop,behavior:'smooth'});}));
+tabs.forEach(t=>t.addEventListener('click',()=>{
+  tabs.forEach(x=>x.classList.remove('active')); sections.forEach(s=>s.classList.remove('active'));
+  t.classList.add('active'); document.getElementById(t.dataset.tab).classList.add('active');
+  window.scrollTo({top:document.querySelector('.tabs').offsetTop,behavior:'smooth'});
+  if(t.dataset.tab==='map') setTimeout(initTripMap,80);
+}));
 
-document.querySelectorAll('.day-head').forEach(h=>h.addEventListener('click',()=>{const b=h.nextElementSibling;b.style.display=b.style.display==='none'?'block':'none';}));
+document.querySelectorAll('.day-head').forEach(h=>h.addEventListener('click',()=>{if(document.body.classList.contains('editing')) return;const b=h.nextElementSibling;b.style.display=b.style.display==='none'?'block':'none';}));
 
-document.querySelectorAll('.nav').forEach(a=>{a.href='https://uri.amap.com/search?keyword='+encodeURIComponent(a.dataset.place)+'&callnative=1';a.target='_blank';});
+function bindNav(){document.querySelectorAll('.nav').forEach(a=>{a.href='https://uri.amap.com/search?keyword='+encodeURIComponent(a.dataset.place)+'&callnative=1';a.target='_blank';});}
+bindNav();
 
-for(let i=1;i<=10;i++){const el=document.getElementById('c'+i);const k='qinggan_'+el.id;el.checked=localStorage.getItem(k)==='1';el.addEventListener('change',()=>localStorage.setItem(k,el.checked?'1':'0'));}
+for(let i=1;i<=10;i++){const el=document.getElementById('c'+i);if(!el) continue;const k='qinggan_'+el.id;el.checked=localStorage.getItem(k)==='1';el.addEventListener('change',()=>localStorage.setItem(k,el.checked?'1':'0'));}
 
 function ymd(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 const today=ymd(new Date()); const todayCard=document.querySelector('.day[data-date="'+today+'"]'); if(todayCard) todayCard.classList.add('today');
 document.getElementById('todayBtn').addEventListener('click',()=>{document.querySelector('[data-tab="days"]').click();const target=document.querySelector('.day[data-date="'+ymd(new Date())+'"]')||document.querySelector('.day');target.scrollIntoView({behavior:'smooth',block:'start'});});
 
-document.getElementById('shareBtn').addEventListener('click',async()=>{const data={title:'青甘8天家庭自驾',text:'青甘家庭自驾行程：8/24–8/31，杭州-兰州-西宁-青海湖-茶卡-大柴旦-敦煌-嘉峪关-张掖。',url:location.href};try{if(navigator.share) await navigator.share(data);else{await navigator.clipboard.writeText(location.href);alert('链接已复制');}}catch(e){}});
+document.getElementById('shareBtn').addEventListener('click',async()=>{const data={title:'青甘8天家庭自驾',text:'青甘家庭自驾行程：8/24–8/31，杭州-兰州-西宁-青海湖-茶卡-大柴旦-敦煌-嘉峪关-张掖。',url:location.href};try{if(navigator.share) await navigator.share(data);else{await navigator.clipboard.writeText(location.href);showToast('链接已复制');}}catch(e){}});
+
+
+
+/* ===== 全程互动地图 ===== */
+let tripMap=null, tripMapReady=false, currentMapDay='all';
+const mapRouteLayers={}, mapAllLayers=[], mapMarkerLayers=[], mapDayLayers={d1:[],d2:[],d3:[],d4:[],d5:[],d6:[],d7:[],d8:[]};
+const MAP_POINTS={
+  hgh:{name:'杭州萧山机场',lat:30.2295,lng:120.4345,codes:['1.1','8.4']},
+  lhw:{name:'兰州中川机场',lat:36.5152,lng:103.6208,codes:['1.2','8.3']},
+  lanzhouWest:{name:'兰州西站',lat:36.0664,lng:103.7463,codes:['1.3','8.2']},
+  xining:{name:'西宁',lat:36.6171,lng:101.7782,codes:['1.4','2.1']},
+  qinghai:{name:'青海湖二郎剑景区',lat:36.5798,lng:100.4986,codes:['2.2']},
+  chaka:{name:'茶卡盐湖',lat:36.6941,lng:99.0707,codes:['2.3','3.1']},
+  dachaidan:{name:'大柴旦镇',lat:37.8443,lng:95.3601,codes:['3.2','3.4','4.1']},
+  emerald:{name:'大柴旦翡翠湖',lat:37.8428,lng:95.2050,codes:['3.3']},
+  dunhuang:{name:'敦煌市区 / 酒店',lat:40.1421,lng:94.6619,codes:['4.2','4.4','5.1','5.3','6.1']},
+  mingsha:{name:'鸣沙山月牙泉',lat:40.0888,lng:94.6754,codes:['4.3']},
+  mogao:{name:'莫高窟',lat:40.0421,lng:94.8090,codes:['5.2']},
+  jiayuguan:{name:'嘉峪关关城',lat:39.7725,lng:98.2891,codes:['6.2','7.1']},
+  danxia:{name:'张掖七彩丹霞',lat:38.9746,lng:100.0662,codes:['7.2']},
+  zhangye:{name:'张掖西站',lat:38.9157,lng:100.4092,codes:['7.3','8.1']}
+};
+const DRIVE_DAYS=[
+  {id:'d2',label:'D2 · 2.1 西宁 → 2.2 青海湖 → 2.3 茶卡',color:'#bd6d3a',pts:['xining','qinghai','chaka']},
+  {id:'d3',label:'D3 · 3.1 茶卡 → 3.2 大柴旦 → 3.3 翡翠湖 → 3.4 大柴旦',color:'#4f7d72',pts:['chaka','dachaidan','emerald','dachaidan']},
+  {id:'d4',label:'D4 · 4.1 大柴旦 → 4.2 敦煌 → 4.3 鸣沙山 → 4.4 敦煌',color:'#8a6a4c',pts:['dachaidan','dunhuang','mingsha','dunhuang']},
+  {id:'d5',label:'D5 · 5.1 敦煌 → 5.2 莫高窟 → 5.3 敦煌',color:'#77658b',pts:['dunhuang','mogao','dunhuang']},
+  {id:'d6',label:'D6 · 6.1 敦煌 → 6.2 嘉峪关',color:'#5b7089',pts:['dunhuang','jiayuguan']},
+  {id:'d7',label:'D7 · 7.1 嘉峪关 → 7.2 七彩丹霞 → 7.3 张掖',color:'#9b6b63',pts:['jiayuguan','danxia','zhangye']}
+];
+function mapLatLng(key){const p=MAP_POINTS[key];return [p.lat,p.lng];}
+function mapPinIcon(txt){const w=Math.max(34,18+txt.length*7);return L.divIcon({className:'map-pin',html:txt,iconSize:[w,28],iconAnchor:[w/2,14],popupAnchor:[0,-13]});}
+function addTransportLine(keys,kind,label,dayId){
+  const style=kind==='flight'?{color:'#75679a',weight:3,dashArray:'2 10',opacity:.85}:{color:'#3d7167',weight:3,dashArray:'8 8',opacity:.78};
+  const layer=L.polyline(keys.map(mapLatLng),style).addTo(tripMap).bindPopup(label+'<br><small>示意线路</small>');
+  mapAllLayers.push(layer); if(dayId&&mapDayLayers[dayId]) mapDayLayers[dayId].push(layer); return layer;
+}
+function addDriveFallback(day){
+  const layer=L.polyline(day.pts.map(mapLatLng),{color:day.color,weight:5,opacity:.86,lineCap:'round',lineJoin:'round'}).addTo(tripMap).bindPopup(day.label+'<br><small>道路服务未加载时显示的连线示意</small>');
+  mapRouteLayers[day.id]=layer; mapAllLayers.push(layer); if(mapDayLayers[day.id]) mapDayLayers[day.id].push(layer); return layer;
+}
+async function addDriveRoute(day){
+  const coords=day.pts.map(k=>MAP_POINTS[k].lng+','+MAP_POINTS[k].lat).join(';');
+  const url='https://router.project-osrm.org/route/v1/driving/'+coords+'?overview=full&geometries=geojson&steps=false';
+  try{
+    const res=await fetch(url,{mode:'cors'}); if(!res.ok) throw new Error('HTTP '+res.status);
+    const data=await res.json(); if(!data.routes||!data.routes[0]) throw new Error('no route');
+    const latlngs=data.routes[0].geometry.coordinates.map(c=>[c[1],c[0]]);
+    const layer=L.polyline(latlngs,{color:day.color,weight:5,opacity:.9,lineCap:'round',lineJoin:'round'}).addTo(tripMap).bindPopup(day.label);
+    mapRouteLayers[day.id]=layer; mapAllLayers.push(layer); if(mapDayLayers[day.id]) mapDayLayers[day.id].push(layer); return true;
+  }catch(err){addDriveFallback(day);return false;}
+}
+function fitTripMap(){
+  if(!tripMap) return; const layers=mapAllLayers.filter(Boolean); if(!layers.length) return;
+  const group=L.featureGroup(layers); const bounds=group.getBounds(); if(bounds.isValid()) tripMap.fitBounds(bounds.pad(.06),{maxZoom:9});
+}
+function setLayerVisible(layer,visible){
+  if(!tripMap||!layer) return;
+  if(visible){if(!tripMap.hasLayer(layer)) layer.addTo(tripMap);}else if(tripMap.hasLayer(layer)) tripMap.removeLayer(layer);
+}
+function dayNumberFromId(id){return Number(String(id).replace('d',''));}
+function applyMapDayFilter(id,scroll=true){
+  if(!tripMap) return;
+  currentMapDay=id||'all';
+  const select=document.getElementById('mapDaySelect'); if(select) select.value=currentMapDay;
+  const all=currentMapDay==='all';
+  Object.entries(mapDayLayers).forEach(([day,layers])=>layers.forEach(layer=>setLayerVisible(layer,all||day===currentMapDay)));
+  mapMarkerLayers.forEach(({layer,codes})=>{
+    const show=all||codes.some(code=>Number(code.split('.')[0])===dayNumberFromId(currentMapDay));
+    setLayerVisible(layer,show);
+  });
+  let visible=[];
+  if(all){visible=mapAllLayers.filter(layer=>tripMap.hasLayer(layer));}
+  else{
+    visible=(mapDayLayers[currentMapDay]||[]).filter(layer=>tripMap.hasLayer(layer));
+    visible.push(...mapMarkerLayers.filter(({layer,codes})=>tripMap.hasLayer(layer)&&codes.some(code=>Number(code.split('.')[0])===dayNumberFromId(currentMapDay))).map(x=>x.layer));
+  }
+  if(visible.length){const b=L.featureGroup(visible).getBounds();if(b.isValid()) tripMap.fitBounds(b.pad(all?.06:.15),{maxZoom:all?9:11});}
+  const status=document.getElementById('mapStatus');
+  if(status) status.textContent=all?'当前显示：全部 8 天行程。':`当前只显示：第 ${dayNumberFromId(currentMapDay)} 天路线和当天行程节点。`;
+  if(scroll) document.getElementById('tripMap')?.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function focusMapDay(id){initTripMap().then(()=>applyMapDayFilter(id,true));}
+async function initTripMap(){
+  if(tripMapReady){setTimeout(()=>tripMap.invalidateSize(),40);return;}
+  if(typeof L==='undefined'){
+    const el=document.getElementById('tripMap'); if(el) el.innerHTML='<div class="map-loading">地图组件加载失败。请确认手机有网络后刷新页面。</div>';
+    document.getElementById('mapStatus').textContent='地图组件未能加载。'; return;
+  }
+  tripMapReady=true;
+  const el=document.getElementById('tripMap'); if(!el) return; el.innerHTML='';
+  tripMap=L.map('tripMap',{zoomControl:true,scrollWheelZoom:true,tap:true}).setView([38.2,101.0],5);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© OpenStreetMap contributors'}).addTo(tripMap);
+
+  const markerOrder=['hgh','lhw','lanzhouWest','xining','qinghai','chaka','dachaidan','emerald','dunhuang','mingsha','mogao','jiayuguan','danxia','zhangye'];
+  markerOrder.forEach((key)=>{const p=MAP_POINTS[key];const primary=p.codes[0];const codes=p.codes.join(' / ');const marker=L.marker([p.lat,p.lng],{icon:mapPinIcon(primary)}).addTo(tripMap).bindPopup('<strong>'+primary+' · '+p.name+'</strong><br><small>行程编号：'+codes+'</small>');mapAllLayers.push(marker);mapMarkerLayers.push({layer:marker,codes:p.codes,key});});
+
+  addTransportLine(['hgh','lhw'],'flight','D1 · 1.1 杭州萧山机场 → 1.2 兰州中川机场 · 航班','d1');
+  addTransportLine(['lhw','lanzhouWest'],'train','D1 · 1.2 中川机场 → 1.3 兰州西站 · 机场铁路','d1');
+  addTransportLine(['lanzhouWest','xining'],'train','D1 · 1.3 兰州西站 → 1.4 西宁 · 高铁/动车','d1');
+  addTransportLine(['zhangye','lanzhouWest'],'train','D8 · 8.1 张掖西站 → 8.2 兰州西站 · 高铁/动车','d8');
+  addTransportLine(['lanzhouWest','lhw'],'train','D8 · 8.2 兰州西站 → 8.3 中川机场 · 机场铁路','d8');
+  addTransportLine(['lhw','hgh'],'flight','D8 · 8.3 兰州中川机场 → 8.4 杭州萧山机场 · 航班','d8');
+
+  const status=document.getElementById('mapStatus'); status.textContent='正在加载自驾道路路线…';
+  const result=await Promise.all(DRIVE_DAYS.map(addDriveRoute));
+  const ok=result.filter(Boolean).length;
+  status.textContent=ok===DRIVE_DAYS.length?'已加载全部自驾道路路线。可用“查看范围”只看某一天。':`已加载 ${ok}/${DRIVE_DAYS.length} 段道路路线；未加载成功的路段已用直线示意。`;
+  if(currentMapDay==='all') fitTripMap(); else applyMapDayFilter(currentMapDay,false); setTimeout(()=>tripMap.invalidateSize(),80);
+}
+document.getElementById('mapFitBtn')?.addEventListener('click',()=>{initTripMap().then(()=>applyMapDayFilter('all',false));});
+document.getElementById('mapDaySelect')?.addEventListener('change',e=>{initTripMap().then(()=>applyMapDayFilter(e.target.value,false));});
+document.querySelectorAll('[data-map-day]').forEach(card=>card.querySelector('.route-day-btn')?.addEventListener('click',()=>focusMapDay(card.dataset.mapDay)));
+
+
+
+/* ===== 旅途照片 / IndexedDB ===== */
+const PHOTO_DB_NAME='qinggan_trip_photos_v1', PHOTO_STORE='photos';
+const PHOTO_DAY_META={
+  d1:{title:'第1天 · 杭州 → 兰州 → 西宁',date:'8/24'},d2:{title:'第2天 · 西宁 → 青海湖 → 茶卡',date:'8/25'},
+  d3:{title:'第3天 · 茶卡 → 大柴旦 → 翡翠湖',date:'8/26'},d4:{title:'第4天 · 大柴旦 → 敦煌 → 鸣沙山',date:'8/27'},
+  d5:{title:'第5天 · 莫高窟 · 敦煌休息',date:'8/28'},d6:{title:'第6天 · 敦煌 → 嘉峪关',date:'8/29'},
+  d7:{title:'第7天 · 嘉峪关 → 七彩丹霞 → 张掖',date:'8/30'},d8:{title:'第8天 · 张掖 → 兰州 → 杭州',date:'8/31'}
+};
+let photoDBPromise=null, photoRecords=[], currentPhotoIds=[], currentPhotoIndex=0, pendingPhotoDay='d1';
+function photoDB(){
+  if(photoDBPromise) return photoDBPromise;
+  photoDBPromise=new Promise((resolve,reject)=>{
+    if(!('indexedDB' in window)){reject(new Error('当前浏览器不支持照片本地数据库'));return;}
+    const req=indexedDB.open(PHOTO_DB_NAME,1);
+    req.onupgradeneeded=()=>{const db=req.result;if(!db.objectStoreNames.contains(PHOTO_STORE)){const st=db.createObjectStore(PHOTO_STORE,{keyPath:'id'});st.createIndex('day','day',{unique:false});st.createIndex('createdAt','createdAt',{unique:false});}};
+    req.onsuccess=()=>resolve(req.result); req.onerror=()=>reject(req.error||new Error('照片数据库打开失败'));
+  });
+  return photoDBPromise;
+}
+async function photoGetAll(){const db=await photoDB();return new Promise((resolve,reject)=>{const tx=db.transaction(PHOTO_STORE,'readonly'),req=tx.objectStore(PHOTO_STORE).getAll();req.onsuccess=()=>resolve(req.result||[]);req.onerror=()=>reject(req.error);});}
+async function photoPut(rec){const db=await photoDB();return new Promise((resolve,reject)=>{const tx=db.transaction(PHOTO_STORE,'readwrite');tx.objectStore(PHOTO_STORE).put(rec);tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error);});}
+async function photoDelete(id){const db=await photoDB();return new Promise((resolve,reject)=>{const tx=db.transaction(PHOTO_STORE,'readwrite');tx.objectStore(PHOTO_STORE).delete(id);tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error);});}
+function uidPhoto(){return 'p_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8)}
+function blobToDataURL(blob){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=()=>reject(r.error);r.readAsDataURL(blob);});}
+function dataURLToBlob(dataURL){const [head,body]=dataURL.split(',');const mime=(head.match(/data:([^;]+)/)||[])[1]||'image/jpeg';const bin=atob(body);const arr=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);return new Blob([arr],{type:mime});}
+async function compressPhoto(file){
+  const src=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=reject;img.src=r.result;};r.onerror=reject;r.readAsDataURL(file);});
+  const maxDim=1600, scale=Math.min(1,maxDim/Math.max(src.naturalWidth||src.width,src.naturalHeight||src.height));
+  const w=Math.max(1,Math.round((src.naturalWidth||src.width)*scale)),h=Math.max(1,Math.round((src.naturalHeight||src.height)*scale));
+  const c=document.createElement('canvas');c.width=w;c.height=h;const ctx=c.getContext('2d');ctx.drawImage(src,0,0,w,h);
+  const blob=await new Promise(resolve=>c.toBlob(resolve,'image/jpeg',.82));
+  if(!blob) throw new Error('照片压缩失败'); return blob;
+}
+function photoDayFromDayArticle(dayEl){const days=[...document.querySelectorAll('.day')];const i=days.indexOf(dayEl);return i>=0?'d'+(i+1):'d1';}
+function setupDayPhotoAreas(){
+  document.querySelectorAll('.day').forEach(day=>{
+    const body=day.querySelector('.day-body'); if(!body||body.querySelector('.day-memory')) return;
+    const d=photoDayFromDayArticle(day), box=document.createElement('div');box.className='day-memory';box.dataset.photoDay=d;
+    box.innerHTML='<div class="day-memory-head"><strong>📷 当日照片</strong><button class="day-photo-add" type="button" data-photo-day="'+d+'">＋ 添加照片</button></div><div class="day-photo-thumbs" data-photo-thumbs="'+d+'"><div class="day-photo-empty">旅行中拍的照片可以放在这里。</div></div>';
+    body.appendChild(box);
+  });
+}
+function photoThumbURL(blob){return URL.createObjectURL(blob)}
+function photoRecordById(id){return photoRecords.find(x=>x.id===id)}
+function sortedPhotos(records=photoRecords){return [...records].sort((a,b)=>(a.createdAt||0)-(b.createdAt||0));}
+function renderDayPhotoStrips(){
+  document.querySelectorAll('[data-photo-thumbs]').forEach(box=>{
+    const d=box.dataset.photoThumbs, list=sortedPhotos(photoRecords.filter(x=>x.day===d));box.innerHTML='';
+    if(!list.length){box.innerHTML='<div class="day-photo-empty">旅行中拍的照片可以放在这里。</div>';return;}
+    list.slice(0,12).forEach(rec=>{const b=document.createElement('button');b.type='button';b.className='day-photo-thumb';b.dataset.photoId=rec.id;const img=document.createElement('img');const url=photoThumbURL(rec.blob);img.src=url;img.alt=rec.caption||PHOTO_DAY_META[d].title;img.onload=()=>URL.revokeObjectURL(url);b.appendChild(img);box.appendChild(b);});
+    if(list.length>12){const more=document.createElement('button');more.type='button';more.className='day-photo-thumb';more.style.cssText='display:flex;align-items:center;justify-content:center;font-size:calc(12px + var(--font-step, 0px));font-weight:900;color:var(--accent2);background:#fffaf2';more.textContent='+'+(list.length-12);more.addEventListener('click',()=>{document.querySelector('[data-tab="photos"]').click();document.getElementById('photoFilter').value=d;renderPhotoGallery();});box.appendChild(more);}
+  });
+}
+function renderPhotoGallery(){
+  const host=document.getElementById('photoGallery'); if(!host) return; const filter=document.getElementById('photoFilter')?.value||'all';host.innerHTML='';
+  const days=filter==='all'?Object.keys(PHOTO_DAY_META):[filter];
+  days.forEach(d=>{const list=sortedPhotos(photoRecords.filter(x=>x.day===d));if(filter==='all'&&!list.length)return;const group=document.createElement('div');group.className='photo-day-group';group.innerHTML='<div class="photo-day-head"><div><strong>'+PHOTO_DAY_META[d].title+'</strong><br><span>'+PHOTO_DAY_META[d].date+'</span></div><span>'+list.length+' 张</span></div><div class="photo-grid"></div>';const grid=group.querySelector('.photo-grid');
+    if(!list.length){grid.outerHTML='<div class="photo-empty">还没有照片。可以点“导入照片”，或回到每日行程在当天底部添加。</div>';}else list.forEach(rec=>{const card=document.createElement('button');card.type='button';card.className='photo-card';card.dataset.photoId=rec.id;const img=document.createElement('img');const url=photoThumbURL(rec.blob);img.src=url;img.alt=rec.caption||PHOTO_DAY_META[d].title;img.onload=()=>URL.revokeObjectURL(url);card.appendChild(img);const code=document.createElement('span');code.className='photo-code';code.textContent=d.toUpperCase().replace('D','Day ');card.appendChild(code);if(rec.caption){const cap=document.createElement('span');cap.className='photo-cap';cap.textContent=rec.caption;card.appendChild(cap);}grid.appendChild(card);});host.appendChild(group);});
+  if(!host.children.length) host.innerHTML='<div class="photo-empty">还没有导入照片。旅行中可以随手把每天拍的照片放进来。</div>';
+  const bytes=photoRecords.reduce((n,x)=>n+(x.blob?.size||0),0),mb=(bytes/1024/1024).toFixed(bytes>1024*1024?1:2);document.getElementById('photoStats').textContent=photoRecords.length+' 张照片 · 约 '+mb+' MB 本地存储';
+  renderDayPhotoStrips();
+}
+async function refreshPhotos(){try{photoRecords=await photoGetAll();renderPhotoGallery();}catch(e){console.error(e);const host=document.getElementById('photoGallery');if(host)host.innerHTML='<div class="photo-empty">当前浏览器无法保存照片。请改用 Safari / Chrome 后再试。</div>';}}
+function choosePhotosForDay(day){pendingPhotoDay=day||'d1';const target=document.getElementById('photoTargetDay');if(target)target.value=pendingPhotoDay;const input=document.getElementById('photoInput');if(input){input.value='';input.click();}}
+async function importPhotoFiles(files,day){if(!files?.length)return;const arr=[...files].slice(0,30);showToast('正在处理 '+arr.length+' 张照片…');let ok=0;for(const f of arr){if(!f.type.startsWith('image/'))continue;try{const blob=await compressPhoto(f);await photoPut({id:uidPhoto(),day,caption:'',name:f.name||'',createdAt:Date.now()+ok,blob});ok++;}catch(e){console.error(e);}}await refreshPhotos();showToast('已加入 '+ok+' 张照片');}
+function openPhoto(id){
+  const rec=photoRecordById(id);if(!rec)return;const filter=document.getElementById('photoFilter')?.value||'all';const scope=filter==='all'?sortedPhotos(photoRecords):sortedPhotos(photoRecords.filter(x=>x.day===filter));currentPhotoIds=scope.map(x=>x.id);currentPhotoIndex=Math.max(0,currentPhotoIds.indexOf(id));updatePhotoLightbox();const lb=document.getElementById('photoLightbox');lb.classList.add('open');lb.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';
+}
+let lightboxURL=null;
+function updatePhotoLightbox(){const id=currentPhotoIds[currentPhotoIndex],rec=photoRecordById(id);if(!rec)return;if(lightboxURL)URL.revokeObjectURL(lightboxURL);lightboxURL=photoThumbURL(rec.blob);document.getElementById('photoLightboxImg').src=lightboxURL;document.getElementById('photoLightboxTitle').textContent=PHOTO_DAY_META[rec.day].title;document.getElementById('photoLightboxCount').textContent=(currentPhotoIndex+1)+' / '+currentPhotoIds.length;document.getElementById('photoCaptionInput').value=rec.caption||'';document.getElementById('photoPrevBtn').style.visibility=currentPhotoIds.length>1?'visible':'hidden';document.getElementById('photoNextBtn').style.visibility=currentPhotoIds.length>1?'visible':'hidden';}
+function closePhotoLightbox(){const lb=document.getElementById('photoLightbox');lb.classList.remove('open');lb.setAttribute('aria-hidden','true');document.body.style.overflow='';if(lightboxURL){URL.revokeObjectURL(lightboxURL);lightboxURL=null;}}
+function stepPhoto(delta){if(!currentPhotoIds.length)return;currentPhotoIndex=(currentPhotoIndex+delta+currentPhotoIds.length)%currentPhotoIds.length;updatePhotoLightbox();}
+async function saveCurrentPhotoCaption(){const id=currentPhotoIds[currentPhotoIndex],rec=photoRecordById(id);if(!rec)return;rec.caption=document.getElementById('photoCaptionInput').value.trim();await photoPut(rec);await refreshPhotos();showToast('照片备注已保存');}
+async function deleteCurrentPhoto(){const id=currentPhotoIds[currentPhotoIndex];if(!id||!confirm('删除这张照片吗？'))return;await photoDelete(id);currentPhotoIds.splice(currentPhotoIndex,1);await refreshPhotos();if(!currentPhotoIds.length){closePhotoLightbox();showToast('照片已删除');return;}currentPhotoIndex=Math.min(currentPhotoIndex,currentPhotoIds.length-1);updatePhotoLightbox();showToast('照片已删除');}
+async function exportPhotoBackup(){if(!photoRecords.length){alert('还没有照片可以导出。');return;}showToast('正在生成相册备份…');const records=[];for(const rec of sortedPhotos()){records.push({id:rec.id,day:rec.day,caption:rec.caption||'',name:rec.name||'',createdAt:rec.createdAt||Date.now(),data:await blobToDataURL(rec.blob)});}const payload={type:'qinggan-trip-photo-backup',version:1,exportedAt:new Date().toISOString(),records};const blob=new Blob([JSON.stringify(payload)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='青甘旅行相册备份-'+ymd(new Date())+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500);showToast('相册备份已导出');}
+async function importPhotoBackupFile(file){try{const data=JSON.parse(await file.text());if(data.type!=='qinggan-trip-photo-backup'||!Array.isArray(data.records))throw new Error();if(photoRecords.length&&!confirm('导入会把备份照片合并到当前相册，继续吗？'))return;let n=0;for(const x of data.records){if(!PHOTO_DAY_META[x.day]||!x.data)continue;await photoPut({id:x.id||uidPhoto(),day:x.day,caption:x.caption||'',name:x.name||'',createdAt:x.createdAt||Date.now()+n,blob:dataURLToBlob(x.data)});n++;}await refreshPhotos();showToast('已导入 '+n+' 张照片');}catch(e){console.error(e);alert('相册备份导入失败，请选择本网页导出的相册备份 JSON 文件。');}}
+setupDayPhotoAreas();
+document.addEventListener('click',e=>{const add=e.target.closest('.day-photo-add');if(add){choosePhotosForDay(add.dataset.photoDay);return;}const thumb=e.target.closest('[data-photo-id]');if(thumb){openPhoto(thumb.dataset.photoId);}});
+document.getElementById('photoAddBtn')?.addEventListener('click',()=>choosePhotosForDay(document.getElementById('photoTargetDay')?.value||'d1'));
+document.getElementById('photoInput')?.addEventListener('change',async e=>{await importPhotoFiles(e.target.files,pendingPhotoDay);e.target.value='';});
+document.getElementById('photoFilter')?.addEventListener('change',renderPhotoGallery);
+document.getElementById('photoExportBtn')?.addEventListener('click',exportPhotoBackup);
+document.getElementById('photoImportBtn')?.addEventListener('click',()=>document.getElementById('photoBackupInput')?.click());
+document.getElementById('photoBackupInput')?.addEventListener('change',async e=>{const f=e.target.files?.[0];if(f)await importPhotoBackupFile(f);e.target.value='';});
+document.getElementById('photoCloseBtn')?.addEventListener('click',closePhotoLightbox);document.getElementById('photoPrevBtn')?.addEventListener('click',()=>stepPhoto(-1));document.getElementById('photoNextBtn')?.addEventListener('click',()=>stepPhoto(1));document.getElementById('photoSaveCaptionBtn')?.addEventListener('click',saveCurrentPhotoCaption);document.getElementById('photoDeleteBtn')?.addEventListener('click',deleteCurrentPhoto);
+document.getElementById('photoLightbox')?.addEventListener('click',e=>{if(e.target.id==='photoLightbox')closePhotoLightbox();});
+document.addEventListener('keydown',e=>{if(!document.getElementById('photoLightbox')?.classList.contains('open'))return;if(e.key==='Escape')closePhotoLightbox();else if(e.key==='ArrowLeft')stepPhoto(-1);else if(e.key==='ArrowRight')stepPhoto(1);});
+refreshPhotos();
+
+/* ===== 费用计算 ===== */
+const COST_KEY='qinggan_trip_costs_v1';
+let costState={budget:20000,items:{},customItems:[]};
+try{costState=JSON.parse(localStorage.getItem(COST_KEY)||'{"budget":20000,"items":{},"customItems":[]}');}catch(e){costState={budget:20000,items:{},customItems:[]};}
+if(!costState.items) costState.items={};
+if(!Array.isArray(costState.customItems)) costState.customItems=[];
+const money=n=>'¥'+Number(n||0).toLocaleString('zh-CN',{maximumFractionDigits:2});
+
+function createCustomCostRow(category,data={}){
+  const group=document.querySelector(`.cost-group[data-category="${category}"]`);
+  if(!group) return null;
+  const id=data.id||('custom-'+Date.now()+'-'+Math.random().toString(36).slice(2,7));
+  if(document.querySelector(`.cost-item[data-id="${id}"]`)) return document.querySelector(`.cost-item[data-id="${id}"]`);
+  const row=document.createElement('div');
+  row.className='cost-item'; row.dataset.id=id; row.dataset.custom='1';
+  row.innerHTML=`<div class="cost-name"><div class="custom-name-wrap"><input class="custom-name" value="" placeholder="项目名称" aria-label="自定义费用名称"><button class="cost-delete" type="button" aria-label="删除项目" title="删除项目">×</button></div></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" inputmode="decimal" min="0" step="1" value="1"><div class="cost-subtotal">¥0</div>`;
+  const addBtn=group.querySelector('.cost-add');
+  group.insertBefore(row,addBtn||null);
+  const name=row.querySelector('.custom-name'), price=row.querySelector('.cost-input'), qty=row.querySelector('.qty-input');
+  if(name) name.value=data.name??'新项目';
+  if(price) price.value=(data.price??'');
+  if(qty) qty.value=(data.qty??1);
+  return row;
+}
+
+function saveCosts(){
+  const b=document.getElementById('budgetInput'); if(b) costState.budget=Number(b.value||0);
+  const items={};
+  document.querySelectorAll('.cost-item').forEach(row=>{
+    const id=row.dataset.id, price=row.querySelector('.cost-input'), qty=row.querySelector('.qty-input'), name=row.querySelector('.custom-name');
+    items[id]={price:Number(price?.value||0),qty:Number(qty?.value||0)};
+    if(name) items[id].name=name.value;
+  });
+  costState.items=items;
+  costState.customItems=[...document.querySelectorAll('.cost-item[data-custom="1"]')].map(row=>({
+    id:row.dataset.id,
+    category:row.closest('.cost-group')?.dataset.category||'other',
+    name:row.querySelector('.custom-name')?.value||'新项目',
+    price:Number(row.querySelector('.cost-input')?.value||0),
+    qty:Number(row.querySelector('.qty-input')?.value||0)
+  }));
+  localStorage.setItem(COST_KEY,JSON.stringify(costState));
+}
+function calcCosts(){
+  let grand=0;
+  document.querySelectorAll('.cost-group').forEach(group=>{
+    let subtotal=0;
+    group.querySelectorAll('.cost-item').forEach(row=>{
+      const p=Number(row.querySelector('.cost-input')?.value||0),q=Number(row.querySelector('.qty-input')?.value||0),v=p*q;
+      subtotal+=v; const out=row.querySelector('.cost-subtotal'); if(out) out.textContent=money(v);
+    });
+    const out=group.querySelector('.cost-group-total span'); if(out) out.textContent=money(subtotal);
+    grand+=subtotal;
+  });
+  const budget=Number(document.getElementById('budgetInput')?.value||0),remain=budget-grand;
+  document.getElementById('grandTotal').textContent=money(grand);
+  const rem=document.getElementById('budgetRemain'); rem.textContent=(remain<0?'超支 ':'')+money(Math.abs(remain)); rem.classList.toggle('budget-over',remain<0);rem.classList.toggle('budget-ok',remain>=0);
+  saveCosts();
+}
+function restoreCosts(){
+  const b=document.getElementById('budgetInput'); if(b) b.value=costState.budget??20000;
+  costState.customItems.forEach(item=>createCustomCostRow(item.category||'other',item));
+  document.querySelectorAll('.cost-item').forEach(row=>{
+    const st=costState.items[row.dataset.id]; if(!st) return;
+    const p=row.querySelector('.cost-input'),q=row.querySelector('.qty-input'),name=row.querySelector('.custom-name');
+    if(p) p.value=st.price??''; if(q) q.value=st.qty??q.value; if(name && st.name!==undefined) name.value=st.name;
+  });
+  calcCosts();
+}
+restoreCosts();
+document.getElementById('costs')?.addEventListener('input',calcCosts);
+document.getElementById('budgetInput')?.addEventListener('input',calcCosts);
+document.getElementById('costs')?.addEventListener('click',e=>{
+  const add=e.target.closest('.cost-add');
+  if(add){
+    const row=createCustomCostRow(add.dataset.addCategory||'other',{name:'新项目',qty:1,price:''});
+    calcCosts();
+    const input=row?.querySelector('.custom-name'); if(input){input.focus();input.select();}
+    showToast('已新增费用项目');
+    return;
+  }
+  const del=e.target.closest('.cost-delete');
+  if(del){
+    const row=del.closest('.cost-item');
+    if(row && confirm('删除这个费用项目吗？')){row.remove();calcCosts();showToast('项目已删除');}
+  }
+});
+document.getElementById('costResetBtn')?.addEventListener('click',()=>{if(confirm('确定清空所有已填写费用吗？行程内容不会被删除，自定义项目也会保留。')){document.getElementById('budgetInput').value=20000;document.querySelectorAll('.cost-input').forEach(x=>x.value='');document.querySelectorAll('.cost-item .qty-input').forEach(x=>{if(x.closest('[data-custom="1"]'))x.value=1;});calcCosts();showToast('费用已清空');}});
+
+/* ===== 可编辑行程 ===== */
+const EDIT_KEY='qinggan_trip_edits_v3';
+let editState={fields:{},timelines:{}};
+try{editState=JSON.parse(localStorage.getItem(EDIT_KEY)||'{"fields":{},"timelines":{}}');}catch(e){editState={fields:{},timelines:{}};}
+if(!editState.fields) editState.fields={}; if(!editState.timelines) editState.timelines={};
+
+const editableSelector='.day h2, .day .sub, .day .hotel, .day > .day-body > .note, #transport .row .l, #transport .row .r, #transport .callout p, #transport .note, #hotels .row .l, #hotels .row .r, #hotels .note, #tips .row .l, #tips .row .r';
+const editableFields=[...document.querySelectorAll(editableSelector)];
+editableFields.forEach((el,i)=>{el.dataset.editKey='f'+i;if(editState.fields[el.dataset.editKey]!==undefined) el.innerHTML=editState.fields[el.dataset.editKey];});
+
+// Restore custom day timelines before attaching edit controls.
+document.querySelectorAll('.day').forEach(day=>{const date=day.dataset.date, timeline=day.querySelector('.timeline');if(timeline && editState.timelines[date]) timeline.innerHTML=editState.timelines[date];});
+
+function cleanTimelineHTML(timeline){
+  const clone=timeline.cloneNode(true);
+  clone.querySelectorAll('.item-edit-actions').forEach(x=>x.remove());
+  clone.querySelectorAll('[contenteditable]').forEach(x=>x.removeAttribute('contenteditable'));
+  return clone.innerHTML;
+}
+function saveState(silent=false){
+  editableFields.forEach(el=>editState.fields[el.dataset.editKey]=el.innerHTML);
+  document.querySelectorAll('.day').forEach(day=>{const t=day.querySelector('.timeline');if(t) editState.timelines[day.dataset.date]=cleanTimelineHTML(t);});
+  localStorage.setItem(EDIT_KEY,JSON.stringify(editState));
+  if(!silent) showToast('已保存到本机');
+}
+let toastTimer;
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),1300);}
+
+function controlsForItem(item){
+  let box=item.querySelector('.item-edit-actions'); if(box) return box;
+  box=document.createElement('div');box.className='item-edit-actions';
+  box.innerHTML='<button class="mini-edit up">↑ 上移</button><button class="mini-edit down">↓ 下移</button><button class="mini-edit danger del">删除</button>';
+  item.querySelector('.desc').appendChild(box);
+  box.querySelector('.up').addEventListener('click',e=>{e.stopPropagation();const prev=item.previousElementSibling;if(prev){item.parentNode.insertBefore(item,prev);saveState();}});
+  box.querySelector('.down').addEventListener('click',e=>{e.stopPropagation();const next=item.nextElementSibling;if(next){item.parentNode.insertBefore(next,item);saveState();}});
+  box.querySelector('.del').addEventListener('click',e=>{e.stopPropagation();if(confirm('删除这一项？')){item.remove();saveState();}});
+  return box;
+}
+function setupDayEditor(day){
+  const timeline=day.querySelector('.timeline'); if(!timeline) return;
+  [...timeline.querySelectorAll('.item')].forEach(item=>controlsForItem(item));
+  let add=day.querySelector('.add-item');
+  if(!add){add=document.createElement('button');add.className='add-item';add.type='button';add.textContent='＋ 添加一个时间节点';timeline.after(add);}
+  add.addEventListener('click',()=>{
+    const item=document.createElement('div');item.className='item';
+    item.innerHTML='<div class="time">时间</div><div class="dot"></div><div class="desc">新增安排<small>点这里可继续修改备注</small></div>';
+    timeline.appendChild(item);controlsForItem(item);applyEditability(true,item);saveState();item.scrollIntoView({behavior:'smooth',block:'center'});
+  });
+  timeline.addEventListener('input',()=>saveState(true));
+  timeline.addEventListener('blur',()=>saveState(),true);
+}
+document.querySelectorAll('.day').forEach(setupDayEditor);
+
+function applyEditability(on,root=document){
+  const fields=root===document?editableFields:[...root.querySelectorAll('.time,.desc')];
+  if(root===document){editableFields.forEach(el=>el.setAttribute('contenteditable',on?'true':'false'));document.querySelectorAll('.timeline .time,.timeline .desc').forEach(el=>el.setAttribute('contenteditable',on?'true':'false'));}
+  else fields.forEach(el=>el.setAttribute('contenteditable',on?'true':'false'));
+}
+editableFields.forEach(el=>{el.addEventListener('input',()=>saveState(true));el.addEventListener('blur',()=>saveState());});
+
+const editBtn=document.getElementById('editBtn');
+function setEditMode(on){
+  document.body.classList.toggle('editing',on);applyEditability(on);editBtn.textContent=on?'完成编辑':'编辑行程';
+  if(on){document.querySelectorAll('.day-body').forEach(b=>b.style.display='block');showToast('编辑模式已开启');}else{saveState();}
+}
+editBtn.addEventListener('click',()=>setEditMode(!document.body.classList.contains('editing')));
+
+// Export/import makes it possible to move edits between phones.
+document.getElementById('exportBtn').addEventListener('click',()=>{
+  saveState(true);
+  saveCosts(); const payload={type:'qinggan-trip-edits',version:4,exportedAt:new Date().toISOString(),editState,costState,checks:{}};
+  for(let i=1;i<=10;i++){const el=document.getElementById('c'+i);if(el) payload.checks[el.id]=el.checked;}
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='青甘行程修改-'+ymd(new Date())+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);showToast('修改数据已导出');
+});
+document.getElementById('importBtn').addEventListener('click',()=>document.getElementById('importFile').click());
+document.getElementById('importFile').addEventListener('change',async e=>{
+  const f=e.target.files&&e.target.files[0];if(!f) return;
+  try{const data=JSON.parse(await f.text());if(data.type!=='qinggan-trip-edits'||!data.editState) throw new Error();localStorage.setItem(EDIT_KEY,JSON.stringify(data.editState));if(data.checks) Object.entries(data.checks).forEach(([id,v])=>localStorage.setItem('qinggan_'+id,v?'1':'0'));if(data.costState) localStorage.setItem(COST_KEY,JSON.stringify(data.costState));alert('导入成功，页面将重新加载。');location.reload();}catch(err){alert('导入失败：请选择本网页导出的 JSON 文件。');}finally{e.target.value='';}
+});
+document.getElementById('resetBtn').addEventListener('click',()=>{if(confirm('确定恢复网页默认行程？自定义行程会被清除，但已填写费用会保留。')){localStorage.removeItem(EDIT_KEY);location.reload();}});
+
+// If old state restored links inside editable blocks, ensure nav links still work.
+bindNav();
 </script>
 </body></html>
