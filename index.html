@@ -43,7 +43,22 @@ a{color:inherit}.wrap{max-width:820px;margin:auto;padding:0 14px 92px}.hero{padd
 .map-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 14px;border-bottom:1px solid var(--line);flex-wrap:wrap}.map-toolbar strong{font-size:calc(15px + var(--font-step, 0px))}.map-toolbar small{display:block;color:var(--muted);font-size:calc(11px + var(--font-step, 0px));margin-top:2px}.map-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.map-day-select{min-height:38px;border:1px solid var(--line);background:#fff;border-radius:11px;padding:8px 30px 8px 10px;font-size:calc(12px + var(--font-step, 0px));font-weight:850;color:var(--text)}.map-fit{border:1px solid var(--line);background:#fff;border-radius:11px;padding:9px 11px;font-size:calc(12px + var(--font-step, 0px));font-weight:900;color:var(--accent2)}
 #tripMap{width:100%;height:520px;background:#ece8df;position:relative}.map-loading{height:520px;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--muted);font-size:calc(13px + var(--font-step, 0px))}.map-status{padding:10px 14px;border-top:1px solid var(--line);font-size:calc(11px + var(--font-step, 0px));color:var(--muted);background:#fffdfa}.map-legend{display:flex;gap:12px;flex-wrap:wrap;padding:10px 14px;border-top:1px solid var(--line);font-size:calc(11px + var(--font-step, 0px));color:var(--muted)}.legend-item{display:flex;align-items:center;gap:6px}.legend-line{width:24px;height:0;border-top:4px solid #b96a38;border-radius:999px}.legend-line.train{border-top:3px dashed #3d7167}.legend-line.flight{border-top:3px dotted #75679a}
 .route-days{display:grid;grid-template-columns:1fr;gap:9px}.route-day{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;display:grid;grid-template-columns:42px minmax(0,1fr) auto;gap:10px;align-items:center}.route-day-num{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:calc(12px + var(--font-step, 0px));font-weight:950}.route-day-info{min-width:0}.route-day-info strong{font-size:calc(13px + var(--font-step, 0px));display:block}.route-day-info small{display:block;color:var(--muted);font-size:calc(11px + var(--font-step, 0px));margin-top:2px}.route-day-btn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 9px;font-size:calc(11px + var(--font-step, 0px));font-weight:900;white-space:nowrap}.map-note{background:#fff6e9;border:1px solid #f1ddbf;padding:11px 12px;border-radius:14px;font-size:calc(12px + var(--font-step, 0px));color:#6f5a45;margin-bottom:14px}.leaflet-container{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}.leaflet-popup-content{font-size:calc(12px + var(--font-step, 0px));line-height:1.5}.map-pin{background:#24231f;color:#fff;border:2px solid white;min-width:34px!important;width:auto!important;height:28px!important;border-radius:999px;display:flex!important;align-items:center;justify-content:center;padding:0 7px;font-size:calc(10px + var(--font-step, 0px));font-weight:950;white-space:nowrap;box-shadow:0 3px 10px rgba(0,0,0,.24);box-sizing:border-box}.map-code-guide{background:#fff;border:1px solid var(--line);border-radius:14px;padding:11px 12px;margin:0 0 14px;font-size:calc(12px + var(--font-step, 0px));color:var(--muted);line-height:1.65}.map-code-guide strong{color:var(--text)}
-@media(max-width:430px){#tripMap,.map-loading{height:450px}.route-day{grid-template-columns:38px minmax(0,1fr) auto;gap:8px}.route-day-num{width:34px;height:34px}.route-day-btn{padding:7px 8px}}
+@media(max-width:560px){
+  .map-toolbar{display:block;padding:12px 12px 13px}
+  .map-toolbar>div:first-child{min-width:0}
+  .map-toolbar strong{display:block;line-height:1.35}
+  .map-controls{display:grid;grid-template-columns:1fr;width:100%;gap:8px;margin-top:10px}
+  .map-controls label{display:block}
+  .map-day-select,.map-fit{width:100%;min-height:46px;font-size:calc(13px + var(--font-step, 0px))}
+  #tripMap,.map-loading{height:390px}
+  .leaflet-control-zoom a{width:44px!important;height:44px!important;line-height:44px!important;font-size:26px!important}
+  .leaflet-control-attribution{font-size:9px!important;max-width:75%;white-space:normal;text-align:right}
+  .map-legend{gap:9px;padding:10px 12px}
+  .route-day{grid-template-columns:38px minmax(0,1fr);gap:8px}
+  .route-day-num{width:34px;height:34px}
+  .route-day-btn{grid-column:1/-1;width:100%;min-height:42px;padding:9px 8px}
+}
+@media(max-width:380px){#tripMap,.map-loading{height:360px}.map-pin{transform:scale(.92)}}
 
 /* inline editor */
 .editing [contenteditable="true"]{outline:2px dashed rgba(189,109,58,.48);outline-offset:3px;border-radius:6px;background:#fffaf2;cursor:text}
@@ -298,7 +313,7 @@ catch(e){document.documentElement.dataset.fontSize='normal';}
         <div class="map-status" id="mapStatus">点击“地图”后开始加载路线。</div>
       </div>
       <div class="map-code-guide"><strong>地图编号说明</strong><br>编号采用“天数.顺序”：例如 <strong>1.1</strong> 表示第 1 天第 1 站（杭州萧山机场），<strong>2.2</strong> 表示第 2 天第 2 站（青海湖）。同一个地点若跨多天重复经过，地图只放一个定位点，点击后会显示全部对应编号。</div>
-      <div class="map-note">地图中的自驾线路由在线道路数据生成，仅用于看全程走向；施工、封路和临时交通管制请以出发当天高德/百度导航为准。飞机和高铁线路为示意，不代表真实航迹或铁路轨迹。</div>
+      <div class="map-note">手机端底图使用高德地图坐标系，行程点和道路路线会自动转换后显示。地图中的自驾线路仅用于看全程走向；施工、封路和临时交通管制请以出发当天高德导航为准。飞机和高铁线路为示意，不代表真实航迹或铁路轨迹。</div>
       <div class="route-days">
         <div class="route-day" data-map-day="d1"><div class="route-day-num" style="background:#75679a">D1</div><div class="route-day-info"><strong>1.1 杭州萧山机场 → 1.2 兰州中川机场 → 1.3 兰州西站 → 1.4 西宁</strong><small>飞机 + 机场铁路 + 高铁</small></div><button class="route-day-btn" type="button">只看当天</button></div>
         <div class="route-day" data-map-day="d2"><div class="route-day-num" style="background:#bd6d3a">D2</div><div class="route-day-info"><strong>2.1 西宁 → 2.2 青海湖 → 2.3 茶卡</strong><small>约 300 km · 驾驶约 5 h</small></div><button class="route-day-btn" type="button">只看当天</button></div>
@@ -555,7 +570,7 @@ tabs.forEach(t=>t.addEventListener('click',()=>{
   tabs.forEach(x=>x.classList.remove('active')); sections.forEach(s=>s.classList.remove('active'));
   t.classList.add('active'); document.getElementById(t.dataset.tab).classList.add('active');
   window.scrollTo({top:document.querySelector('.tabs').offsetTop,behavior:'smooth'});
-  if(t.dataset.tab==='map') setTimeout(initTripMap,80);
+  if(t.dataset.tab==='map') setTimeout(()=>{initTripMap();setTimeout(()=>tripMap&&tripMap.invalidateSize(),180);},80);
 }));
 
 document.querySelectorAll('.day-head').forEach(h=>h.addEventListener('click',()=>{if(document.body.classList.contains('editing')) return;const b=h.nextElementSibling;b.style.display=b.style.display==='none'?'block':'none';}));
@@ -692,7 +707,19 @@ const DRIVE_DAYS=[
   {id:'d6',label:'D6 · 6.1 敦煌 → 6.2 嘉峪关',color:'#5b7089',pts:['dunhuang','jiayuguan']},
   {id:'d7',label:'D7 · 7.1 嘉峪关 → 7.2 七彩丹霞 → 7.3 张掖',color:'#9b6b63',pts:['jiayuguan','danxia','zhangye']}
 ];
-function mapLatLng(key){const p=MAP_POINTS[key];return [p.lat,p.lng];}
+/* 高德底图使用 GCJ-02；行程坐标和 OSRM 路线原始数据为 WGS84，显示前统一转换。 */
+function outOfChina(lat,lng){return lng<72.004||lng>137.8347||lat<0.8293||lat>55.8271;}
+function gcjTransformLat(x,y){let r=-100+2*x+3*y+.2*y*y+.1*x*y+.2*Math.sqrt(Math.abs(x));r+=(20*Math.sin(6*x*Math.PI)+20*Math.sin(2*x*Math.PI))*2/3;r+=(20*Math.sin(y*Math.PI)+40*Math.sin(y/3*Math.PI))*2/3;r+=(160*Math.sin(y/12*Math.PI)+320*Math.sin(y*Math.PI/30))*2/3;return r;}
+function gcjTransformLng(x,y){let r=300+x+2*y+.1*x*x+.1*x*y+.1*Math.sqrt(Math.abs(x));r+=(20*Math.sin(6*x*Math.PI)+20*Math.sin(2*x*Math.PI))*2/3;r+=(20*Math.sin(x*Math.PI)+40*Math.sin(x/3*Math.PI))*2/3;r+=(150*Math.sin(x/12*Math.PI)+300*Math.sin(x/30*Math.PI))*2/3;return r;}
+function wgs84ToGcj02(lat,lng){
+  if(outOfChina(lat,lng)) return [lat,lng];
+  const a=6378245,ee=.00669342162296594323,dLat=gcjTransformLat(lng-105,lat-35),dLng=gcjTransformLng(lng-105,lat-35),radLat=lat/180*Math.PI;
+  let magic=Math.sin(radLat);magic=1-ee*magic*magic;const sqrtMagic=Math.sqrt(magic);
+  const mgLat=lat+(dLat*180)/((a*(1-ee))/(magic*sqrtMagic)*Math.PI);
+  const mgLng=lng+(dLng*180)/(a/sqrtMagic*Math.cos(radLat)*Math.PI);
+  return [mgLat,mgLng];
+}
+function mapLatLng(key){const p=MAP_POINTS[key];return wgs84ToGcj02(p.lat,p.lng);}
 function mapPinIcon(txt){const w=Math.max(34,18+txt.length*7);return L.divIcon({className:'map-pin',html:txt,iconSize:[w,28],iconAnchor:[w/2,14],popupAnchor:[0,-13]});}
 function addTransportLine(keys,kind,label,dayId){
   const style=kind==='flight'?{color:'#75679a',weight:3,dashArray:'2 10',opacity:.85}:{color:'#3d7167',weight:3,dashArray:'8 8',opacity:.78};
@@ -709,7 +736,7 @@ async function addDriveRoute(day){
   try{
     const res=await fetch(url,{mode:'cors'}); if(!res.ok) throw new Error('HTTP '+res.status);
     const data=await res.json(); if(!data.routes||!data.routes[0]) throw new Error('no route');
-    const latlngs=data.routes[0].geometry.coordinates.map(c=>[c[1],c[0]]);
+    const latlngs=data.routes[0].geometry.coordinates.map(c=>wgs84ToGcj02(c[1],c[0]));
     const layer=L.polyline(latlngs,{color:day.color,weight:5,opacity:.9,lineCap:'round',lineJoin:'round'}).addTo(tripMap).bindPopup(day.label);
     mapRouteLayers[day.id]=layer; mapAllLayers.push(layer); if(mapDayLayers[day.id]) mapDayLayers[day.id].push(layer); return true;
   }catch(err){addDriveFallback(day);return false;}
@@ -753,11 +780,22 @@ async function initTripMap(){
   }
   tripMapReady=true;
   const el=document.getElementById('tripMap'); if(!el) return; el.innerHTML='';
-  tripMap=L.map('tripMap',{zoomControl:true,scrollWheelZoom:true,tap:true}).setView([38.2,101.0],5);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© OpenStreetMap contributors'}).addTo(tripMap);
+  tripMap=L.map('tripMap',{zoomControl:true,scrollWheelZoom:true,tap:true,preferCanvas:true}).setView(wgs84ToGcj02(38.2,101.0),5);
+  /* 微信/国内网络下 OSM 瓦片经常无法显示，改用国内可访问性更好的高德底图。 */
+  const baseLayer=L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=7&x={x}&y={y}&z={z}',{
+    subdomains:'1234',maxZoom:18,minZoom:3,attribution:'© 高德地图'
+  }).addTo(tripMap);
+  let tileErrors=0;
+  baseLayer.on('tileerror',()=>{
+    tileErrors++;
+    if(tileErrors===6){
+      const st=document.getElementById('mapStatus');
+      if(st) st.textContent='底图加载较慢：请确认手机网络正常，或切换 Wi‑Fi/蜂窝网络后点“显示全程”重试。路线和行程点仍可使用。';
+    }
+  });
 
   const markerOrder=['hgh','lhw','lanzhouWest','xining','qinghai','chaka','dachaidan','emerald','dunhuang','mingsha','mogao','jiayuguan','danxia','zhangye'];
-  markerOrder.forEach((key)=>{const p=MAP_POINTS[key];const primary=p.codes[0];const codes=p.codes.join(' / ');const marker=L.marker([p.lat,p.lng],{icon:mapPinIcon(primary)}).addTo(tripMap).bindPopup('<strong>'+primary+' · '+p.name+'</strong><br><small>行程编号：'+codes+'</small>');mapAllLayers.push(marker);mapMarkerLayers.push({layer:marker,codes:p.codes,key});});
+  markerOrder.forEach((key)=>{const p=MAP_POINTS[key];const primary=p.codes[0];const codes=p.codes.join(' / ');const marker=L.marker(mapLatLng(key),{icon:mapPinIcon(primary)}).addTo(tripMap).bindPopup('<strong>'+primary+' · '+p.name+'</strong><br><small>行程编号：'+codes+'</small>');mapAllLayers.push(marker);mapMarkerLayers.push({layer:marker,codes:p.codes,key});});
 
   addTransportLine(['hgh','lhw'],'flight','D1 · 1.1 杭州萧山机场 → 1.2 兰州中川机场 · 航班','d1');
   addTransportLine(['lhw','lanzhouWest'],'train','D1 · 1.2 中川机场 → 1.3 兰州西站 · 机场铁路','d1');
