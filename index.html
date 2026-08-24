@@ -548,6 +548,11 @@ catch(e){document.documentElement.dataset.fontSize='normal';}
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 const FONT_KEY='qinggan_font_size_v1';
+// Cloud storage keys are declared up front because cost/editor initialization can use them before the cloud module is initialized.
+const CLOUD_CONFIG_KEY='qinggan_cloud_config_v1';
+const CLOUD_LAST_KEY='qinggan_cloud_last_v1';
+const CLOUD_INIT_KEY='qinggan_cloud_initialized_v1';
+const CLOUD_DIRTY_KEY='qinggan_cloud_dirty_v1';
 var cloudReady=false, cloudClient=null, cloudUser=null, cloudPushTimer=null, cloudPollTimer=null, cloudApplying=false, cloudLastPhotoRefresh=0;
 
 /* ===== 核心按钮故障保护 =====
@@ -1051,7 +1056,7 @@ function saveCostsLocal(){
   localStorage.setItem(COST_KEY,JSON.stringify(costState));
 }
 function saveCosts(){saveCostsLocal();localStorage.setItem(CLOUD_DIRTY_KEY,'1');scheduleCloudStatePush();}
-function calcCosts(){
+function calcCosts(markDirty=true){
   let grand=0;
   document.querySelectorAll('.cost-group').forEach(group=>{
     let subtotal=0;
@@ -1065,7 +1070,7 @@ function calcCosts(){
   const budget=Number(document.getElementById('budgetInput')?.value||0),remain=budget-grand;
   document.getElementById('grandTotal').textContent=money(grand);
   const rem=document.getElementById('budgetRemain'); rem.textContent=(remain<0?'超支 ':'')+money(Math.abs(remain)); rem.classList.toggle('budget-over',remain<0);rem.classList.toggle('budget-ok',remain>=0);
-  saveCosts();
+  if(markDirty===false) saveCostsLocal(); else saveCosts();
 }
 function restoreCosts(){
   const b=document.getElementById('budgetInput'); if(b) b.value=costState.budget??20000;
@@ -1075,7 +1080,7 @@ function restoreCosts(){
     const p=row.querySelector('.cost-input'),q=row.querySelector('.qty-input'),name=row.querySelector('.custom-name');
     if(p) p.value=st.price??''; if(q) q.value=st.qty??q.value; if(name && st.name!==undefined) name.value=st.name;
   });
-  calcCosts();
+  calcCosts(false);
 }
 restoreCosts();
 document.getElementById('costs')?.addEventListener('input',calcCosts);
@@ -1276,10 +1281,6 @@ document.getElementById('importFile').addEventListener('change',async e=>{
 });
 
 /* ===== 家庭云同步 / Supabase ===== */
-const CLOUD_CONFIG_KEY='qinggan_cloud_config_v1';
-const CLOUD_LAST_KEY='qinggan_cloud_last_v1';
-const CLOUD_INIT_KEY='qinggan_cloud_initialized_v1';
-const CLOUD_DIRTY_KEY='qinggan_cloud_dirty_v1';
 let cloudConfig={url:'',key:'',email:''};
 try{cloudConfig=Object.assign(cloudConfig,JSON.parse(localStorage.getItem(CLOUD_CONFIG_KEY)||'{}'));}catch(e){}
 let cloudLastKnownUpdatedAt=localStorage.getItem(CLOUD_LAST_KEY)||'';
