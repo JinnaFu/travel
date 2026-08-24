@@ -101,11 +101,16 @@ body.time-picker-open{overflow:hidden}
 .photo-card .photo-cap{position:absolute;left:0;right:0;bottom:0;padding:18px 7px 6px;background:linear-gradient(transparent,rgba(20,18,16,.75));color:#fff;font-size:calc(10px + var(--font-step, 0px));text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .photo-empty{border:1px dashed #d6c8b9;border-radius:13px;padding:18px;text-align:center;color:var(--muted);font-size:calc(12px + var(--font-step, 0px));background:#fffaf3}
 .day-memory{margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}.day-memory-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}.day-memory-head strong{font-size:calc(13px + var(--font-step, 0px))}.day-photo-add{border:1px solid var(--line);background:#fff;border-radius:10px;padding:7px 9px;font-size:calc(11px + var(--font-step, 0px));font-weight:900;color:var(--accent2)}
-.day-photo-thumbs{display:flex;gap:7px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}.day-photo-thumbs::-webkit-scrollbar{display:none}.day-photo-thumb{flex:0 0 74px;width:74px;height:74px;border-radius:11px;overflow:hidden;border:1px solid var(--line);background:#eee8df;padding:0}.day-photo-thumb img{width:100%;height:100%;object-fit:cover;display:block}.day-photo-empty{font-size:calc(11px + var(--font-step, 0px));color:var(--muted);padding:7px 0}
+.day-photo-thumbs{display:flex;gap:7px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}.day-photo-thumbs::-webkit-scrollbar{display:none}.day-photo-thumbs .photo-card{flex:0 0 92px;width:92px;height:92px}.day-photo-thumb{flex:0 0 74px;width:74px;height:74px;border-radius:11px;overflow:hidden;border:1px solid var(--line);background:#eee8df;padding:0}.day-photo-thumb img{width:100%;height:100%;object-fit:cover;display:block}.day-photo-empty{font-size:calc(11px + var(--font-step, 0px));color:var(--muted);padding:7px 0}
 .photo-lightbox{position:fixed;inset:0;z-index:90;background:rgba(20,18,16,.93);display:none;align-items:center;justify-content:center;padding:18px}.photo-lightbox.open{display:flex}.photo-lightbox-inner{width:min(720px,100%);max-height:92vh;display:flex;flex-direction:column;gap:10px}.photo-lightbox-img-wrap{position:relative;display:flex;align-items:center;justify-content:center;min-height:240px;max-height:70vh}.photo-lightbox img{max-width:100%;max-height:70vh;object-fit:contain;border-radius:14px;background:#111}.photo-close{position:absolute;right:0;top:-46px;width:40px;height:40px;border:1px solid rgba(255,255,255,.25);border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font-size:calc(20px + var(--font-step, 0px));font-weight:900}.photo-prev,.photo-next{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:48px;border:0;border-radius:12px;background:rgba(20,18,16,.58);color:#fff;font-size:calc(26px + var(--font-step, 0px))}.photo-prev{left:6px}.photo-next{right:6px}
 .photo-lightbox-meta{background:#fffdf9;border-radius:14px;padding:11px}.photo-lightbox-meta-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}.photo-lightbox-meta strong{font-size:calc(13px + var(--font-step, 0px))}.photo-caption-input{width:100%;border:1px solid #ded6ca;background:#fff;border-radius:10px;padding:9px 10px;font-size:calc(14px + var(--font-step, 0px));outline:none}.photo-caption-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(189,109,58,.09)}.photo-lightbox-actions{display:flex;gap:8px;margin-top:8px}.photo-lightbox-actions button{flex:1;border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px;font-size:calc(12px + var(--font-step, 0px));font-weight:900}.photo-lightbox-actions .danger{color:#9d4638;background:#fff5f1}
 .photo-sync-note{font-size:calc(11px + var(--font-step, 0px));color:var(--muted);padding:10px 2px 2px}.photo-sync-note strong{color:var(--ink)}
 @media(max-width:520px){.photo-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.photo-lightbox{padding:12px}.photo-lightbox-inner{max-height:94vh}.photo-toolbar-row .photo-btn{flex:1}.photo-select{min-width:120px}}
+
+
+/* comments + food photo albums */
+.comment-box{margin-top:12px;border-top:1px solid var(--line);padding-top:10px}.comment-box summary{cursor:pointer;font-size:calc(13px + var(--font-step,0px));font-weight:900;color:var(--accent2);list-style:none}.comment-box summary::-webkit-details-marker{display:none}.comment-box summary:before{content:"💬 ";}.comment-list{display:flex;flex-direction:column;gap:8px;margin-top:9px}.comment-card{background:#f8f4ee;border:1px solid var(--line);border-left:5px solid var(--comment-color,#6b7280);border-radius:12px;padding:9px 10px}.comment-meta{display:flex;justify-content:space-between;gap:8px;align-items:center;font-size:calc(11px + var(--font-step,0px));color:var(--muted)}.comment-meta strong{color:var(--comment-color,#374151);font-size:calc(12px + var(--font-step,0px));font-weight:950}.comment-body{color:var(--comment-color,#374151)}.comment-profile-mask{position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:10000;display:flex;align-items:center;justify-content:center;padding:18px}.comment-profile-dialog{width:min(420px,100%);background:#fff;border-radius:20px;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.25)}.comment-profile-dialog h3{margin:0 0 8px;font-size:20px}.comment-profile-dialog p{margin:0 0 14px;color:var(--muted);font-size:14px}.comment-profile-name{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:12px;padding:12px;font-size:16px}.comment-color-title{margin:16px 0 8px;font-weight:900}.comment-color-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:9px}.comment-color-choice{height:42px;border-radius:12px;border:3px solid transparent;cursor:pointer}.comment-color-choice.active{border-color:#111;box-shadow:0 0 0 2px #fff inset}.comment-profile-actions{display:flex;gap:9px;margin-top:18px}.comment-profile-actions button{flex:1;min-height:44px;border:0;border-radius:12px;font-weight:900}.comment-profile-actions .primary{background:var(--ink);color:#fff}.comment-profile-actions .secondary{background:#eee;color:#222}@media(max-width:520px){.comment-color-grid{grid-template-columns:repeat(4,1fr)}}.comment-body{margin-top:4px;font-size:calc(13px + var(--font-step,0px));white-space:pre-wrap;word-break:break-word}.comment-form{display:flex;gap:7px;margin-top:9px}.comment-form textarea{flex:1;min-height:42px;resize:vertical;border:1px solid var(--line);border-radius:11px;padding:9px 10px;font:inherit;font-size:calc(13px + var(--font-step,0px));background:#fff}.comment-form button{min-width:76px;border:0;border-radius:11px;background:var(--accent2);color:#fff;font-weight:900}.comment-empty{font-size:calc(11px + var(--font-step,0px));color:var(--muted);padding:6px 0}.photo-category-tabs{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}.photo-cat-btn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 11px;font-size:calc(12px + var(--font-step,0px));font-weight:900}.photo-cat-btn.active{background:var(--ink);color:#fff;border-color:var(--ink)}.photo-food-group{margin-top:12px;border:1px solid var(--line);border-radius:16px;padding:10px;background:#fffaf4}.photo-food-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}.photo-food-head strong{font-size:calc(14px + var(--font-step,0px))}.photo-food-head span{font-size:calc(11px + var(--font-step,0px));color:var(--muted)}.food-mosaic{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.food-mosaic .photo-card{aspect-ratio:1/1}.food-mosaic .photo-card:first-child{grid-column:span 2;grid-row:span 2}.food-mosaic .photo-card:first-child img{object-fit:cover}.photo-section-title{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:13px 0 7px}.photo-section-title strong{font-size:calc(15px + var(--font-step,0px))}.photo-section-title span{font-size:calc(11px + var(--font-step,0px));color:var(--muted)}.meal-select{min-height:42px;border:1px solid var(--line);background:#fff;border-radius:11px;padding:8px 10px;font-size:calc(13px + var(--font-step,0px));font-weight:800}.photo-upload-hint{font-size:calc(11px + var(--font-step,0px));color:var(--muted);margin-top:5px}
+@media(max-width:520px){.comment-form{flex-direction:column}.comment-form button{min-height:42px}.food-mosaic{grid-template-columns:repeat(3,minmax(0,1fr))}}
 
 /* cloud sync */
 .cloud-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:11px 13px;margin:12px 0;box-shadow:var(--shadow)}
@@ -143,7 +148,7 @@ catch(e){document.documentElement.dataset.fontSize='normal';}
 
   <div class="cloud-bar" id="cloudBar">
     <div class="cloud-status-wrap"><span class="cloud-dot" id="cloudDot"></span><div class="cloud-text"><strong id="cloudStatus">☁️ 云同步未连接</strong><small id="cloudStatusDetail">本机修改仍会保留；连接后可与家人共享行程和照片</small></div></div>
-    <button class="cloud-settings-btn" id="cloudSettingsBtn" type="button">同步设置</button>
+    <div style="display:flex;gap:7px;flex:0 0 auto"><button class="cloud-settings-btn" id="cloudPullTopBtn" type="button">☁️ 立即同步</button><button class="cloud-settings-btn" id="cloudSettingsBtn" type="button">同步设置</button></div>
   </div>
 
   <div class="route">
@@ -332,14 +337,14 @@ catch(e){document.documentElement.dataset.fontSize='normal';}
       <div class="photo-toolbar">
         <div class="photo-toolbar-row">
           <select id="photoFilter" class="photo-select" aria-label="筛选照片"><option value="all">查看：全部照片</option><option value="d1">第1天 · 杭州→兰州→西宁</option><option value="d2">第2天 · 西宁→青海湖→茶卡</option><option value="d3">第3天 · 茶卡→大柴旦→翡翠湖</option><option value="d4">第4天 · 大柴旦→敦煌→鸣沙山</option><option value="d5">第5天 · 莫高窟·敦煌休息</option><option value="d6">第6天 · 敦煌→嘉峪关</option><option value="d7">第7天 · 嘉峪关→丹霞→张掖</option><option value="d8">第8天 · 张掖→兰州→杭州</option></select>
-          <select id="photoTargetDay" class="photo-select" aria-label="照片加入哪一天"><option value="d1">添加到：第1天</option><option value="d2">添加到：第2天</option><option value="d3">添加到：第3天</option><option value="d4">添加到：第4天</option><option value="d5">添加到：第5天</option><option value="d6">添加到：第6天</option><option value="d7">添加到：第7天</option><option value="d8">添加到：第8天</option></select>
+          <select id="photoTargetDay" class="photo-select" aria-label="照片加入哪一天"><option value="d1">添加到：第1天</option><option value="d2">添加到：第2天</option><option value="d3">添加到：第3天</option><option value="d4">添加到：第4天</option><option value="d5">添加到：第5天</option><option value="d6">添加到：第6天</option><option value="d7">添加到：第7天</option><option value="d8">添加到：第8天</option></select><select id="photoTargetCategory" class="photo-select" aria-label="照片类型"><option value="scenery">🌄 风景</option><option value="food">🍜 美食</option></select><select id="photoTargetMeal" class="meal-select" aria-label="选择哪一餐" style="display:none"><option value="breakfast">早餐</option><option value="lunch">午餐</option><option value="dinner">晚餐</option><option value="other">其他</option></select>
         </div>
         <div class="photo-toolbar-row">
           <button class="photo-btn primary" id="photoAddBtn" type="button">＋ 导入照片</button>
           <button class="photo-btn" id="photoExportBtn" type="button">导出相册备份</button>
           <button class="photo-btn" id="photoImportBtn" type="button">导入相册备份</button>
         </div>
-        <div class="photo-stats"><span id="photoStats">0 张照片</span><span>建议分批导入，每次 10–20 张</span></div>
+        <div class="photo-stats"><span id="photoStats">0 张照片</span><span>风景按天归档；美食按早餐 / 午餐 / 晚餐自动拼成宫格</span></div>
         <input type="file" id="photoInput" accept="image/*" multiple hidden>
         <input type="file" id="photoBackupInput" accept="application/json" hidden>
       </div>
@@ -494,7 +499,7 @@ catch(e){document.documentElement.dataset.fontSize='normal';}
     <div class="photo-lightbox-meta">
       <div class="photo-lightbox-meta-row"><strong id="photoLightboxTitle">旅途照片</strong><span id="photoLightboxCount" style="font-size:calc(11px + var(--font-step, 0px));color:var(--muted)"></span></div>
       <input id="photoCaptionInput" class="photo-caption-input" maxlength="120" placeholder="给这张照片写一句话……">
-      <div class="photo-lightbox-actions"><button id="photoSaveCaptionBtn" type="button">保存备注</button><button id="photoDeleteBtn" class="danger" type="button">删除照片</button></div>
+      <div class="photo-lightbox-actions"><button id="photoSaveCaptionBtn" type="button">保存备注</button><button id="photoDeleteBtn" class="danger" type="button">删除照片</button></div><details class="comment-box" id="photoCommentDetails"><summary>💬 评论（0）</summary><div class="comment-list"></div><div class="comment-form"><textarea placeholder="给这张照片写一句话……" maxlength="500"></textarea><button type="button">发送</button></div></details>
     </div>
   </div>
 </div>
@@ -825,6 +830,9 @@ const PHOTO_DAY_META={
   d7:{title:'第7天 · 嘉峪关 → 七彩丹霞 → 张掖',date:'8/30'},d8:{title:'第8天 · 张掖 → 兰州 → 杭州',date:'8/31'}
 };
 let photoDBPromise=null, photoRecords=[], currentPhotoIds=[], currentPhotoIndex=0, pendingPhotoDay='d1';
+const PHOTO_CATEGORIES={scenery:'风景',food:'美食'};
+const MEAL_META={breakfast:'早餐',lunch:'午餐',dinner:'晚餐',other:'其他'};
+let pendingPhotoCategory='scenery', pendingPhotoMeal='dinner';
 function photoDB(){
   if(photoDBPromise) return photoDBPromise;
   photoDBPromise=new Promise((resolve,reject)=>{
@@ -857,57 +865,102 @@ function setupDayPhotoAreas(){
   document.querySelectorAll('.day').forEach(day=>{
     const body=day.querySelector('.day-body'); if(!body||body.querySelector('.day-memory')) return;
     const d=photoDayFromDayArticle(day), box=document.createElement('div');box.className='day-memory';box.dataset.photoDay=d;
-    box.innerHTML='<div class="day-memory-head"><strong>📷 当日照片</strong><button class="day-photo-add" type="button" data-photo-day="'+d+'">＋ 添加照片</button></div><div class="day-photo-thumbs" data-photo-thumbs="'+d+'"><div class="day-photo-empty">旅行中拍的照片可以放在这里。</div></div>';
+    box.innerHTML='<div class="day-memory-head"><strong>📷 当日照片</strong><div class="actions" style="margin:0"><button class="day-photo-add" type="button" data-photo-day="'+d+'" data-photo-category="scenery">＋ 风景</button><button class="day-photo-add" type="button" data-photo-day="'+d+'" data-photo-category="food">＋ 美食</button></div></div><div class="photo-section-title"><strong>🌄 风景</strong><span data-day-scenery-count="'+d+'"></span></div><div class="day-photo-thumbs" data-photo-thumbs="'+d+'"><div class="day-photo-empty">旅行中的风景会放在这里。</div></div><div class="photo-section-title"><strong>🍜 美食</strong><span>按餐次自动拼宫格</span></div><div data-food-meals="'+d+'"></div>';
     body.appendChild(box);
+    const details=document.createElement('details');details.className='comment-box day-comment-box';details.dataset.commentDay=d;details.innerHTML='<summary>行程评论（0）</summary><div class="comment-list"></div><div class="comment-form"><textarea placeholder="写一句对今天行程的感受……" maxlength="500"></textarea><button type="button">发送</button></div>';body.appendChild(details);
+    details.querySelector('button').addEventListener('click',()=>submitComment('day',d,details));
   });
 }
 function photoThumbURL(source){if(source?.cloudUrl)return source.cloudUrl;const blob=source?.blob||source;return URL.createObjectURL(blob)}
 function maybeRevokePhotoURL(url){if(typeof url==='string'&&url.startsWith('blob:'))URL.revokeObjectURL(url)}
 function photoRecordById(id){return photoRecords.find(x=>x.id===id)}
 function sortedPhotos(records=photoRecords){return [...records].sort((a,b)=>(a.createdAt||0)-(b.createdAt||0));}
+function makePhotoCard(rec){
+  const card=document.createElement('button');card.type='button';card.className='photo-card';card.dataset.photoId=rec.id;
+  const img=document.createElement('img');const url=photoThumbURL(rec);img.src=url;img.alt=rec.caption||PHOTO_DAY_META[rec.day].title;img.onload=()=>maybeRevokePhotoURL(url);card.appendChild(img);
+  const code=document.createElement('span');code.className='photo-code';code.textContent=rec.category==='food'?(MEAL_META[rec.meal]||'美食'):rec.day.toUpperCase().replace('D','Day ');card.appendChild(code);
+  if(rec.caption){const cap=document.createElement('span');cap.className='photo-cap';cap.textContent=rec.caption;card.appendChild(cap);}
+  return card;
+}
+function renderFoodMeals(host,list){
+  host.innerHTML='';
+  ['breakfast','lunch','dinner','other'].forEach(meal=>{
+    const arr=list.filter(x=>(x.meal||'dinner')===meal);if(!arr.length)return;
+    const group=document.createElement('div');group.className='photo-food-group';group.innerHTML='<div class="photo-food-head"><strong>🍽️ '+MEAL_META[meal]+'</strong><span>'+arr.length+' 张 · 宫格</span></div><div class="food-mosaic"></div>';
+    const grid=group.querySelector('.food-mosaic');arr.forEach(rec=>grid.appendChild(makePhotoCard(rec)));host.appendChild(group);
+  });
+  if(!host.children.length)host.innerHTML='<div class="photo-empty">还没有美食照片。上传时选择早餐、午餐或晚餐，照片会自动拼成宫格。</div>';
+}
 function renderDayPhotoStrips(){
   document.querySelectorAll('[data-photo-thumbs]').forEach(box=>{
-    const d=box.dataset.photoThumbs, list=sortedPhotos(photoRecords.filter(x=>x.day===d));box.innerHTML='';
-    if(!list.length){box.innerHTML='<div class="day-photo-empty">旅行中拍的照片可以放在这里。</div>';return;}
-    list.slice(0,12).forEach(rec=>{const b=document.createElement('button');b.type='button';b.className='day-photo-thumb';b.dataset.photoId=rec.id;const img=document.createElement('img');const url=photoThumbURL(rec);img.src=url;img.alt=rec.caption||PHOTO_DAY_META[d].title;img.onload=()=>maybeRevokePhotoURL(url);b.appendChild(img);box.appendChild(b);});
-    if(list.length>12){const more=document.createElement('button');more.type='button';more.className='day-photo-thumb';more.style.cssText='display:flex;align-items:center;justify-content:center;font-size:calc(12px + var(--font-step, 0px));font-weight:900;color:var(--accent2);background:#fffaf2';more.textContent='+'+(list.length-12);more.addEventListener('click',()=>{document.querySelector('[data-tab="photos"]').click();document.getElementById('photoFilter').value=d;renderPhotoGallery();});box.appendChild(more);}
+    const d=box.dataset.photoThumbs, list=sortedPhotos(photoRecords.filter(x=>x.day===d));const scenery=list.filter(x=>(x.category||'scenery')==='scenery');box.innerHTML='';
+    const count=document.querySelector('[data-day-scenery-count="'+d+'"]');if(count)count.textContent=scenery.length+' 张';
+    if(!scenery.length){box.innerHTML='<div class="day-photo-empty">旅行中的风景会放在这里。</div>';}else scenery.slice(0,12).forEach(rec=>box.appendChild(makePhotoCard(rec)));
+    if(scenery.length>12){const more=document.createElement('button');more.type='button';more.className='day-photo-thumb';more.style.cssText='display:flex;align-items:center;justify-content:center;font-size:calc(12px + var(--font-step,0px));font-weight:900;color:var(--accent2);background:#fffaf2';more.textContent='+'+(scenery.length-12);more.addEventListener('click',()=>{document.querySelector('[data-tab="photos"]').click();document.getElementById('photoFilter').value=d;renderPhotoGallery();});box.appendChild(more);}
   });
+  document.querySelectorAll('[data-food-meals]').forEach(host=>{const d=host.dataset.foodMeals;renderFoodMeals(host,sortedPhotos(photoRecords.filter(x=>x.day===d&&(x.category||'scenery')==='food')));});
 }
 function renderPhotoGallery(){
-  const host=document.getElementById('photoGallery'); if(!host) return; const filter=document.getElementById('photoFilter')?.value||'all';host.innerHTML='';
+  const host=document.getElementById('photoGallery');if(!host)return;const filter=document.getElementById('photoFilter')?.value||'all';host.innerHTML='';
   const days=filter==='all'?Object.keys(PHOTO_DAY_META):[filter];
-  days.forEach(d=>{const list=sortedPhotos(photoRecords.filter(x=>x.day===d));if(filter==='all'&&!list.length)return;const group=document.createElement('div');group.className='photo-day-group';group.innerHTML='<div class="photo-day-head"><div><strong>'+PHOTO_DAY_META[d].title+'</strong><br><span>'+PHOTO_DAY_META[d].date+'</span></div><span>'+list.length+' 张</span></div><div class="photo-grid"></div>';const grid=group.querySelector('.photo-grid');
-    if(!list.length){grid.outerHTML='<div class="photo-empty">还没有照片。可以点“导入照片”，或回到每日行程在当天底部添加。</div>';}else list.forEach(rec=>{const card=document.createElement('button');card.type='button';card.className='photo-card';card.dataset.photoId=rec.id;const img=document.createElement('img');const url=photoThumbURL(rec);img.src=url;img.alt=rec.caption||PHOTO_DAY_META[d].title;img.onload=()=>maybeRevokePhotoURL(url);card.appendChild(img);const code=document.createElement('span');code.className='photo-code';code.textContent=d.toUpperCase().replace('D','Day ');card.appendChild(code);if(rec.caption){const cap=document.createElement('span');cap.className='photo-cap';cap.textContent=rec.caption;card.appendChild(cap);}grid.appendChild(card);});host.appendChild(group);});
-  if(!host.children.length) host.innerHTML='<div class="photo-empty">还没有导入照片。旅行中可以随手把每天拍的照片放进来。</div>';
+  days.forEach(d=>{const list=sortedPhotos(photoRecords.filter(x=>x.day===d));if(filter==='all'&&!list.length)return;const group=document.createElement('div');group.className='photo-day-group';group.innerHTML='<div class="photo-day-head"><div><strong>'+PHOTO_DAY_META[d].title+'</strong><br><span>'+PHOTO_DAY_META[d].date+'</span></div><span>'+list.length+' 张</span></div><div class="photo-section-title"><strong>🌄 风景</strong><span>'+list.filter(x=>(x.category||'scenery')==='scenery').length+' 张</span></div><div class="photo-grid scenery-grid"></div><div class="photo-section-title"><strong>🍜 美食</strong><span>按餐次自动拼宫格</span></div><div class="food-gallery"></div>';
+    const scenery=list.filter(x=>(x.category||'scenery')==='scenery'),grid=group.querySelector('.scenery-grid');if(!scenery.length)grid.innerHTML='<div class="photo-empty" style="grid-column:1/-1">还没有风景照片。</div>';else scenery.forEach(rec=>grid.appendChild(makePhotoCard(rec)));renderFoodMeals(group.querySelector('.food-gallery'),list.filter(x=>(x.category||'scenery')==='food'));host.appendChild(group);
+  });
+  if(!host.children.length)host.innerHTML='<div class="photo-empty">还没有导入照片。旅行中可以随手把每天拍的照片放进来。</div>';
   const bytes=photoRecords.reduce((n,x)=>n+(x.blob?.size||x.size||0),0),mb=(bytes/1024/1024).toFixed(bytes>1024*1024?1:2);document.getElementById('photoStats').textContent=photoRecords.length+' 张照片 · 约 '+mb+' MB '+(cloudReady?'云端相册':'本地存储');
-  renderDayPhotoStrips();
+  renderDayPhotoStrips();renderAllCommentCounts();
 }
+
+/* ===== 评论 / 弹幕 ===== */
+const COMMENT_AUTHOR_KEY='qinggan_comment_author_v1';
+const COMMENT_PROFILE_KEY='qinggan_comment_profile_v2';
+const COMMENT_COLORS=['#e11d48','#ea580c','#ca8a04','#16a34a','#0891b2','#2563eb','#7c3aed','#c026d3','#0f766e','#4f46e5','#be123c','#374151'];
+let commentRecords=[];
+function commentProfile(){try{return JSON.parse(localStorage.getItem(COMMENT_PROFILE_KEY)||'null');}catch(e){return null;}}
+function commentAuthor(){const p=commentProfile();if(p?.name)return p.name;return (localStorage.getItem(COMMENT_AUTHOR_KEY)||'').trim();}
+function commentColorForName(name){let h=0;for(let i=0;i<(name||'').length;i++)h=(h*31+(name.charCodeAt(i)||0))>>>0;return COMMENT_COLORS[h%COMMENT_COLORS.length];}
+function saveCommentProfile(name,color){localStorage.setItem(COMMENT_PROFILE_KEY,JSON.stringify({name,color}));localStorage.setItem(COMMENT_AUTHOR_KEY,name);}
+function ensureCommentProfile(){return new Promise(resolve=>{const existing=commentProfile();const oldName=existing?.name||commentAuthor();const mask=document.createElement('div');mask.className='comment-profile-mask';const dialog=document.createElement('div');dialog.className='comment-profile-dialog';dialog.innerHTML='<h3>设置评论 ID 和颜色</h3><p>第一次评论时设置一次。以后你的评论都会使用这个颜色。</p><input class="comment-profile-name" maxlength="30" placeholder="例如：爸爸、妈妈、Jinna"><div class="comment-color-title">选择你喜欢的评论颜色</div><div class="comment-color-grid"></div><div class="comment-profile-actions"><button class="secondary" type="button">取消</button><button class="primary" type="button">保存并评论</button></div>';mask.appendChild(dialog);document.body.appendChild(mask);const input=dialog.querySelector('.comment-profile-name');input.value=oldName||'';let selected=existing?.color||commentColorForName(oldName||'旅行者');const grid=dialog.querySelector('.comment-color-grid');COMMENT_COLORS.forEach(c=>{const b=document.createElement('button');b.type='button';b.className='comment-color-choice'+(c===selected?' active':'');b.style.background=c;b.setAttribute('aria-label','选择颜色 '+c);b.addEventListener('click',()=>{selected=c;grid.querySelectorAll('.comment-color-choice').forEach(x=>x.classList.remove('active'));b.classList.add('active');});grid.appendChild(b);});const close=val=>{mask.remove();resolve(val);};dialog.querySelector('.secondary').onclick=()=>close(null);dialog.querySelector('.primary').onclick=()=>{const name=input.value.trim().slice(0,30);if(!name){input.focus();return;}saveCommentProfile(name,selected);close({name,color:selected});};mask.addEventListener('click',e=>{if(e.target===mask)close(null);});input.focus();});}
+function commentDate(ts){try{return new Date(ts).toLocaleString('zh-CN',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});}catch(e){return '';}}
+async function cloudCommentGetAll(){if(!cloudReady||!cloudUser)return [];const {data,error}=await cloudClient.from('trip_comments').select('id,target_type,target_id,author_name,author_color,body,created_at').eq('user_id',cloudUser.id).order('created_at',{ascending:true});if(error)throw error;return (data||[]).map(x=>({id:x.id,targetType:x.target_type,targetId:x.target_id,author:x.author_name,authorColor:x.author_color||commentColorForName(x.author_name),body:x.body,createdAt:Number(x.created_at)||Date.now()}));}
+function localCommentGetAll(){try{return JSON.parse(localStorage.getItem('qinggan_comments_v1')||'[]');}catch(e){return [];}}
+function localCommentSaveAll(){localStorage.setItem('qinggan_comments_v1',JSON.stringify(commentRecords));}
+async function refreshComments(){try{commentRecords=cloudReady?await cloudCommentGetAll():localCommentGetAll();renderAllComments();}catch(e){console.warn('comments',e);commentRecords=localCommentGetAll();renderAllComments();}}
+function commentFor(targetType,targetId){return commentRecords.filter(x=>x.targetType===targetType&&x.targetId===targetId);}
+function renderCommentList(details,targetType,targetId){const list=details.querySelector('.comment-list');if(!list)return;const arr=commentFor(targetType,targetId);list.innerHTML='';if(!arr.length){list.innerHTML='<div class="comment-empty">还没有评论，第一条留给你。</div>';}else arr.forEach(c=>{const card=document.createElement('div');card.className='comment-card';const cc=c.authorColor||commentColorForName(c.author||'旅行者');card.style.setProperty('--comment-color',cc);card.innerHTML='<div class="comment-meta"><strong></strong><span></span></div><div class="comment-body"></div>';card.querySelector('strong').textContent=c.author||'旅行者';card.querySelector('span').textContent=commentDate(c.createdAt);card.querySelector('.comment-body').textContent=c.body;list.appendChild(card);});const summary=details.querySelector('summary');if(summary)summary.textContent='💬 评论（'+arr.length+'）';}
+function renderAllComments(){document.querySelectorAll('.day-comment-box').forEach(d=>renderCommentList(d,'day',d.dataset.commentDay));const light=document.getElementById('photoCommentDetails');if(light){const id=light.dataset.commentPhoto;renderCommentList(light,'photo',id);}}
+function renderAllCommentCounts(){renderAllComments();}
+async function submitComment(targetType,targetId,details){const text=details.querySelector('textarea')?.value.trim();if(!text)return;const profile=commentProfile()||await ensureCommentProfile();if(!profile?.name)return;const rec={id:'c_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8),targetType,targetId,author:profile.name,authorColor:profile.color||commentColorForName(profile.name),body:text,createdAt:Date.now()};try{if(cloudReady){const {error}=await cloudClient.from('trip_comments').insert({id:rec.id,user_id:cloudUser.id,target_type:targetType,target_id:targetId,author_name:rec.author,author_color:rec.authorColor,body:text,created_at:rec.createdAt});if(error)throw error;}else{commentRecords.push(rec);localCommentSaveAll();}if(cloudReady)commentRecords.push(rec);details.querySelector('textarea').value='';renderCommentList(details,targetType,targetId);details.open=true;showToast(cloudReady?'评论已同步':'评论已保存在本机');}catch(e){console.error(e);alert('评论发送失败：'+(e.message||'请检查网络'));}}
+function ensureDayCommentBoxes(){document.querySelectorAll('.day').forEach(day=>{if(!day.querySelector('.day-comment-box')){const d=photoDayFromDayArticle(day),body=day.querySelector('.day-body');const details=document.createElement('details');details.className='comment-box day-comment-box';details.dataset.commentDay=d;details.innerHTML='<summary>💬 评论（0）</summary><div class="comment-list"></div><div class="comment-form"><textarea placeholder="写一句对今天行程的感受……" maxlength="500"></textarea><button type="button">发送</button></div>';body.appendChild(details);details.querySelector('button').addEventListener('click',()=>submitComment('day',d,details));}});}
 async function refreshPhotos(){try{photoRecords=await photoGetAll();renderPhotoGallery();}catch(e){console.error(e);const host=document.getElementById('photoGallery');if(host)host.innerHTML='<div class="photo-empty">照片读取失败。请检查网络或改用 Safari / Chrome 后再试。</div>';}}
-function choosePhotosForDay(day){pendingPhotoDay=day||'d1';const target=document.getElementById('photoTargetDay');if(target)target.value=pendingPhotoDay;const input=document.getElementById('photoInput');if(input){input.value='';input.click();}}
-async function importPhotoFiles(files,day){if(!files?.length)return;const arr=[...files].slice(0,30);showToast('正在处理 '+arr.length+' 张照片…');let ok=0;for(const f of arr){if(!f.type.startsWith('image/'))continue;try{const blob=await compressPhoto(f);await photoPut({id:uidPhoto(),day,caption:'',name:f.name||'',createdAt:Date.now()+ok,blob});ok++;}catch(e){console.error(e);}}await refreshPhotos();showToast('已加入 '+ok+' 张照片');}
+function syncPhotoUploadControls(){const cat=document.getElementById('photoTargetCategory')?.value||'scenery';const meal=document.getElementById('photoTargetMeal');if(meal)meal.style.display=cat==='food'?'block':'none';}
+function choosePhotosForDay(day,category='scenery',meal='dinner'){pendingPhotoDay=day||'d1';pendingPhotoCategory=category||'scenery';pendingPhotoMeal=meal||'dinner';const target=document.getElementById('photoTargetDay');if(target)target.value=pendingPhotoDay;const cat=document.getElementById('photoTargetCategory');if(cat)cat.value=pendingPhotoCategory;const ms=document.getElementById('photoTargetMeal');if(ms)ms.value=pendingPhotoMeal;syncPhotoUploadControls();const input=document.getElementById('photoInput');if(input){input.value='';input.click();}}
+async function importPhotoFiles(files,day,category=pendingPhotoCategory,meal=pendingPhotoMeal){if(!files?.length)return;const arr=[...files].slice(0,30);showToast('正在处理 '+arr.length+' 张照片…');let ok=0;for(const f of arr){if(!f.type.startsWith('image/'))continue;try{const blob=await compressPhoto(f);await photoPut({id:uidPhoto(),day,category:category||'scenery',meal:meal||'dinner',caption:'',name:f.name||'',createdAt:Date.now()+ok,blob});ok++;}catch(e){console.error(e);}}await refreshPhotos();showToast('已加入 '+ok+' 张照片');}
 function openPhoto(id){
   const rec=photoRecordById(id);if(!rec)return;const filter=document.getElementById('photoFilter')?.value||'all';const scope=filter==='all'?sortedPhotos(photoRecords):sortedPhotos(photoRecords.filter(x=>x.day===filter));currentPhotoIds=scope.map(x=>x.id);currentPhotoIndex=Math.max(0,currentPhotoIds.indexOf(id));updatePhotoLightbox();const lb=document.getElementById('photoLightbox');lb.classList.add('open');lb.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';
 }
 let lightboxURL=null;
-function updatePhotoLightbox(){const id=currentPhotoIds[currentPhotoIndex],rec=photoRecordById(id);if(!rec)return;if(lightboxURL)maybeRevokePhotoURL(lightboxURL);lightboxURL=photoThumbURL(rec);document.getElementById('photoLightboxImg').src=lightboxURL;document.getElementById('photoLightboxTitle').textContent=PHOTO_DAY_META[rec.day].title;document.getElementById('photoLightboxCount').textContent=(currentPhotoIndex+1)+' / '+currentPhotoIds.length;document.getElementById('photoCaptionInput').value=rec.caption||'';document.getElementById('photoPrevBtn').style.visibility=currentPhotoIds.length>1?'visible':'hidden';document.getElementById('photoNextBtn').style.visibility=currentPhotoIds.length>1?'visible':'hidden';}
+function updatePhotoLightbox(){const id=currentPhotoIds[currentPhotoIndex],rec=photoRecordById(id);if(!rec)return;if(lightboxURL)maybeRevokePhotoURL(lightboxURL);lightboxURL=photoThumbURL(rec);document.getElementById('photoLightboxImg').src=lightboxURL;document.getElementById('photoLightboxTitle').textContent=PHOTO_DAY_META[rec.day].title+' · '+(rec.category==='food'?(MEAL_META[rec.meal]||'美食'):'风景');document.getElementById('photoLightboxCount').textContent=(currentPhotoIndex+1)+' / '+currentPhotoIds.length;document.getElementById('photoCaptionInput').value=rec.caption||'';document.getElementById('photoPrevBtn').style.visibility=currentPhotoIds.length>1?'visible':'hidden';document.getElementById('photoNextBtn').style.visibility=currentPhotoIds.length>1?'visible':'hidden';const cd=document.getElementById('photoCommentDetails');if(cd){cd.dataset.commentPhoto=id;renderCommentList(cd,'photo',id);}}
 function closePhotoLightbox(){const lb=document.getElementById('photoLightbox');lb.classList.remove('open');lb.setAttribute('aria-hidden','true');document.body.style.overflow='';if(lightboxURL){maybeRevokePhotoURL(lightboxURL);lightboxURL=null;}}
 function stepPhoto(delta){if(!currentPhotoIds.length)return;currentPhotoIndex=(currentPhotoIndex+delta+currentPhotoIds.length)%currentPhotoIds.length;updatePhotoLightbox();}
 async function saveCurrentPhotoCaption(){const id=currentPhotoIds[currentPhotoIndex],rec=photoRecordById(id);if(!rec)return;rec.caption=document.getElementById('photoCaptionInput').value.trim();await photoPut(rec);await refreshPhotos();showToast('照片备注已保存');}
 async function deleteCurrentPhoto(){const id=currentPhotoIds[currentPhotoIndex];if(!id||!confirm('删除这张照片吗？'))return;await photoDelete(id);currentPhotoIds.splice(currentPhotoIndex,1);await refreshPhotos();if(!currentPhotoIds.length){closePhotoLightbox();showToast('照片已删除');return;}currentPhotoIndex=Math.min(currentPhotoIndex,currentPhotoIds.length-1);updatePhotoLightbox();showToast('照片已删除');}
-async function exportPhotoBackup(){if(!photoRecords.length){alert('还没有照片可以导出。');return;}showToast('正在生成相册备份…');const records=[];for(const rec of sortedPhotos()){let blob=rec.blob;if(!blob&&cloudReady&&rec.filePath){const dl=await cloudClient.storage.from('trip-photos').download(rec.filePath);if(dl.error)throw dl.error;blob=dl.data;}if(!blob)continue;records.push({id:rec.id,day:rec.day,caption:rec.caption||'',name:rec.name||'',createdAt:rec.createdAt||Date.now(),data:await blobToDataURL(blob)});}const payload={type:'qinggan-trip-photo-backup',version:1,exportedAt:new Date().toISOString(),records};const blob=new Blob([JSON.stringify(payload)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='青甘旅行相册备份-'+ymd(new Date())+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500);showToast('相册备份已导出');}
-async function importPhotoBackupFile(file){try{const data=JSON.parse(await file.text());if(data.type!=='qinggan-trip-photo-backup'||!Array.isArray(data.records))throw new Error();if(photoRecords.length&&!confirm('导入会把备份照片合并到当前相册，继续吗？'))return;let n=0;for(const x of data.records){if(!PHOTO_DAY_META[x.day]||!x.data)continue;await photoPut({id:x.id||uidPhoto(),day:x.day,caption:x.caption||'',name:x.name||'',createdAt:x.createdAt||Date.now()+n,blob:dataURLToBlob(x.data)});n++;}await refreshPhotos();showToast('已导入 '+n+' 张照片');}catch(e){console.error(e);alert('相册备份导入失败，请选择本网页导出的相册备份 JSON 文件。');}}
-setupDayPhotoAreas();
-document.addEventListener('click',e=>{const add=e.target.closest('.day-photo-add');if(add){choosePhotosForDay(add.dataset.photoDay);return;}const thumb=e.target.closest('[data-photo-id]');if(thumb){openPhoto(thumb.dataset.photoId);}});
-document.getElementById('photoAddBtn')?.addEventListener('click',()=>choosePhotosForDay(document.getElementById('photoTargetDay')?.value||'d1'));
-document.getElementById('photoInput')?.addEventListener('change',async e=>{await importPhotoFiles(e.target.files,pendingPhotoDay);e.target.value='';});
+async function exportPhotoBackup(){if(!photoRecords.length){alert('还没有照片可以导出。');return;}showToast('正在生成相册备份…');const records=[];for(const rec of sortedPhotos()){let blob=rec.blob;if(!blob&&cloudReady&&rec.filePath){const dl=await cloudClient.storage.from('trip-photos').download(rec.filePath);if(dl.error)throw dl.error;blob=dl.data;}if(!blob)continue;records.push({id:rec.id,day:rec.day,category:rec.category||'scenery',meal:rec.meal||'dinner',caption:rec.caption||'',name:rec.name||'',createdAt:rec.createdAt||Date.now(),data:await blobToDataURL(blob)});}const payload={type:'qinggan-trip-photo-backup',version:1,exportedAt:new Date().toISOString(),records};const blob=new Blob([JSON.stringify(payload)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='青甘旅行相册备份-'+ymd(new Date())+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500);showToast('相册备份已导出');}
+async function importPhotoBackupFile(file){try{const data=JSON.parse(await file.text());if(data.type!=='qinggan-trip-photo-backup'||!Array.isArray(data.records))throw new Error();if(photoRecords.length&&!confirm('导入会把备份照片合并到当前相册，继续吗？'))return;let n=0;for(const x of data.records){if(!PHOTO_DAY_META[x.day]||!x.data)continue;await photoPut({id:x.id||uidPhoto(),day:x.day,category:x.category||'scenery',meal:x.meal||'dinner',caption:x.caption||'',name:x.name||'',createdAt:x.createdAt||Date.now()+n,blob:dataURLToBlob(x.data)});n++;}await refreshPhotos();showToast('已导入 '+n+' 张照片');}catch(e){console.error(e);alert('相册备份导入失败，请选择本网页导出的相册备份 JSON 文件。');}}
+setupDayPhotoAreas();ensureDayCommentBoxes();
+document.addEventListener('click',e=>{const add=e.target.closest('.day-photo-add');if(add){choosePhotosForDay(add.dataset.photoDay,add.dataset.photoCategory||'scenery',add.dataset.photoMeal||'dinner');return;}const thumb=e.target.closest('[data-photo-id]');if(thumb){openPhoto(thumb.dataset.photoId);}});
+document.getElementById('photoAddBtn')?.addEventListener('click',()=>choosePhotosForDay(document.getElementById('photoTargetDay')?.value||'d1',document.getElementById('photoTargetCategory')?.value||'scenery',document.getElementById('photoTargetMeal')?.value||'dinner'));
+document.getElementById('photoTargetCategory')?.addEventListener('change',syncPhotoUploadControls);syncPhotoUploadControls();
+document.getElementById('photoInput')?.addEventListener('change',async e=>{await importPhotoFiles(e.target.files,pendingPhotoDay,pendingPhotoCategory,pendingPhotoMeal);e.target.value='';});
 document.getElementById('photoFilter')?.addEventListener('change',renderPhotoGallery);
 document.getElementById('photoExportBtn')?.addEventListener('click',exportPhotoBackup);
 document.getElementById('photoImportBtn')?.addEventListener('click',()=>document.getElementById('photoBackupInput')?.click());
 document.getElementById('photoBackupInput')?.addEventListener('change',async e=>{const f=e.target.files?.[0];if(f)await importPhotoBackupFile(f);e.target.value='';});
 document.getElementById('photoCloseBtn')?.addEventListener('click',closePhotoLightbox);document.getElementById('photoPrevBtn')?.addEventListener('click',()=>stepPhoto(-1));document.getElementById('photoNextBtn')?.addEventListener('click',()=>stepPhoto(1));document.getElementById('photoSaveCaptionBtn')?.addEventListener('click',saveCurrentPhotoCaption);document.getElementById('photoDeleteBtn')?.addEventListener('click',deleteCurrentPhoto);
+document.getElementById('photoCommentDetails')?.querySelector('button')?.addEventListener('click',()=>{const d=document.getElementById('photoCommentDetails');submitComment('photo',d.dataset.commentPhoto,d);});
 document.getElementById('photoLightbox')?.addEventListener('click',e=>{if(e.target.id==='photoLightbox')closePhotoLightbox();});
 document.addEventListener('keydown',e=>{if(!document.getElementById('photoLightbox')?.classList.contains('open'))return;if(e.key==='Escape')closePhotoLightbox();else if(e.key==='ArrowLeft')stepPhoto(-1);else if(e.key==='ArrowRight')stepPhoto(1);});
-refreshPhotos();
+refreshPhotos();refreshComments();
 
 /* ===== 费用计算 ===== */
 const COST_KEY='qinggan_trip_costs_v1';
@@ -952,7 +1005,7 @@ function saveCostsLocal(){
   }));
   localStorage.setItem(COST_KEY,JSON.stringify(costState));
 }
-function saveCosts(){saveCostsLocal();scheduleCloudStatePush();}
+function saveCosts(){saveCostsLocal();localStorage.setItem(CLOUD_DIRTY_KEY,'1');scheduleCloudStatePush();}
 function calcCosts(){
   let grand=0;
   document.querySelectorAll('.cost-group').forEach(group=>{
@@ -1025,7 +1078,7 @@ function saveStateLocal(silent=false){
   localStorage.setItem(EDIT_KEY,JSON.stringify(editState));
   if(!silent) showToast(cloudReady?'已保存，正在同步':'已保存到本机');
 }
-function saveState(silent=false){saveStateLocal(silent);scheduleCloudStatePush();if(!silent)refreshDynamicNavTargets(false);}
+function saveState(silent=false){saveStateLocal(silent);localStorage.setItem(CLOUD_DIRTY_KEY,'1');scheduleCloudStatePush();if(!silent)refreshDynamicNavTargets(true);}
 let toastTimer;
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),1300);}
 
@@ -1180,6 +1233,8 @@ document.getElementById('importFile').addEventListener('change',async e=>{
 /* ===== 家庭云同步 / Supabase ===== */
 const CLOUD_CONFIG_KEY='qinggan_cloud_config_v1';
 const CLOUD_LAST_KEY='qinggan_cloud_last_v1';
+const CLOUD_INIT_KEY='qinggan_cloud_initialized_v1';
+const CLOUD_DIRTY_KEY='qinggan_cloud_dirty_v1';
 let cloudConfig={url:'',key:'',email:''};
 try{cloudConfig=Object.assign(cloudConfig,JSON.parse(localStorage.getItem(CLOUD_CONFIG_KEY)||'{}'));}catch(e){}
 let cloudLastKnownUpdatedAt=localStorage.getItem(CLOUD_LAST_KEY)||'';
@@ -1243,7 +1298,7 @@ async function cloudPushStateNow(){
     setCloudStatus('syncing','☁️ 正在同步','正在把这台手机的修改保存到家庭云端…');
     const payload=collectTripCloudPayload(),updated_at=new Date().toISOString();
     const {error}=await cloudClient.from('trip_state').upsert({user_id:cloudUser.id,payload,updated_at},{onConflict:'user_id'});
-    if(error)throw error;cloudLastKnownUpdatedAt=updated_at;localStorage.setItem(CLOUD_LAST_KEY,updated_at);
+    if(error)throw error;cloudLastKnownUpdatedAt=updated_at;localStorage.setItem(CLOUD_LAST_KEY,updated_at);localStorage.setItem(CLOUD_INIT_KEY,'1');localStorage.removeItem(CLOUD_DIRTY_KEY);
     setCloudStatus('online','✓ 已同步',cloudConfig.email||'家庭账号已连接');
   }catch(e){console.error(e);setCloudStatus('error','⚠️ 同步失败',e.message||'请检查网络和 Supabase 设置');}
 }
@@ -1256,7 +1311,7 @@ async function cloudPullAndMaybeApply(force=false){
     const row=await fetchCloudState();if(!row)return;
     const remote=JSON.stringify(row.payload||{}),local=JSON.stringify(collectTripCloudPayload());
     if(force||remote!==local){
-      cloudApplying=true;applyTripCloudPayload(row.payload);cloudLastKnownUpdatedAt=row.updated_at||'';localStorage.setItem(CLOUD_LAST_KEY,cloudLastKnownUpdatedAt);
+      cloudApplying=true;applyTripCloudPayload(row.payload);cloudLastKnownUpdatedAt=row.updated_at||'';localStorage.setItem(CLOUD_LAST_KEY,cloudLastKnownUpdatedAt);localStorage.setItem(CLOUD_INIT_KEY,'1');localStorage.removeItem(CLOUD_DIRTY_KEY);
       setCloudStatus('online','✓ 已读取云端','正在载入家人最新修改…');setTimeout(()=>location.reload(),250);return;
     }
     cloudLastKnownUpdatedAt=row.updated_at||cloudLastKnownUpdatedAt;setCloudStatus('online','✓ 已同步',cloudConfig.email||'家庭账号已连接');
@@ -1264,23 +1319,20 @@ async function cloudPullAndMaybeApply(force=false){
 }
 async function cloudPoll(){
   if(!cloudReady||document.hidden)return;
-  try{const row=await fetchCloudState();if(!row)return;if(row.updated_at&&row.updated_at!==cloudLastKnownUpdatedAt){const remote=JSON.stringify(row.payload||{}),local=JSON.stringify(collectTripCloudPayload());cloudLastKnownUpdatedAt=row.updated_at;localStorage.setItem(CLOUD_LAST_KEY,row.updated_at);if(remote!==local&&!document.body.classList.contains('editing')){cloudApplying=true;applyTripCloudPayload(row.payload);setCloudStatus('syncing','☁️ 收到家人修改','正在更新页面…');setTimeout(()=>location.reload(),300);}}}catch(e){console.warn('cloud poll',e);}
+  try{const row=await fetchCloudState();await refreshComments();if(!row)return;if(row.updated_at&&row.updated_at!==cloudLastKnownUpdatedAt){const remote=JSON.stringify(row.payload||{}),local=JSON.stringify(collectTripCloudPayload());cloudLastKnownUpdatedAt=row.updated_at;localStorage.setItem(CLOUD_LAST_KEY,row.updated_at);if(remote!==local&&!document.body.classList.contains('editing')&&localStorage.getItem(CLOUD_DIRTY_KEY)!=='1'){cloudApplying=true;applyTripCloudPayload(row.payload);setCloudStatus('syncing','☁️ 收到家人修改','正在更新页面…');setTimeout(()=>location.reload(),300);}}}catch(e){console.warn('cloud poll',e);}
 }
 async function afterCloudSignedIn(user){
   cloudUser=user;cloudReady=true;document.getElementById('cloudAccountState').textContent='已登录：'+(user.email||cloudConfig.email||'家庭账号');
-  setCloudStatus('online','☁️ 云端已连接','正在检查家庭最新版本…');
+  setCloudStatus('syncing','☁️ 正在读取云端','每次打开页面会自动读取家庭最新版本…');
   if(cloudPollTimer)clearInterval(cloudPollTimer);cloudPollTimer=setInterval(cloudPoll,12000);
-  await refreshPhotos();
+  await refreshPhotos();await refreshComments();
   const row=await fetchCloudState();
-  if(!row){
-    setCloudStatus('online','☁️ 已连接，尚未初始化','请点“上传本机现有数据和照片到云端”建立家庭初始版本');return;
-  }
-  const remote=JSON.stringify(row.payload||{}),local=JSON.stringify(collectTripCloudPayload());
-  cloudLastKnownUpdatedAt=row.updated_at||'';localStorage.setItem(CLOUD_LAST_KEY,cloudLastKnownUpdatedAt);
-  if(remote===local){setCloudStatus('online','✓ 已同步',cloudConfig.email||'家庭账号已连接');return;}
-  if(await localHasMeaningfulData()){
-    setCloudStatus('syncing','☁️ 本机与云端内容不同','若这是你已修改过的手机，请先点“上传本机现有数据”；否则点“从云端重新读取”');
-  }else{cloudApplying=true;applyTripCloudPayload(row.payload);setTimeout(()=>location.reload(),250);}
+  if(!row){setCloudStatus('online','☁️ 已连接，尚未初始化','这是第一次使用，请点“上传本机现有数据和照片到云端”');return;}
+  const initialized=localStorage.getItem(CLOUD_INIT_KEY)==='1',dirty=localStorage.getItem(CLOUD_DIRTY_KEY)==='1';
+  if(initialized&&!dirty){cloudApplying=true;applyTripCloudPayload(row.payload);cloudLastKnownUpdatedAt=row.updated_at||'';localStorage.setItem(CLOUD_LAST_KEY,cloudLastKnownUpdatedAt);setCloudStatus('online','✓ 已自动读取云端','家庭最新版本已加载');setTimeout(()=>location.reload(),220);return;}
+  if(initialized&&dirty){setCloudStatus('syncing','☁️ 本机有未同步修改','为防止覆盖你的修改，请先保存/同步本机内容');return;}
+  if(await localHasMeaningfulData())setCloudStatus('syncing','☁️ 等待首次同步','请确认是否把这台手机现有内容上传为家庭初始版本');
+  else{cloudApplying=true;applyTripCloudPayload(row.payload);cloudLastKnownUpdatedAt=row.updated_at||'';localStorage.setItem(CLOUD_LAST_KEY,cloudLastKnownUpdatedAt);localStorage.setItem(CLOUD_INIT_KEY,'1');setTimeout(()=>location.reload(),220);}
 }
 async function initializeCloud(){
   if(!cloudConfig.url||!cloudConfig.key){setCloudStatus('','☁️ 云同步未连接','先在“同步设置”中完成一次 Supabase 配置');return;}
@@ -1303,9 +1355,9 @@ async function cloudLogout(){try{if(cloudClient)await cloudClient.auth.signOut()
 /* 云相册 */
 async function cloudPhotoGetAll(){
   if(!cloudReady||!cloudUser)return localPhotoGetAll();
-  const {data,error}=await cloudClient.from('trip_photos').select('id,day,caption,file_path,original_name,created_at,size_bytes').eq('user_id',cloudUser.id).order('created_at',{ascending:true});
+  const {data,error}=await cloudClient.from('trip_photos').select('id,day,category,meal,caption,file_path,original_name,created_at,size_bytes').eq('user_id',cloudUser.id).order('created_at',{ascending:true});
   if(error)throw error;const rows=data||[];
-  return Promise.all(rows.map(async x=>{let cloudUrl='';try{const r=await cloudClient.storage.from('trip-photos').createSignedUrl(x.file_path,86400);if(!r.error)cloudUrl=r.data.signedUrl;}catch(e){}return{id:x.id,day:x.day,caption:x.caption||'',name:x.original_name||'',createdAt:Number(x.created_at)||Date.now(),filePath:x.file_path,size:Number(x.size_bytes)||0,cloudUrl};}));
+  return Promise.all(rows.map(async x=>{let cloudUrl='';try{const r=await cloudClient.storage.from('trip-photos').createSignedUrl(x.file_path,86400);if(!r.error)cloudUrl=r.data.signedUrl;}catch(e){}return{id:x.id,day:x.day,category:x.category||'scenery',meal:x.meal||'dinner',caption:x.caption||'',name:x.original_name||'',createdAt:Number(x.created_at)||Date.now(),filePath:x.file_path,size:Number(x.size_bytes)||0,cloudUrl};}));
 }
 function photoExt(blob){const t=(blob?.type||'image/jpeg').toLowerCase();if(t.includes('png'))return'png';if(t.includes('webp'))return'webp';return'jpg';}
 async function cloudPhotoPut(rec){
@@ -1314,7 +1366,7 @@ async function cloudPhotoPut(rec){
   if(rec.blob){path=path||(`${cloudUser.id}/${rec.id}.${photoExt(rec.blob)}`);const up=await cloudClient.storage.from('trip-photos').upload(path,rec.blob,{contentType:rec.blob.type||'image/jpeg',upsert:true,cacheControl:'3600'});if(up.error)throw up.error;}
   if(!path){const old=photoRecords.find(x=>x.id===rec.id);path=old?.filePath||'';}
   if(!path)throw new Error('照片文件路径缺失');
-  const row={id:rec.id,user_id:cloudUser.id,day:rec.day,caption:rec.caption||'',file_path:path,original_name:rec.name||'',created_at:Number(rec.createdAt)||Date.now(),size_bytes:Number(rec.blob?.size||rec.size||0)};
+  const row={id:rec.id,user_id:cloudUser.id,day:rec.day,category:rec.category||'scenery',meal:rec.meal||'dinner',caption:rec.caption||'',file_path:path,original_name:rec.name||'',created_at:Number(rec.createdAt)||Date.now(),size_bytes:Number(rec.blob?.size||rec.size||0)};
   const {error}=await cloudClient.from('trip_photos').upsert(row,{onConflict:'id'});if(error)throw error;return row;
 }
 async function cloudPhotoDelete(id){
@@ -1329,20 +1381,21 @@ async function migrateLocalPhotosToCloud(){
 async function migrateLocalToCloud(){
   if(!cloudReady){alert('请先登录云端。');return;}
   if(!confirm('将这台手机当前的行程、费用、待办和本地照片作为家庭云端版本上传。继续吗？'))return;
-  try{setCloudStatus('syncing','☁️ 正在迁移','先保存行程和费用…');await cloudPushStateNow();const n=await migrateLocalPhotosToCloud();await refreshPhotos();setCloudStatus('online','✓ 本机内容已上传',`已迁移 ${n} 张本地照片；以后修改会自动同步`);showToast('已迁移到家庭云端');}
+  try{setCloudStatus('syncing','☁️ 正在迁移','先保存行程和费用…');await cloudPushStateNow();const n=await migrateLocalPhotosToCloud();await refreshPhotos();localStorage.setItem(CLOUD_INIT_KEY,'1');localStorage.removeItem(CLOUD_DIRTY_KEY);setCloudStatus('online','✓ 本机内容已上传',`已迁移 ${n} 张本地照片；以后修改会自动同步`);showToast('已迁移到家庭云端');}
   catch(e){console.error(e);alert('迁移失败：'+(e.message||'未知错误'));setCloudStatus('error','⚠️ 迁移失败',e.message||'请检查网络');}
 }
 async function exportFullLocalBackup(){
   try{
     saveStateLocal(true);saveCostsLocal();const records=[];let photos=[];
     if(cloudReady)photos=await cloudPhotoGetAll();else photos=await localPhotoGetAll();
-    for(const rec of photos){let blob=rec.blob;if(!blob&&cloudReady&&rec.filePath){const dl=await cloudClient.storage.from('trip-photos').download(rec.filePath);if(dl.error)throw dl.error;blob=dl.data;}if(blob)records.push({id:rec.id,day:rec.day,caption:rec.caption||'',name:rec.name||'',createdAt:rec.createdAt||Date.now(),data:await blobToDataURL(blob)});}
+    for(const rec of photos){let blob=rec.blob;if(!blob&&cloudReady&&rec.filePath){const dl=await cloudClient.storage.from('trip-photos').download(rec.filePath);if(dl.error)throw dl.error;blob=dl.data;}if(blob)records.push({id:rec.id,day:rec.day,category:rec.category||'scenery',meal:rec.meal||'dinner',caption:rec.caption||'',name:rec.name||'',createdAt:rec.createdAt||Date.now(),data:await blobToDataURL(blob)});}
     const payload={type:'qinggan-trip-full-backup',version:1,exportedAt:new Date().toISOString(),editState,costState,navGeoCache,checks:currentChecks(),photos:records};
     const blob=new Blob([JSON.stringify(payload)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='青甘旅行完整备份-'+ymd(new Date())+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500);showToast('完整备份已导出');
   }catch(e){console.error(e);alert('完整备份失败：'+(e.message||'未知错误'));}
 }
 
 document.getElementById('cloudSettingsBtn').addEventListener('click',openCloudSettings);
+document.getElementById('cloudPullTopBtn').addEventListener('click',async()=>{if(!cloudReady){openCloudSettings();return;}if(localStorage.getItem(CLOUD_DIRTY_KEY)==='1'){if(!confirm('本机还有未同步修改。继续读取云端会覆盖这些修改，确定吗？'))return;}await cloudPullAndMaybeApply(true);});
 document.getElementById('cloudCloseBtn').addEventListener('click',closeCloudSettings);
 document.getElementById('cloudOverlay').addEventListener('click',e=>{if(e.target.id==='cloudOverlay')closeCloudSettings();});
 document.getElementById('cloudSaveConfigBtn').addEventListener('click',()=>{saveCloudConfigFromForm();cloudClient=null;initializeCloud();});
