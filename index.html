@@ -120,6 +120,11 @@ body.time-picker-open{overflow:hidden}
 .nav-refresh-state{font-size:calc(10px + var(--font-step, 0px));color:var(--muted);margin-top:5px}
 @media(min-width:640px){.cloud-grid{grid-template-columns:1fr 1fr}.cloud-field.wide{grid-column:1/-1}.cloud-overlay{align-items:center}.cloud-text small{max-width:420px}}
 
+/* build / cloud-read stamp: helps verify deployed version and actual remote read frequency */
+.version-stamp{position:fixed;top:max(10px,env(safe-area-inset-top));right:10px;z-index:250;background:rgba(36,35,31,.90);color:#fff;border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:7px 9px;box-shadow:0 5px 18px rgba(0,0,0,.16);backdrop-filter:blur(10px);font-size:10px;line-height:1.45;text-align:right;pointer-events:none;max-width:min(270px,72vw)}
+.version-stamp strong{font-size:11px}.version-stamp .cloud-read-line{opacity:.78}
+@media(max-width:560px){.version-stamp{top:max(6px,env(safe-area-inset-top));right:6px;padding:5px 7px;font-size:9px;border-radius:10px;max-width:68vw}.version-stamp strong{font-size:10px}}
+
 </style>
 <script>
 try{document.documentElement.dataset.fontSize=localStorage.getItem('qinggan_font_size_v1')||'normal';}
@@ -544,6 +549,10 @@ catch(e){document.documentElement.dataset.fontSize='normal';}
   <input type="file" id="importFile" accept="application/json" hidden>
 </div>
 <div class="toast" id="toast">已保存</div>
+<div class="version-stamp" id="versionStamp" aria-label="网页版本信息">
+  <div><strong>网页版本：2026-08-24 23:26</strong></div>
+  <div class="cloud-read-line">最近云读取：<span id="lastCloudReadStamp">尚未读取</span></div>
+</div>
 <div class="bottom"><div class="bottom-inner"><button class="bigbtn alt" id="editBtn">编辑行程</button><button class="bigbtn alt" id="shareBtn">分享行程</button><button class="bigbtn" id="todayBtn">查看当天</button></div></div>
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
@@ -553,7 +562,28 @@ const CLOUD_CONFIG_KEY='qinggan_cloud_config_v1';
 const CLOUD_LAST_KEY='qinggan_cloud_last_v1';
 const CLOUD_INIT_KEY='qinggan_cloud_initialized_v1';
 const CLOUD_DIRTY_KEY='qinggan_cloud_dirty_v1';
+const CLOUD_LAST_READ_KEY='qinggan_cloud_last_read_v1';
+const CLOUD_LAST_AUTO_POLL_KEY='qinggan_cloud_last_auto_poll_v1';
 var cloudReady=false, cloudClient=null, cloudUser=null, cloudPushTimer=null, cloudPollTimer=null, cloudApplying=false, cloudLastPhotoRefresh=0;
+
+const PAGE_BUILD_STAMP='2026-08-24 23:26';
+function formatStamp(ts){
+  if(!ts)return'尚未读取';
+  const d=new Date(Number(ts)||ts);if(Number.isNaN(d.getTime()))return String(ts);
+  const p=n=>String(n).padStart(2,'0');
+  return `${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;
+}
+function renderVersionStamp(){
+  const box=document.getElementById('versionStamp');if(!box)return;
+  const strong=box.querySelector('strong');if(strong)strong.textContent='网页版本：'+PAGE_BUILD_STAMP;
+  const out=document.getElementById('lastCloudReadStamp');if(out)out.textContent=formatStamp(localStorage.getItem(CLOUD_LAST_READ_KEY));
+}
+function markCloudRead(source='auto'){
+  const now=Date.now();localStorage.setItem(CLOUD_LAST_READ_KEY,String(now));
+  if(source==='auto'||source==='startup'){localStorage.setItem(CLOUD_LAST_AUTO_POLL_KEY,String(now));cloudLastAutoPollAt=now;}
+  renderVersionStamp();
+}
+renderVersionStamp();
 
 /* ===== 核心按钮故障保护 =====
    某个地图/相册/评论初始化模块即使发生异常，也不能让“编辑行程/同步”整体失效。 */
@@ -1333,10 +1363,10 @@ async function localHasMeaningfulData(){
   try{meaningful=meaningful||(await localPhotoGetAll()).length>0;}catch(e){}
   return meaningful;
 }
-async function fetchCloudState(){
+async function fetchCloudState(source='auto'){
   if(!cloudReady||!cloudUser)return null;
   const {data,error}=await cloudClient.from('trip_state').select('payload,updated_at').eq('user_id',cloudUser.id).maybeSingle();
-  if(error)throw error;return data||null;
+  if(error)throw error;markCloudRead(source);return data||null;
 }
 async function cloudPushStateNow(){
   if(!cloudReady||!cloudUser||cloudApplying)return;
@@ -1352,12 +1382,13 @@ function scheduleCloudStatePush(){
   if(!cloudReady||cloudApplying)return;clearTimeout(cloudPushTimer);cloudPushTimer=setTimeout(cloudPushStateNow,900);
 }
 const CLOUD_POLL_INTERVAL_MS=60*60*1000; // 自动读取远程：每 1 小时最多一次
-let cloudLastAutoPollAt=0;
+let cloudLastAutoPollAt=Number(localStorage.getItem(CLOUD_LAST_AUTO_POLL_KEY)||0);
+function autoPollDue(){return !cloudLastAutoPollAt||Date.now()-cloudLastAutoPollAt>=CLOUD_POLL_INTERVAL_MS;}
 
 async function cloudPullAndMaybeApply(force=false){
   if(!cloudReady||!cloudUser)return;
   try{
-    const row=await fetchCloudState();cloudLastAutoPollAt=Date.now();if(!row)return;
+    const row=await fetchCloudState(force?'manual':'auto');if(!row)return;
     const remote=JSON.stringify(row.payload||{}),local=JSON.stringify(collectTripCloudPayload());
     if(force||remote!==local){
       cloudApplying=true;applyTripCloudPayload(row.payload);cloudLastKnownUpdatedAt=row.updated_at||'';localStorage.setItem(CLOUD_LAST_KEY,cloudLastKnownUpdatedAt);localStorage.setItem(CLOUD_INIT_KEY,'1');localStorage.removeItem(CLOUD_DIRTY_KEY);
@@ -1367,22 +1398,44 @@ async function cloudPullAndMaybeApply(force=false){
   }catch(e){console.error(e);setCloudStatus('error','⚠️ 读取云端失败',e.message||'请检查网络');}
 }
 async function cloudPoll(){
-  if(!cloudReady||document.hidden)return;
-  const now=Date.now();
-  if(cloudLastAutoPollAt&&now-cloudLastAutoPollAt<CLOUD_POLL_INTERVAL_MS)return;
-  cloudLastAutoPollAt=now;
-  try{const row=await fetchCloudState();await refreshComments();if(!row)return;if(row.updated_at&&row.updated_at!==cloudLastKnownUpdatedAt){const remote=JSON.stringify(row.payload||{}),local=JSON.stringify(collectTripCloudPayload());cloudLastKnownUpdatedAt=row.updated_at;localStorage.setItem(CLOUD_LAST_KEY,row.updated_at);if(remote!==local&&!document.body.classList.contains('editing')&&localStorage.getItem(CLOUD_DIRTY_KEY)!=='1'){cloudApplying=true;applyTripCloudPayload(row.payload);setCloudStatus('syncing','☁️ 收到家人修改','正在更新页面…');setTimeout(()=>location.reload(),300);}}}catch(e){console.warn('cloud poll',e);}
+  if(!cloudReady||document.hidden||!autoPollDue())return;
+  // Reserve the slot before the request so visibility/online events cannot start a second concurrent poll.
+  cloudLastAutoPollAt=Date.now();localStorage.setItem(CLOUD_LAST_AUTO_POLL_KEY,String(cloudLastAutoPollAt));
+  try{const row=await fetchCloudState('auto');await refreshComments();if(!row)return;if(row.updated_at&&row.updated_at!==cloudLastKnownUpdatedAt){const remote=JSON.stringify(row.payload||{}),local=JSON.stringify(collectTripCloudPayload());cloudLastKnownUpdatedAt=row.updated_at;localStorage.setItem(CLOUD_LAST_KEY,row.updated_at);if(remote!==local&&!document.body.classList.contains('editing')&&localStorage.getItem(CLOUD_DIRTY_KEY)!=='1'){cloudApplying=true;applyTripCloudPayload(row.payload);setCloudStatus('syncing','☁️ 收到家人修改','正在更新页面…');setTimeout(()=>location.reload(),300);}}}catch(e){console.warn('cloud poll',e);}
 }
 async function afterCloudSignedIn(user){
   cloudUser=user;cloudReady=true;document.getElementById('cloudAccountState').textContent='已登录：'+(user.email||cloudConfig.email||'家庭账号');
-  setCloudStatus('syncing','☁️ 正在读取云端','打开页面时读取一次；之后每 1 小时最多自动检查一次…');
   if(cloudPollTimer)clearInterval(cloudPollTimer);cloudPollTimer=setInterval(cloudPoll,CLOUD_POLL_INTERVAL_MS);
   await refreshPhotos();await refreshComments();
-  const row=await fetchCloudState();cloudLastAutoPollAt=Date.now();
-  if(!row){setCloudStatus('online','☁️ 已连接，尚未初始化','这是第一次使用，请点“上传本机现有数据和照片到云端”');return;}
+
   const initialized=localStorage.getItem(CLOUD_INIT_KEY)==='1',dirty=localStorage.getItem(CLOUD_DIRTY_KEY)==='1';
-  if(initialized&&!dirty){cloudApplying=true;applyTripCloudPayload(row.payload);cloudLastKnownUpdatedAt=row.updated_at||'';localStorage.setItem(CLOUD_LAST_KEY,cloudLastKnownUpdatedAt);setCloudStatus('online','✓ 已自动读取云端','家庭最新版本已加载');setTimeout(()=>location.reload(),220);return;}
+  // Once initialized, a page reload must NOT force another remote state read inside the one-hour window.
+  if(initialized&&!autoPollDue()){
+    const last=localStorage.getItem(CLOUD_LAST_READ_KEY);
+    setCloudStatus(dirty?'syncing':'online',dirty?'☁️ 本机有未同步修改':'✓ 云同步已连接',dirty?'为防止覆盖你的修改，请先保存/同步本机内容':'最近云端读取：'+formatStamp(last)+'；下一次自动读取最多每 1 小时一次');
+    return;
+  }
+
+  setCloudStatus('syncing','☁️ 正在读取云端','自动读取间隔固定为 1 小时…');
+  // Reserve startup as an automatic poll and persist it across reloads.
+  cloudLastAutoPollAt=Date.now();localStorage.setItem(CLOUD_LAST_AUTO_POLL_KEY,String(cloudLastAutoPollAt));
+  const row=await fetchCloudState('startup');
+  if(!row){setCloudStatus('online','☁️ 已连接，尚未初始化','这是第一次使用，请点“上传本机现有数据和照片到云端”');return;}
+
   if(initialized&&dirty){setCloudStatus('syncing','☁️ 本机有未同步修改','为防止覆盖你的修改，请先保存/同步本机内容');return;}
+  if(initialized&&!dirty){
+    const remote=JSON.stringify(row.payload||{}),local=JSON.stringify(collectTripCloudPayload());
+    cloudLastKnownUpdatedAt=row.updated_at||cloudLastKnownUpdatedAt;localStorage.setItem(CLOUD_LAST_KEY,cloudLastKnownUpdatedAt);
+    if(remote!==local){
+      cloudApplying=true;applyTripCloudPayload(row.payload);
+      setCloudStatus('syncing','☁️ 云端有新版本','正在应用最新家庭行程…');
+      setTimeout(()=>location.reload(),220);
+    }else{
+      setCloudStatus('online','✓ 已检查云端','当前就是家庭最新版本；下次自动读取约 1 小时后');
+    }
+    return;
+  }
+
   if(await localHasMeaningfulData())setCloudStatus('syncing','☁️ 等待首次同步','请确认是否把这台手机现有内容上传为家庭初始版本');
   else{cloudApplying=true;applyTripCloudPayload(row.payload);cloudLastKnownUpdatedAt=row.updated_at||'';localStorage.setItem(CLOUD_LAST_KEY,cloudLastKnownUpdatedAt);localStorage.setItem(CLOUD_INIT_KEY,'1');setTimeout(()=>location.reload(),220);}
 }
