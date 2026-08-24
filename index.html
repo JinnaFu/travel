@@ -1351,10 +1351,13 @@ async function cloudPushStateNow(){
 function scheduleCloudStatePush(){
   if(!cloudReady||cloudApplying)return;clearTimeout(cloudPushTimer);cloudPushTimer=setTimeout(cloudPushStateNow,900);
 }
+const CLOUD_POLL_INTERVAL_MS=60*60*1000; // 自动读取远程：每 1 小时最多一次
+let cloudLastAutoPollAt=0;
+
 async function cloudPullAndMaybeApply(force=false){
   if(!cloudReady||!cloudUser)return;
   try{
-    const row=await fetchCloudState();if(!row)return;
+    const row=await fetchCloudState();cloudLastAutoPollAt=Date.now();if(!row)return;
     const remote=JSON.stringify(row.payload||{}),local=JSON.stringify(collectTripCloudPayload());
     if(force||remote!==local){
       cloudApplying=true;applyTripCloudPayload(row.payload);cloudLastKnownUpdatedAt=row.updated_at||'';localStorage.setItem(CLOUD_LAST_KEY,cloudLastKnownUpdatedAt);localStorage.setItem(CLOUD_INIT_KEY,'1');localStorage.removeItem(CLOUD_DIRTY_KEY);
@@ -1365,14 +1368,17 @@ async function cloudPullAndMaybeApply(force=false){
 }
 async function cloudPoll(){
   if(!cloudReady||document.hidden)return;
+  const now=Date.now();
+  if(cloudLastAutoPollAt&&now-cloudLastAutoPollAt<CLOUD_POLL_INTERVAL_MS)return;
+  cloudLastAutoPollAt=now;
   try{const row=await fetchCloudState();await refreshComments();if(!row)return;if(row.updated_at&&row.updated_at!==cloudLastKnownUpdatedAt){const remote=JSON.stringify(row.payload||{}),local=JSON.stringify(collectTripCloudPayload());cloudLastKnownUpdatedAt=row.updated_at;localStorage.setItem(CLOUD_LAST_KEY,row.updated_at);if(remote!==local&&!document.body.classList.contains('editing')&&localStorage.getItem(CLOUD_DIRTY_KEY)!=='1'){cloudApplying=true;applyTripCloudPayload(row.payload);setCloudStatus('syncing','☁️ 收到家人修改','正在更新页面…');setTimeout(()=>location.reload(),300);}}}catch(e){console.warn('cloud poll',e);}
 }
 async function afterCloudSignedIn(user){
   cloudUser=user;cloudReady=true;document.getElementById('cloudAccountState').textContent='已登录：'+(user.email||cloudConfig.email||'家庭账号');
-  setCloudStatus('syncing','☁️ 正在读取云端','每次打开页面会自动读取家庭最新版本…');
-  if(cloudPollTimer)clearInterval(cloudPollTimer);cloudPollTimer=setInterval(cloudPoll,12000);
+  setCloudStatus('syncing','☁️ 正在读取云端','打开页面时读取一次；之后每 1 小时最多自动检查一次…');
+  if(cloudPollTimer)clearInterval(cloudPollTimer);cloudPollTimer=setInterval(cloudPoll,CLOUD_POLL_INTERVAL_MS);
   await refreshPhotos();await refreshComments();
-  const row=await fetchCloudState();
+  const row=await fetchCloudState();cloudLastAutoPollAt=Date.now();
   if(!row){setCloudStatus('online','☁️ 已连接，尚未初始化','这是第一次使用，请点“上传本机现有数据和照片到云端”');return;}
   const initialized=localStorage.getItem(CLOUD_INIT_KEY)==='1',dirty=localStorage.getItem(CLOUD_DIRTY_KEY)==='1';
   if(initialized&&!dirty){cloudApplying=true;applyTripCloudPayload(row.payload);cloudLastKnownUpdatedAt=row.updated_at||'';localStorage.setItem(CLOUD_LAST_KEY,cloudLastKnownUpdatedAt);setCloudStatus('online','✓ 已自动读取云端','家庭最新版本已加载');setTimeout(()=>location.reload(),220);return;}
@@ -1452,7 +1458,7 @@ document.getElementById('cloudMigrateBtn').addEventListener('click',migrateLocal
 document.getElementById('cloudPullBtn').addEventListener('click',async()=>{if(!cloudReady){alert('请先登录云端。');return;}if(confirm('从云端重新读取会覆盖这台手机尚未同步的本机修改，继续吗？'))await cloudPullAndMaybeApply(true);});
 document.getElementById('cloudFullBackupBtn').addEventListener('click',exportFullLocalBackup);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)cloudPoll();});
-window.addEventListener('online',()=>{if(cloudReady){setCloudStatus('syncing','☁️ 网络已恢复','正在检查家人最新修改…');cloudPoll();}});
+window.addEventListener('online',()=>{if(cloudReady){setCloudStatus('online','☁️ 网络已恢复','按每小时频率自动检查；需要时可点“立即同步”');cloudPoll();}});
 window.addEventListener('offline',()=>setCloudStatus('error','☁️ 当前离线','修改仍会保存在本机，联网后再同步'));
 initializeCloud();
 
