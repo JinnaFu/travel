@@ -549,6 +549,51 @@ catch(e){document.documentElement.dataset.fontSize='normal';}
 <script>
 const FONT_KEY='qinggan_font_size_v1';
 var cloudReady=false, cloudClient=null, cloudUser=null, cloudPushTimer=null, cloudPollTimer=null, cloudApplying=false, cloudLastPhotoRefresh=0;
+
+/* ===== 核心按钮故障保护 =====
+   某个地图/相册/评论初始化模块即使发生异常，也不能让“编辑行程/同步”整体失效。 */
+function bindCoreButtonsSafely(){
+  const edit=document.getElementById('editBtn');
+  if(edit && edit.dataset.coreBound!=='1'){
+    edit.dataset.coreBound='1';
+    edit.addEventListener('click',()=>{
+      const on=!document.body.classList.contains('editing');
+      try{ if(typeof setEditMode==='function') setEditMode(on); else throw new Error('edit initializer unavailable'); }
+      catch(err){
+        console.warn('edit fallback',err);
+        document.body.classList.toggle('editing',on);
+        document.querySelectorAll('.timeline .desc').forEach(el=>el.setAttribute('contenteditable',on?'true':'false'));
+        document.querySelectorAll('.timeline .time').forEach(el=>{if(on){el.tabIndex=0;el.setAttribute('role','button');}else{el.removeAttribute('tabindex');el.removeAttribute('role');}});
+        edit.textContent=on?'完成编辑':'编辑行程';
+      }
+    });
+  }
+  const settings=document.getElementById('cloudSettingsBtn');
+  if(settings && settings.dataset.coreBound!=='1'){
+    settings.dataset.coreBound='1';
+    settings.addEventListener('click',()=>{
+      try{if(typeof openCloudSettings==='function') return openCloudSettings();}catch(err){console.warn('cloud settings',err);}
+      const box=document.getElementById('cloudOverlay');
+      if(box){box.classList.add('open');box.setAttribute('aria-hidden','false');}
+    });
+  }
+  const pull=document.getElementById('cloudPullTopBtn');
+  if(pull && pull.dataset.coreBound!=='1'){
+    pull.dataset.coreBound='1';
+    pull.addEventListener('click',async()=>{
+      try{
+        if(typeof cloudPullAndMaybeApply==='function' && cloudReady){
+          if(localStorage.getItem(CLOUD_DIRTY_KEY)==='1' && !confirm('本机还有未同步修改。继续读取云端会覆盖这些修改，确定吗？')) return;
+          await cloudPullAndMaybeApply(true); return;
+        }
+      }catch(err){console.warn('cloud pull',err);}
+      const box=document.getElementById('cloudOverlay');
+      if(box){box.classList.add('open');box.setAttribute('aria-hidden','false');}
+    });
+  }
+}
+setTimeout(bindCoreButtonsSafely,0);
+
 const VALID_FONT_SIZES=new Set(['normal','large','xlarge']);
 function setTripFontSize(size,announce=true){
   if(!VALID_FONT_SIZES.has(size)) size='normal';
@@ -947,7 +992,7 @@ async function saveCurrentPhotoCaption(){const id=currentPhotoIds[currentPhotoIn
 async function deleteCurrentPhoto(){const id=currentPhotoIds[currentPhotoIndex];if(!id||!confirm('删除这张照片吗？'))return;await photoDelete(id);currentPhotoIds.splice(currentPhotoIndex,1);await refreshPhotos();if(!currentPhotoIds.length){closePhotoLightbox();showToast('照片已删除');return;}currentPhotoIndex=Math.min(currentPhotoIndex,currentPhotoIds.length-1);updatePhotoLightbox();showToast('照片已删除');}
 async function exportPhotoBackup(){if(!photoRecords.length){alert('还没有照片可以导出。');return;}showToast('正在生成相册备份…');const records=[];for(const rec of sortedPhotos()){let blob=rec.blob;if(!blob&&cloudReady&&rec.filePath){const dl=await cloudClient.storage.from('trip-photos').download(rec.filePath);if(dl.error)throw dl.error;blob=dl.data;}if(!blob)continue;records.push({id:rec.id,day:rec.day,category:rec.category||'scenery',meal:rec.meal||'dinner',caption:rec.caption||'',name:rec.name||'',createdAt:rec.createdAt||Date.now(),data:await blobToDataURL(blob)});}const payload={type:'qinggan-trip-photo-backup',version:1,exportedAt:new Date().toISOString(),records};const blob=new Blob([JSON.stringify(payload)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='青甘旅行相册备份-'+ymd(new Date())+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500);showToast('相册备份已导出');}
 async function importPhotoBackupFile(file){try{const data=JSON.parse(await file.text());if(data.type!=='qinggan-trip-photo-backup'||!Array.isArray(data.records))throw new Error();if(photoRecords.length&&!confirm('导入会把备份照片合并到当前相册，继续吗？'))return;let n=0;for(const x of data.records){if(!PHOTO_DAY_META[x.day]||!x.data)continue;await photoPut({id:x.id||uidPhoto(),day:x.day,category:x.category||'scenery',meal:x.meal||'dinner',caption:x.caption||'',name:x.name||'',createdAt:x.createdAt||Date.now()+n,blob:dataURLToBlob(x.data)});n++;}await refreshPhotos();showToast('已导入 '+n+' 张照片');}catch(e){console.error(e);alert('相册备份导入失败，请选择本网页导出的相册备份 JSON 文件。');}}
-setupDayPhotoAreas();ensureDayCommentBoxes();
+try{setupDayPhotoAreas();ensureDayCommentBoxes();}catch(err){console.error('photo/comment initializer failed',err);}
 document.addEventListener('click',e=>{const add=e.target.closest('.day-photo-add');if(add){choosePhotosForDay(add.dataset.photoDay,add.dataset.photoCategory||'scenery',add.dataset.photoMeal||'dinner');return;}const thumb=e.target.closest('[data-photo-id]');if(thumb){openPhoto(thumb.dataset.photoId);}});
 document.getElementById('photoAddBtn')?.addEventListener('click',()=>choosePhotosForDay(document.getElementById('photoTargetDay')?.value||'d1',document.getElementById('photoTargetCategory')?.value||'scenery',document.getElementById('photoTargetMeal')?.value||'dinner'));
 document.getElementById('photoTargetCategory')?.addEventListener('change',syncPhotoUploadControls);syncPhotoUploadControls();
@@ -1194,7 +1239,7 @@ function setupDayEditor(day){
   timeline.addEventListener('input',()=>saveState(true));
   timeline.addEventListener('blur',()=>saveState(),true);
 }
-document.querySelectorAll('.day').forEach(setupDayEditor);
+try{document.querySelectorAll('.day').forEach(setupDayEditor);}catch(err){console.error('day editor initializer failed',err);}
 
 function applyEditability(on,root=document){
   const fields=root===document?editableFields:[...root.querySelectorAll('.desc')];
@@ -1215,7 +1260,7 @@ function setEditMode(on){
   document.body.classList.toggle('editing',on);applyEditability(on);editBtn.textContent=on?'完成编辑':'编辑行程';
   if(on){document.querySelectorAll('.day-body').forEach(b=>b.style.display='block');showToast('编辑模式已开启');}else{saveState();}
 }
-editBtn.addEventListener('click',()=>setEditMode(!document.body.classList.contains('editing')));
+editBtn.dataset.coreBound='1';editBtn.addEventListener('click',()=>setEditMode(!document.body.classList.contains('editing')));
 
 // Export/import makes it possible to move edits between phones.
 document.getElementById('exportBtn').addEventListener('click',()=>{
@@ -1394,8 +1439,8 @@ async function exportFullLocalBackup(){
   }catch(e){console.error(e);alert('完整备份失败：'+(e.message||'未知错误'));}
 }
 
-document.getElementById('cloudSettingsBtn').addEventListener('click',openCloudSettings);
-document.getElementById('cloudPullTopBtn').addEventListener('click',async()=>{if(!cloudReady){openCloudSettings();return;}if(localStorage.getItem(CLOUD_DIRTY_KEY)==='1'){if(!confirm('本机还有未同步修改。继续读取云端会覆盖这些修改，确定吗？'))return;}await cloudPullAndMaybeApply(true);});
+document.getElementById('cloudSettingsBtn').dataset.coreBound='1';document.getElementById('cloudSettingsBtn').addEventListener('click',openCloudSettings);
+document.getElementById('cloudPullTopBtn').dataset.coreBound='1';document.getElementById('cloudPullTopBtn').addEventListener('click',async()=>{if(!cloudReady){openCloudSettings();return;}if(localStorage.getItem(CLOUD_DIRTY_KEY)==='1'){if(!confirm('本机还有未同步修改。继续读取云端会覆盖这些修改，确定吗？'))return;}await cloudPullAndMaybeApply(true);});
 document.getElementById('cloudCloseBtn').addEventListener('click',closeCloudSettings);
 document.getElementById('cloudOverlay').addEventListener('click',e=>{if(e.target.id==='cloudOverlay')closeCloudSettings();});
 document.getElementById('cloudSaveConfigBtn').addEventListener('click',()=>{saveCloudConfigFromForm();cloudClient=null;initializeCloud();});
@@ -1413,5 +1458,6 @@ initializeCloud();
 
 // If old state restored links inside editable blocks, ensure nav links still work.
 bindNav();
+setTimeout(bindCoreButtonsSafely,50);
 </script>
 </body></html>
