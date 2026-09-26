@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#f6f3ed" />
-<title>青甘家庭自驾 · 2026.08.24–08.31</title>
+<title>广西国庆 7 天轻松自驾 · 2026.10.01–10.07</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
 <style>
 :root{
@@ -134,19 +134,17 @@ body.time-picker-open{overflow:hidden}
 
 </style>
 <script>
-try{document.documentElement.dataset.fontSize=localStorage.getItem('qinggan_font_size_v1')||'normal';}
+try{document.documentElement.dataset.fontSize=localStorage.getItem('guangxi_2026_font_size_v1')||'normal';}
 catch(e){document.documentElement.dataset.fontSize='normal';}
 </script>
 </head>
 <body>
 <div class="wrap">
   <header class="hero">
-    <div class="eyebrow">FAMILY ROAD TRIP · 2026</div>
-    <h1>青甘 8 天<br>轻松家庭自驾</h1>
-    <p>8 月 24 日—8 月 31 日 · 杭州出发 · 3 人 · SUV · 敦煌连住两晚</p>
-    <div class="chips">
-      <div class="chip">🚗 两人轮流驾驶</div><div class="chip">🏨 亚朵左右住宿</div><div class="chip">⛰️ 尽量减少高海拔停留</div><div class="chip">🌙 不追日出、不赶夜路</div>
-    </div>
+    <div class="eyebrow">GUANGXI ROAD TRIP · 2026</div>
+    <h1>广西 7 天<br>两个人的山水假期</h1>
+    <p>10 月 1 日—10 月 7 日 · 深圳往返 · 2 人 · 瀑布与峡谷优先 · 靖西连住两晚</p>
+    <div class="chips"><div class="chip">🚗 主驾为主，少车路段换手</div><div class="chip">🏨 连锁酒店 · 1 间大床房</div><div class="chip">💧 德天瀑布 + 通灵峡谷</div><div class="chip">🌿 每天最多一个核心景点</div></div>
   </header>
 
   <div class="font-toolbar" role="group" aria-label="字体大小">
@@ -159,20 +157,18 @@ catch(e){document.documentElement.dataset.fontSize='normal';}
   </div>
 
   <div class="cloud-bar" id="cloudBar">
-    <div class="cloud-status-wrap"><span class="cloud-dot" id="cloudDot"></span><div class="cloud-text"><strong id="cloudStatus">☁️ 云同步未连接</strong><small id="cloudStatusDetail">本机修改仍会保留；连接后可与家人共享行程和照片</small></div></div>
+    <div class="cloud-status-wrap"><span class="cloud-dot" id="cloudDot"></span><div class="cloud-text"><strong id="cloudStatus">☁️ 云同步未连接</strong><small id="cloudStatusDetail">本机修改仍会保留；连接后可与同伴共享行程和照片</small></div></div>
     <div style="display:flex;gap:7px;flex:0 0 auto"><button class="cloud-settings-btn" id="cloudPullTopBtn" type="button">☁️ 立即同步</button><button class="cloud-settings-btn" id="cloudSettingsBtn" type="button">同步设置</button></div>
   </div>
 
   <div class="comment-unread-bar" id="commentUnreadBar" aria-live="polite">
-    <div class="comment-unread-text">💬 <strong id="commentUnreadCount">0 条未读评论</strong><div class="comment-sync-hint" id="commentUnreadHint">家人的新评论会自动同步到这台设备</div></div>
+    <div class="comment-unread-text">💬 <strong id="commentUnreadCount">0 条未读评论</strong><div class="comment-sync-hint" id="commentUnreadHint">同伴的新评论会自动同步到这台设备</div></div>
     <button class="comment-unread-open" id="commentUnreadOpenBtn" type="button">查看</button>
   </div>
 
   <div class="route">
     <div class="route-title">路线总览</div>
-    <div class="route-line">
-      <div class="stop"><b></b>杭州</div><div class="stop"><b></b>兰州</div><div class="stop"><b></b>西宁</div><div class="stop"><b></b>青海湖</div><div class="stop"><b></b>茶卡</div><div class="stop"><b></b>大柴旦</div><div class="stop"><b></b>敦煌 ×2</div><div class="stop"><b></b>嘉峪关</div><div class="stop"><b></b>张掖</div><div class="stop"><b></b>兰州</div><div class="stop"><b></b>杭州</div>
-    </div>
+    <div class="route-line"><div class="stop"><b></b>深圳</div><div class="stop"><b></b>玉林</div><div class="stop"><b></b>大新</div><div class="stop"><b></b>德天</div><div class="stop"><b></b>靖西 ×2</div><div class="stop"><b></b>通灵</div><div class="stop"><b></b>鹅泉</div><div class="stop"><b></b>南宁</div><div class="stop"><b></b>梧州</div><div class="stop"><b></b>深圳</div></div>
   </div>
 
   <nav class="tabs">
@@ -190,177 +186,95 @@ catch(e){document.documentElement.dataset.fontSize='normal';}
     <div class="edit-help">✏️ <strong>编辑模式已开启：</strong>点击时间会打开“小时 / 分钟”轮盘；其他虚线文字可直接修改。每个时间节点还可以上移、下移或删除，也可以在每天底部新增一项。修改会自动保存在当前手机/浏览器。
     </div>
     <section id="days" class="section active">
-      <div class="drive-nav-hint">📍 <strong>高德驾车：</strong>每天行程底部带“导航”的按钮会打开高德路线规划，手机端自动以<strong>你当前的位置</strong>为起点、对应地点为终点，并按驾车方式规划路线。</div>
-      <div class="day-view-filter">
-        <div><strong>📅 显示哪一天的行程</strong><small>后面几天照片变多后，可以只显示当天，避免一直向下翻。</small></div>
-        <select id="dayViewFilter" class="day-view-select" aria-label="选择显示哪一天的行程">
-          <option value="all">全部 8 天</option><option value="d1">第1天 · 8/24</option><option value="d2">第2天 · 8/25</option><option value="d3">第3天 · 8/26</option><option value="d4">第4天 · 8/27</option><option value="d5">第5天 · 8/28</option><option value="d6">第6天 · 8/29</option><option value="d7">第7天 · 8/30</option><option value="d8">第8天 · 8/31</option>
-        </select>
-      </div>
-
-      <article class="day" data-date="2026-08-24">
-        <div class="day-head"><div><div class="day-kicker">DAY 1 · 8/24 周一</div><h2>杭州 → 兰州 → 西宁</h2><div class="sub">纯交通日 · 不安排景点</div></div><div class="badge">轻松</div></div>
-        <div class="day-body"><div class="timeline">
-          <div class="item"><div class="time">07:00</div><div class="dot"></div><div class="desc">到杭州萧山机场<small>值机、托运行李、早餐</small></div></div>
-          <div class="item"><div class="time">09:15</div><div class="dot"></div><div class="desc">计划乘 MF8255 杭州 → 兰州<small>计划 12:15 抵达兰州中川 T3；最终以出票为准</small></div></div>
-          <div class="item"><div class="time">13:00</div><div class="dot"></div><div class="desc">中川机场 → 兰州西站<small>机场铁路/动车，给换乘留足余量</small></div></div>
-          <div class="item"><div class="time">15:49</div><div class="dot"></div><div class="desc">D2657 兰州西 → 西宁<small>计划 16:48 到，约 59 分钟</small></div></div>
-          <div class="item"><div class="time">17:10</div><div class="dot"></div><div class="desc">西宁站附近取 SUV<small>两位驾驶员都登记；取车拍完整视频</small></div></div>
-          <div class="item"><div class="time">18:10</div><div class="dot"></div><div class="desc">入住酒店 → 晚饭 → 早点休息</div></div>
-        </div>
-        <div class="hotel"><strong>🏨 西宁海湖新区国投广场亚朵S酒店</strong>建议家庭房 · 免费停车优先</div>
-        <div class="actions"><a class="btn primary nav" data-nav-key="d1-hotel" data-nav-source="hotel" data-place="西宁海湖新区国投广场亚朵S酒店">高德驾车 · 酒店</a><a class="btn" href="https://www.12306.cn/" target="_blank">12306</a></div>
-        </div>
-      </article>
-
-      <article class="day" data-date="2026-08-25">
-        <div class="day-head"><div><div class="day-kicker">DAY 2 · 8/25 周二</div><h2>西宁 → 青海湖 → 茶卡</h2><div class="sub">约 300 km · 累计驾驶约 5 h</div></div><div class="badge">自然风光</div></div>
-        <div class="day-body"><div class="timeline">
-          <div class="item"><div class="time">07:30</div><div class="dot"></div><div class="desc">起床、早餐</div></div>
-          <div class="item"><div class="time">08:30</div><div class="dot"></div><div class="desc">西宁出发</div></div>
-          <div class="item"><div class="time">11:00</div><div class="dot"></div><div class="desc" data-nav-stop="qhh">青海湖二郎剑景区<small>慢慢看湖 2 小时，不加长时间游船</small></div></div>
-          <div class="item"><div class="time">13:00</div><div class="dot"></div><div class="desc">午餐</div></div>
-          <div class="item"><div class="time">13:45</div><div class="dot"></div><div class="desc">出发前往茶卡</div></div>
-          <div class="item"><div class="time">16:10</div><div class="dot"></div><div class="desc">茶卡镇入住、放行李</div></div>
-          <div class="item"><div class="time">17:00</div><div class="dot"></div><div class="desc" data-nav-stop="chaka">茶卡盐湖<small>玩到约 19:30，傍晚光线更柔和</small></div></div>
-          <div class="item"><div class="time">20:15</div><div class="dot"></div><div class="desc">回酒店、晚饭</div></div>
-        </div>
-        <div class="note">海拔提示：青海湖和茶卡约 3000 m 上下。今天不跑跳、不饮酒，出现明显不适就减少停留。</div>
-        <div class="hotel"><strong>🏨 茶卡盐湖君道酒店</strong>优先三人房 / 亲子房</div>
-        <div class="actions"><a class="btn primary nav" data-nav-key="d2-qhh" data-nav-stop="qhh" data-place="青海湖二郎剑景区">高德驾车 · 青海湖</a><a class="btn nav" data-nav-key="d2-chaka" data-nav-stop="chaka" data-place="茶卡盐湖景区">高德驾车 · 茶卡</a></div>
-        </div>
-      </article>
-
-      <article class="day" data-date="2026-08-26">
-        <div class="day-head"><div><div class="day-kicker">DAY 3 · 8/26 周三</div><h2>茶卡 → 大柴旦 → 翡翠湖</h2><div class="sub">约 400 km · 驾驶约 4.5–5 h</div></div><div class="badge">长途但不赶</div></div>
-        <div class="day-body"><div class="timeline">
-          <div class="item"><div class="time">07:30</div><div class="dot"></div><div class="desc">起床、早餐</div></div>
-          <div class="item"><div class="time">09:00</div><div class="dot"></div><div class="desc">茶卡出发</div></div>
-          <div class="item"><div class="time">11:00</div><div class="dot"></div><div class="desc">服务区休息 15–20 分钟</div></div>
-          <div class="item"><div class="time">12:00</div><div class="dot"></div><div class="desc">德令哈附近午餐</div></div>
-          <div class="item"><div class="time">14:30</div><div class="dot"></div><div class="desc">抵达大柴旦，办理入住</div></div>
-          <div class="item"><div class="time">15:00</div><div class="dot"></div><div class="desc">午休约 1 小时</div></div>
-          <div class="item"><div class="time">16:30</div><div class="dot"></div><div class="desc" data-nav-stop="emerald">大柴旦翡翠湖<small>游览约 2 小时</small></div></div>
-          <div class="item"><div class="time">19:20</div><div class="dot"></div><div class="desc">回酒店、晚饭</div></div>
-        </div>
-        <div class="hotel"><strong>🏨 大柴旦丽呈华廷酒店（翡翠步行街店）</strong>优先三床房；供氧/加湿设施更适合父母同行</div>
-        <div class="actions"><a class="btn primary nav" data-nav-key="d3-emerald" data-nav-stop="emerald" data-place="大柴旦翡翠湖旅游景区">高德驾车 · 翡翠湖</a></div>
-        </div>
-      </article>
-
-      <article class="day" data-date="2026-08-27">
-        <div class="day-head"><div><div class="day-kicker">DAY 4 · 8/27 周四</div><h2>大柴旦 → 敦煌 → 鸣沙山</h2><div class="sub">驾驶约 4.5–5 h · 敦煌开始连住两晚</div></div><div class="badge">渐入轻松</div></div>
-        <div class="day-body"><div class="timeline">
-          <div class="item"><div class="time">07:45</div><div class="dot"></div><div class="desc">起床、早餐</div></div>
-          <div class="item"><div class="time">09:00</div><div class="dot"></div><div class="desc">大柴旦出发<small>途经当金山一带，只短暂经过高海拔路段</small></div></div>
-          <div class="item"><div class="time">12:30</div><div class="dot"></div><div class="desc">阿克塞附近午餐</div></div>
-          <div class="item"><div class="time">14:30</div><div class="dot"></div><div class="desc">抵达敦煌，办理入住</div></div>
-          <div class="item"><div class="time">15:00</div><div class="dot"></div><div class="desc">午休 1.5 小时</div></div>
-          <div class="item"><div class="time">17:00</div><div class="dot"></div><div class="desc" data-nav-stop="mingsha">出发前往鸣沙山月牙泉</div></div>
-          <div class="item"><div class="time">17:30</div><div class="dot"></div><div class="desc">入园<small>慢慢玩到日落后；务必在当日停止检票前进园</small></div></div>
-          <div class="item"><div class="time">21:00</div><div class="dot"></div><div class="desc">回敦煌市区吃饭</div></div>
-        </div>
-        <div class="hotel"><strong>🏨 敦煌沙州夜市北门亚朵酒店</strong>家庭房 · 连住 2 晚，不换酒店</div>
-        <div class="actions"><a class="btn primary nav" data-nav-key="d4-mingsha" data-nav-stop="mingsha" data-place="鸣沙山月牙泉景区">高德驾车 · 鸣沙山</a><a class="btn nav" data-nav-key="d4-night" data-place="敦煌沙州夜市">高德驾车 · 沙州夜市</a></div>
-        </div>
-      </article>
-
-      <article class="day" data-date="2026-08-28">
-        <div class="day-head"><div><div class="day-kicker">DAY 5 · 8/28 周五</div><h2>莫高窟 · 敦煌休息日</h2><div class="sub">不长途驾驶 · 整趟旅行缓冲日</div></div><div class="badge">核心景点</div></div>
-        <div class="day-body"><div class="timeline">
-          <div class="item"><div class="time">07:30</div><div class="dot"></div><div class="desc">起床、早餐</div></div>
-          <div class="item"><div class="time">08:20</div><div class="dot"></div><div class="desc">酒店出发</div></div>
-          <div class="item"><div class="time">08:40</div><div class="dot"></div><div class="desc" data-nav-stop="mogao">到莫高窟数字展示中心<small>建议至少提前 30 分钟抵达</small></div></div>
-          <div class="item"><div class="time">09:00</div><div class="dot"></div><div class="desc">常规参观<small>数字展示 + 实体洞窟；具体入场时间以预约票为准</small></div></div>
-          <div class="item"><div class="time">12:30</div><div class="dot"></div><div class="desc">结束参观，返回市区</div></div>
-          <div class="item"><div class="time">13:10</div><div class="dot"></div><div class="desc">午饭</div></div>
-          <div class="item"><div class="time">14:00</div><div class="dot"></div><div class="desc">回酒店午休</div></div>
-          <div class="item"><div class="time">17:30</div><div class="dot"></div><div class="desc">自由活动<small>沙州夜市 / 咖啡 / 酒店休息，今天不再加远途景点</small></div></div>
-        </div>
-        <div class="note">莫高窟是本次最需要提前锁定的门票。2026 旺季实行实名分时预约；常规参观每日限量。</div>
-        <div class="actions"><a class="btn primary nav" data-nav-key="d5-mogao" data-nav-stop="mogao" data-place="莫高窟数字展示中心">高德驾车 · 莫高窟</a><a class="btn" href="https://www.dha.ac.cn/" target="_blank">敦煌研究院官网</a></div>
-        </div>
-      </article>
-
-      <article class="day" data-date="2026-08-29">
-        <div class="day-head"><div><div class="day-kicker">DAY 6 · 8/29 周六</div><h2>敦煌 → 嘉峪关</h2><div class="sub">约 370 km · 驾驶约 4–4.5 h</div></div><div class="badge">文化线</div></div>
-        <div class="day-body"><div class="timeline">
-          <div class="item"><div class="time">08:00</div><div class="dot"></div><div class="desc">起床、早餐、退房</div></div>
-          <div class="item"><div class="time">09:30</div><div class="dot"></div><div class="desc">敦煌出发</div></div>
-          <div class="item"><div class="time">11:30</div><div class="dot"></div><div class="desc">瓜州附近休息、午餐</div></div>
-          <div class="item"><div class="time">14:30</div><div class="dot"></div><div class="desc">抵达嘉峪关酒店，稍休息</div></div>
-          <div class="item"><div class="time">15:45</div><div class="dot"></div><div class="desc" data-nav-stop="jiayuguan">嘉峪关关城<small>只看关城本体，不加第一墩/悬壁长城</small></div></div>
-          <div class="item"><div class="time">18:15</div><div class="dot"></div><div class="desc">返回市区</div></div>
-          <div class="item"><div class="time">19:00</div><div class="dot"></div><div class="desc">晚饭、休息</div></div>
-        </div>
-        <div class="hotel"><strong>🏨 全季酒店（嘉峪关迎宾湖店）</strong>家庭房 · 免费停车优先</div>
-        <div class="actions"><a class="btn primary nav" data-nav-key="d6-jiayuguan" data-nav-stop="jiayuguan" data-place="嘉峪关关城景区">高德驾车 · 嘉峪关</a></div>
-        </div>
-      </article>
-
-      <article class="day" data-date="2026-08-30">
-        <div class="day-head"><div><div class="day-kicker">DAY 7 · 8/30 周日</div><h2>嘉峪关 → 七彩丹霞 → 张掖</h2><div class="sub">驾驶约 3 h · 下午看丹霞</div></div><div class="badge">日落友好</div></div>
-        <div class="day-body"><div class="timeline">
-          <div class="item"><div class="time">08:00</div><div class="dot"></div><div class="desc">起床、早餐</div></div>
-          <div class="item"><div class="time">10:00</div><div class="dot"></div><div class="desc">嘉峪关出发</div></div>
-          <div class="item"><div class="time">12:30</div><div class="dot"></div><div class="desc">七彩丹霞附近午饭</div></div>
-          <div class="item"><div class="time">13:30</div><div class="dot"></div><div class="desc">休息、喝咖啡，不急着进景区</div></div>
-          <div class="item"><div class="time">15:00</div><div class="dot"></div><div class="desc" data-nav-stop="danxia">张掖七彩丹霞<small>下午光线更适合看颜色和层次</small></div></div>
-          <div class="item"><div class="time">18:40</div><div class="dot"></div><div class="desc">离开景区，前往张掖市区</div></div>
-          <div class="item"><div class="time">19:30</div><div class="dot"></div><div class="desc">入住酒店</div></div>
-          <div class="item"><div class="time">20:30</div><div class="dot"></div><div class="desc">如租车公司支持，今晚完成异地还车</div></div>
-        </div>
-        <div class="hotel"><strong>🏨 建国璞隐（张掖西站大佛寺店）</strong>家庭房 · 靠近张掖西站</div>
-        <div class="actions"><a class="btn primary nav" data-nav-key="d7-danxia" data-nav-stop="danxia" data-place="张掖七彩丹霞旅游景区">高德驾车 · 七彩丹霞</a><a class="btn nav" data-nav-key="d7-zhangye" data-place="张掖西站">高德驾车 · 张掖西站</a></div>
-        </div>
-      </article>
-
-      <article class="day" data-date="2026-08-31">
-        <div class="day-head"><div><div class="day-kicker">DAY 8 · 8/31 周一</div><h2>张掖 → 兰州 → 杭州</h2><div class="sub">返程日 · 不安排景点</div></div><div class="badge">回家</div></div>
-        <div class="day-body"><div class="timeline">
-          <div class="item"><div class="time">07:00</div><div class="dot"></div><div class="desc">起床、早餐、退房</div></div>
-          <div class="item"><div class="time">08:20</div><div class="dot"></div><div class="desc">抵达张掖西站</div></div>
-          <div class="item"><div class="time">09:09</div><div class="dot"></div><div class="desc">计划乘 D2682 张掖西 → 兰州西<small>计划 12:27 抵达；最终以 12306 出票为准</small></div></div>
-          <div class="item"><div class="time">12:40</div><div class="dot"></div><div class="desc">兰州西 → 中川机场</div></div>
-          <div class="item"><div class="time">14:00</div><div class="dot"></div><div class="desc">抵达机场，午饭、休息、值机</div></div>
-          <div class="item"><div class="time">17:55</div><div class="dot"></div><div class="desc">计划乘 MU2446 兰州 → 杭州<small>计划 20:40 抵达杭州；最终以出票为准</small></div></div>
-        </div>
-        <div class="note">返程宁可在机场多留一些时间，也不要把高铁与航班衔接压得太紧。</div>
-        <div class="actions"><a class="btn primary" href="https://www.12306.cn/" target="_blank">打开 12306</a></div>
-        </div>
-      </article>
+<div class="drive-nav-hint">📍 <strong>高德导航：</strong>点按钮在高德搜索目的地，核对门店或景区游客中心后选择驾车。时间是建议节奏，车程为基础估算，未含严重拥堵；每天最多一个核心景点。</div>
+<div class="day-view-filter"><div><strong>📅 显示哪一天的行程</strong><small>按天查看行程、照片和评论。</small></div><select id="dayViewFilter" class="day-view-select" aria-label="选择显示哪一天的行程"><option value="all">全部 7 天</option><option value="d1">第1天 · 10/1</option><option value="d2">第2天 · 10/2</option><option value="d3">第3天 · 10/3</option><option value="d4">第4天 · 10/4</option><option value="d5">第5天 · 10/5</option><option value="d6">第6天 · 10/6</option><option value="d7">第7天 · 10/7</option></select></div>
+<article class="day" data-date="2026-10-01">
+<div class="day-head"><div><div class="day-kicker">DAY 1 · 10/1 周四</div><h2>深圳 → 玉林</h2><div class="sub">首日只转场 · 480–540 km · 基础驾驶 6–7 h</div></div><div class="badge">转场日</div></div>
+<div class="day-body"><div class="timeline"><div class="item"><div class="time">07:00</div><div class="dot"></div><div class="desc">深圳出发<small>前晚正常休息；出发前比较跨珠江路线，以当日导航为准</small></div></div>
+<div class="item"><div class="time">09:00</div><div class="dot"></div><div class="desc">服务区休息、按体力换人<small>约每 1.5–2 小时休息；只在停车后换驾驶员</small></div></div>
+<div class="item"><div class="time">12:00</div><div class="dot"></div><div class="desc">途中午餐与休息<small>预留 45–60 分钟，后续继续按驾驶时长休息</small></div></div>
+<div class="item"><div class="time">16:00</div><div class="dot"></div><div class="desc">目标下午至傍晚抵达玉林<small>不含严重拥堵的估计；办理入住，留足休息时间</small></div></div>
+<div class="item"><div class="time">18:00</div><div class="dot"></div><div class="desc">酒店附近晚餐<small>可尝当地米粉或家常菜，早点休息，不追加景点</small></div></div></div>
+<div class="note">这是全程较长的一天。国庆首日拥堵可能明显延长车程，抵达时间仅为目标；疲劳就近休息，不靠夜间赶路补进度。</div>
+<div class="hotel"><strong>🏨 玉林国际会展中心希尔顿欢朋酒店</strong>民主南路 336 号 · 2 位成人 / 1 间大床房</div>
+<div class="actions"><a class="btn primary nav" data-place="玉林国际会展中心希尔顿欢朋酒店" data-nav-key="d1-hotel" data-nav-source="hotel">高德 · 酒店</a></div></div></article>
+<article class="day" data-date="2026-10-02">
+<div class="day-head"><div><div class="day-kicker">DAY 2 · 10/2 周五</div><h2>玉林 → 大新县城</h2><div class="sub">早餐后出发 · 400–430 km · 基础驾驶 4.5–5.5 h</div></div><div class="badge">不加景点</div></div>
+<div class="day-body"><div class="timeline"><div class="item"><div class="time">09:00</div><div class="dot"></div><div class="desc">早餐后退房，前往大新<small>每 1.5–2 小时安排服务区休息</small></div></div>
+<div class="item"><div class="time">12:00</div><div class="dot"></div><div class="desc">途中午餐<small>车流少、白天且有把握的高速路段可由女生短段接替</small></div></div>
+<div class="item"><div class="time">15:30</div><div class="dot"></div><div class="desc">目标 15:00–16:00 入住大新<small>放下行李，洗漱休息；堵车时顺延</small></div></div>
+<div class="item"><div class="time">17:00</div><div class="dot"></div><div class="desc">确认次日德天预约和交通公告<small>核对订单时段、游客中心停车和接驳；预先加油/充电</small></div></div>
+<div class="item"><div class="time">18:00</div><div class="dot"></div><div class="desc">县城晚餐，早点休息<small>酒店地址是桂圆路 65 号，不是瀑布入口</small></div></div></div>
+<div class="note">住大新县城是为了保留连锁酒店选择，次日仍需较早出发去德天。下午不叠加明仕、安平仙河等项目。</div>
+<div class="hotel"><strong>🏨 维也纳国际酒店（大新德天广场店）</strong>桂圆路 65 号 · 2 位成人 / 1 间大床房</div>
+<div class="actions"><a class="btn primary nav" data-place="维也纳国际酒店（大新德天广场店）" data-nav-key="d2-hotel" data-nav-source="hotel">高德 · 酒店</a></div></div></article>
+<article class="day" data-date="2026-10-03">
+<div class="day-head"><div><div class="day-kicker">DAY 3 · 10/3 周六</div><h2>大新 → 德天瀑布 → 靖西</h2><div class="sub">本日唯一核心景点 · 150–180 km · 基础驾驶 3–4 h</div></div><div class="badge">瀑布优先</div></div>
+<div class="day-body"><div class="timeline"><div class="item"><div class="time">07:30</div><div class="dot"></div><div class="desc">退房，前往德天游客中心<small>预约成功后再出发；景区道路施工可能单向放行，额外留出缓冲</small></div></div>
+<div class="item"><div class="time">10:00</div><div class="dot"></div><div class="desc" data-nav-stop="detian">大新县德天跨国瀑布景区游客中心<small>重点看宽幅瀑布、喀斯特峰丛与归春河；时刻以订单为准</small></div></div>
+<div class="item"><div class="time">12:00</div><div class="dot"></div><div class="desc">景区午餐、坐下休息<small>竹筏仅在开放且队伍可接受时选择；不把所有体验项目打包</small></div></div>
+<div class="item"><div class="time">14:30</div><div class="dot"></div><div class="desc">目标离开景区，前往靖西<small>如排队超时，缩短可选项目；女司机不承担陌生山路/景区拥堵段</small></div></div>
+<div class="item"><div class="time">17:00</div><div class="dot"></div><div class="desc">目标傍晚入住靖西，晚餐<small>连住两晚；优先休息，锦绣古镇只在有余力时随意散步</small></div></div></div>
+<div class="note">按约到 10:00 时段规划，建议 07:30–08:00 从县城出发。先到游客中心停车换乘；游览 4–5 小时含景交、排队和午餐，按实际预约与施工管制调整。</div>
+<div class="hotel"><strong>🏨 宜尚酒店（百色靖西锦绣古镇店）</strong>绣球大道 1101 号 · 2 位成人 / 1 间大床房 · 连住第 1 晚</div>
+<div class="actions"><a class="btn primary nav" data-place="大新县德天跨国瀑布景区游客中心" data-nav-key="d3-detian" data-nav-stop="detian">高德 · 游客中心</a><a class="btn primary nav" data-place="宜尚酒店（百色靖西锦绣古镇店）" data-nav-key="d3-hotel" data-nav-source="hotel">高德 · 酒店</a></div></div></article>
+<article class="day" data-date="2026-10-04">
+<div class="day-head"><div><div class="day-kicker">DAY 4 · 10/4 周日</div><h2>靖西 → 通灵大峡谷 → 靖西</h2><div class="sub">峡谷半日 · 70–100 km · 基础驾驶 1.5–2 h</div></div><div class="badge">下午留白</div></div>
+<div class="day-body"><div class="timeline"><div class="item"><div class="time">09:00</div><div class="dot"></div><div class="desc">早餐后前往通灵大峡谷<small>穿防滑鞋、带轻便雨衣；先查天气与开放公告</small></div></div>
+<div class="item"><div class="time">10:00</div><div class="dot"></div><div class="desc" data-nav-stop="tongling">靖西市通灵大峡谷景区<small>安排约 3–4 小时，欣赏峡谷、洞中水景，按体力走官方开放路线</small></div></div>
+<div class="item"><div class="time">13:00</div><div class="dot"></div><div class="desc">午餐、返靖西<small>游览或排队较慢时顺延，下午没有必须赶到的项目</small></div></div>
+<div class="item"><div class="time">15:00</div><div class="dot"></div><div class="desc">酒店午休 / 自由活动<small>给腿脚和司机恢复体力，不追加第二个峡谷</small></div></div>
+<div class="item"><div class="time">18:00</div><div class="dot"></div><div class="desc">靖西晚餐<small>附近随意散步，累了就直接回房</small></div></div></div>
+<div class="note">峡谷有台阶、湿滑路面和返程爬升，“半日”仍有步行负担。若想体验地下河漂流，用古龙山替换通灵，当天只选一个；强降雨或闭园时改为酒店休息。</div>
+<div class="hotel"><strong>🏨 宜尚酒店（百色靖西锦绣古镇店）</strong>绣球大道 1101 号 · 2 位成人 / 1 间大床房 · 连住第 2 晚</div>
+<div class="actions"><a class="btn primary nav" data-place="靖西市通灵大峡谷景区" data-nav-key="d4-tongling" data-nav-stop="tongling">高德 · 景区</a><a class="btn primary nav" data-place="宜尚酒店（百色靖西锦绣古镇店）" data-nav-key="d4-hotel" data-nav-source="hotel">高德 · 酒店</a></div></div></article>
+<article class="day" data-date="2026-10-05">
+<div class="day-head"><div><div class="day-kicker">DAY 5 · 10/5 周一</div><h2>靖西 → 鹅泉 → 南宁</h2><div class="sub">清泉与峰林田园 · 280–320 km · 基础驾驶 3.5–4.5 h</div></div><div class="badge">短游转场</div></div>
+<div class="day-body"><div class="timeline"><div class="item"><div class="time">08:30</div><div class="dot"></div><div class="desc">早餐、退房，前往鹅泉<small>建议 08:30–09:00 左右出发，行李装车收好</small></div></div>
+<div class="item"><div class="time">09:00</div><div class="dot"></div><div class="desc" data-nav-stop="equan">靖西市鹅泉风景区<small>停留约 1.5–2 小时；适合两人散步，不额外攀爬</small></div></div>
+<div class="item"><div class="time">11:30</div><div class="dot"></div><div class="desc">早午餐后前往南宁<small>约 11:00–12:00 启程；途中按需休息，不再绕去其他景区</small></div></div>
+<div class="item"><div class="time">17:00</div><div class="dot"></div><div class="desc">目标傍晚入住南宁<small>避开跨城追美食，只在酒店附近吃晚饭</small></div></div>
+<div class="item"><div class="time">19:00</div><div class="dot"></div><div class="desc">自由休息<small>天气不好时取消鹅泉，早餐后直接转场</small></div></div></div>
+<div class="note">鹅泉主要补充清泉、峰林和田园的组合，游览控制在 1.5–2 小时，不等日落。中午前后启程去南宁，给道路拥堵留出余量。</div>
+<div class="hotel"><strong>🏨 南宁江南金凯路亚朵酒店</strong>金凯路 59 号 · 2 位成人 / 1 间大床房</div>
+<div class="actions"><a class="btn primary nav" data-place="靖西市鹅泉风景区" data-nav-key="d5-equan" data-nav-stop="equan">高德 · 景区</a><a class="btn primary nav" data-place="南宁江南金凯路亚朵酒店" data-nav-key="d5-hotel" data-nav-source="hotel">高德 · 酒店</a></div></div></article>
+<article class="day" data-date="2026-10-06">
+<div class="day-head"><div><div class="day-kicker">DAY 6 · 10/6 周二</div><h2>南宁 → 梧州龙圩</h2><div class="sub">拆分返程 · 340–380 km · 基础驾驶 4–5 h</div></div><div class="badge">缓冲日</div></div>
+<div class="day-body"><div class="timeline"><div class="item"><div class="time">09:00</div><div class="dot"></div><div class="desc">早餐后前往梧州龙圩区<small>两人按状态轮换，途中正常休息</small></div></div>
+<div class="item"><div class="time">12:00</div><div class="dot"></div><div class="desc">途中午餐<small>不为赶到酒店而连续驾驶</small></div></div>
+<div class="item"><div class="time">15:00</div><div class="dot"></div><div class="desc">目标下午入住酒店<small>洗漱、午休，附近有余力再散步</small></div></div>
+<div class="item"><div class="time">18:00</div><div class="dot"></div><div class="desc">晚餐并检查次日路线<small>提前加油/充电，确认深圳返程拥堵情况</small></div></div></div>
+<div class="note">梧州主要用于拆分返程长途，下午留白。若精神和天气都好，可在附近短走，不必专门赶去骑楼城或继续跨城。</div>
+<div class="hotel"><strong>🏨 麗枫酒店（梧州高铁南站苍海公园店）</strong>政贤路 136 号 · 2 位成人 / 1 间大床房</div>
+<div class="actions"><a class="btn primary nav" data-place="麗枫酒店（梧州高铁南站苍海公园店）" data-nav-key="d6-hotel" data-nav-source="hotel">高德 · 酒店</a></div></div></article>
+<article class="day" data-date="2026-10-07">
+<div class="day-head"><div><div class="day-kicker">DAY 7 · 10/7 周三</div><h2>梧州 → 深圳</h2><div class="sub">白天返程 · 380–430 km · 基础驾驶 5–6 h</div></div><div class="badge">平安到家</div></div>
+<div class="day-body"><div class="timeline"><div class="item"><div class="time">07:30</div><div class="dot"></div><div class="desc">早餐后退房，返回深圳<small>提前看跨珠江通道实时路况，以导航动态选择</small></div></div>
+<div class="item"><div class="time">09:30</div><div class="dot"></div><div class="desc">服务区休息<small>拥堵路段由更熟练的驾驶员驾驶，女生只接有把握的少车路段</small></div></div>
+<div class="item"><div class="time">12:00</div><div class="dot"></div><div class="desc">午餐和休息<small>若持续疲劳，延长休息并重新评估抵达时间</small></div></div>
+<div class="item"><div class="time">16:00</div><div class="dot"></div><div class="desc">目标下午至傍晚到家<small>到家前不追加城市景点；整理照片与记账</small></div></div></div>
+<div class="note">建议 07:30–08:00 出发，下午至傍晚到家是目标而非保证。国庆返程拥堵会放大时长；疲劳时必须休息，不用赶夜路弥补。</div>
+<div class="hotel"><strong>🏡 回深圳家中</strong>本日不预订酒店</div>
+<div class="actions"><a class="btn primary nav" data-place="深圳市" >高德 · 选择回家终点</a></div></div></article>
     </section>
 
 
     <section id="map" class="section">
-      <div class="callout"><h3>🗺️ 全程互动地图</h3><p>可以拖动、双指缩放或使用地图左上角 ＋/－。自驾段会联网加载道路路线；飞机和高铁段用示意线展示。</p></div>
-      <div class="map-card">
-        <div class="map-toolbar"><div><strong>杭州 → 兰州 → 西宁 → 青甘自驾 → 张掖 → 兰州 → 杭州</strong><small>编号规则：1.1 = 第1天第1站；可按天筛选路线和标记</small></div><div class="map-controls"><label for="mapDaySelect" style="font-size:calc(11px + var(--font-step, 0px));font-weight:850;color:var(--muted)">查看范围</label><select id="mapDaySelect" class="map-day-select" aria-label="选择查看某一天路线"><option value="all">全部行程</option><option value="d1">第1天 · 杭州→兰州→西宁</option><option value="d2">第2天 · 西宁→青海湖→茶卡</option><option value="d3">第3天 · 茶卡→大柴旦→翡翠湖</option><option value="d4">第4天 · 大柴旦→敦煌→鸣沙山</option><option value="d5">第5天 · 敦煌→莫高窟→敦煌</option><option value="d6">第6天 · 敦煌→嘉峪关</option><option value="d7">第7天 · 嘉峪关→七彩丹霞→张掖</option><option value="d8">第8天 · 张掖→兰州→杭州</option></select><button class="map-fit" id="mapFitBtn" type="button">显示全程</button></div></div>
-        <div id="tripMap"><div class="map-loading">首次打开地图时会加载地图瓦片和自驾道路路线，请保持网络连接。</div></div>
-        <div class="map-legend"><span class="legend-item"><i class="legend-line"></i>自驾道路</span><span class="legend-item"><i class="legend-line train"></i>高铁 / 机场铁路（示意）</span><span class="legend-item"><i class="legend-line flight"></i>航班（示意）</span></div>
-        <div class="map-status" id="mapStatus">点击“地图”后开始加载路线。</div>
-      </div>
-      <div class="map-code-guide"><strong>地图编号说明</strong><br>编号采用“天数.顺序”：例如 <strong>1.1</strong> 表示第 1 天第 1 站（杭州萧山机场），<strong>2.2</strong> 表示第 2 天第 2 站（青海湖）。同一个地点若跨多天重复经过，地图只放一个定位点，点击后会显示全部对应编号。</div>
-      <div class="map-note">手机端底图使用高德地图坐标系，行程点和道路路线会自动转换后显示。地图中的自驾线路仅用于看全程走向；施工、封路和临时交通管制请以出发当天高德导航为准。飞机和高铁线路为示意，不代表真实航迹或铁路轨迹。</div>
-      <div class="route-days">
-        <div class="route-day" data-map-day="d1"><div class="route-day-num" style="background:#75679a">D1</div><div class="route-day-info"><strong>1.1 杭州萧山机场 → 1.2 兰州中川机场 → 1.3 兰州西站 → 1.4 西宁</strong><small>飞机 + 机场铁路 + 高铁</small></div><button class="route-day-btn" type="button">只看当天</button></div>
-        <div class="route-day" data-map-day="d2"><div class="route-day-num" style="background:#bd6d3a">D2</div><div class="route-day-info"><strong>2.1 西宁 → 2.2 青海湖 → 2.3 茶卡</strong><small>约 300 km · 驾驶约 5 h</small></div><button class="route-day-btn" type="button">只看当天</button></div>
-        <div class="route-day" data-map-day="d3"><div class="route-day-num" style="background:#4f7d72">D3</div><div class="route-day-info"><strong>3.1 茶卡 → 3.2 大柴旦 → 3.3 翡翠湖</strong><small>约 400 km · 驾驶约 4.5–5 h</small></div><button class="route-day-btn" type="button">只看当天</button></div>
-        <div class="route-day" data-map-day="d4"><div class="route-day-num" style="background:#8a6a4c">D4</div><div class="route-day-info"><strong>4.1 大柴旦 → 4.2 敦煌 → 4.3 鸣沙山</strong><small>驾驶约 4.5–5 h</small></div><button class="route-day-btn" type="button">只看当天</button></div>
-        <div class="route-day" data-map-day="d5"><div class="route-day-num" style="background:#77658b">D5</div><div class="route-day-info"><strong>5.1 敦煌 → 5.2 莫高窟 → 5.3 敦煌</strong><small>本地短途 · 休息日</small></div><button class="route-day-btn" type="button">只看当天</button></div>
-        <div class="route-day" data-map-day="d6"><div class="route-day-num" style="background:#5b7089">D6</div><div class="route-day-info"><strong>6.1 敦煌 → 6.2 嘉峪关</strong><small>约 370 km · 驾驶约 4–4.5 h</small></div><button class="route-day-btn" type="button">只看当天</button></div>
-        <div class="route-day" data-map-day="d7"><div class="route-day-num" style="background:#9b6b63">D7</div><div class="route-day-info"><strong>7.1 嘉峪关 → 7.2 七彩丹霞 → 7.3 张掖</strong><small>驾驶约 3 h</small></div><button class="route-day-btn" type="button">只看当天</button></div>
-        <div class="route-day" data-map-day="d8"><div class="route-day-num" style="background:#3d7167">D8</div><div class="route-day-info"><strong>8.1 张掖西站 → 8.2 兰州西站 → 8.3 兰州中川机场 → 8.4 杭州萧山机场</strong><small>高铁 + 机场铁路 + 飞机</small></div><button class="route-day-btn" type="button">只看当天</button></div>
-      </div>
-      <div class="actions" style="margin-top:12px"><a class="btn primary nav" data-place="青海湖二郎剑景区">高德查看青海湖</a><a class="btn nav" data-place="张掖七彩丹霞旅游景区">高德查看丹霞</a></div>
+<div class="callout"><h3>🗺️ 全程互动地图</h3><p>拖动、缩放地图，按天查看自驾路线。道路服务不可用时显示示意连线，导航以高德实时结果为准。</p></div>
+<div class="map-card"><div class="map-toolbar"><div><strong>深圳 → 玉林 → 大新 / 靖西 → 南宁 → 梧州 → 深圳</strong><small>约 2,200–2,400 km · 编号 3.2 表示第 3 天第 2 站</small></div><div class="map-controls"><label for="mapDaySelect">查看范围</label><select id="mapDaySelect" class="map-day-select" aria-label="选择查看某一天路线"><option value="all">全部行程</option><option value="d1">第1天 · 深圳 → 玉林</option><option value="d2">第2天 · 玉林 → 大新县城</option><option value="d3">第3天 · 大新 → 德天瀑布 → 靖西</option><option value="d4">第4天 · 靖西 → 通灵大峡谷 → 靖西</option><option value="d5">第5天 · 靖西 → 鹅泉 → 南宁</option><option value="d6">第6天 · 南宁 → 梧州龙圩</option><option value="d7">第7天 · 梧州 → 深圳</option></select><button class="map-fit" id="mapFitBtn" type="button">显示全程</button></div></div>
+<div id="tripMap"><div class="map-loading">首次打开时加载底图与道路路线，请保持网络连接。</div></div><div class="map-legend"><span class="legend-item"><i class="legend-line"></i>自驾道路 / 加载失败时为示意连线</span></div><div class="map-status" id="mapStatus">点击“地图”后开始加载路线。</div></div>
+<div class="map-code-guide"><strong>地图编号说明</strong><br>1.1 是深圳出发点，3.2 是德天景区。重复地点只放一个标记，点击可查看对应日期与编号。</div>
+<div class="map-note">地图为全程走向示意：城市点为市区参考位置，景点为景区参考位置，均不是酒店或停车场的精确入口。德天须在中国一侧游客中心停车接驳；实际路线、施工管制和车程以当天导航与景区公告为准。</div>
+<div class="route-days"><div class="route-day" data-map-day="d1"><div class="route-day-num" style="background:#75679a">D1</div><div class="route-day-info"><strong>深圳 → 玉林</strong><small>首日只转场 · 480–540 km · 基础驾驶 6–7 h</small></div><button class="route-day-btn" type="button">只看当天</button></div><div class="route-day" data-map-day="d2"><div class="route-day-num" style="background:#bd6d3a">D2</div><div class="route-day-info"><strong>玉林 → 大新县城</strong><small>早餐后出发 · 400–430 km · 基础驾驶 4.5–5.5 h</small></div><button class="route-day-btn" type="button">只看当天</button></div><div class="route-day" data-map-day="d3"><div class="route-day-num" style="background:#4f7d72">D3</div><div class="route-day-info"><strong>大新 → 德天瀑布 → 靖西</strong><small>本日唯一核心景点 · 150–180 km · 基础驾驶 3–4 h</small></div><button class="route-day-btn" type="button">只看当天</button></div><div class="route-day" data-map-day="d4"><div class="route-day-num" style="background:#8a6a4c">D4</div><div class="route-day-info"><strong>靖西 → 通灵大峡谷 → 靖西</strong><small>峡谷半日 · 70–100 km · 基础驾驶 1.5–2 h</small></div><button class="route-day-btn" type="button">只看当天</button></div><div class="route-day" data-map-day="d5"><div class="route-day-num" style="background:#77658b">D5</div><div class="route-day-info"><strong>靖西 → 鹅泉 → 南宁</strong><small>清泉与峰林田园 · 280–320 km · 基础驾驶 3.5–4.5 h</small></div><button class="route-day-btn" type="button">只看当天</button></div><div class="route-day" data-map-day="d6"><div class="route-day-num" style="background:#5b7089">D6</div><div class="route-day-info"><strong>南宁 → 梧州龙圩</strong><small>拆分返程 · 340–380 km · 基础驾驶 4–5 h</small></div><button class="route-day-btn" type="button">只看当天</button></div><div class="route-day" data-map-day="d7"><div class="route-day-num" style="background:#9b6b63">D7</div><div class="route-day-info"><strong>梧州 → 深圳</strong><small>白天返程 · 380–430 km · 基础驾驶 5–6 h</small></div><button class="route-day-btn" type="button">只看当天</button></div></div>
+<div class="actions" style="margin-top:12px"><a class="btn primary nav" data-place="大新县德天跨国瀑布景区游客中心" >高德 · 德天游客中心</a><a class="btn primary nav" data-place="靖西市通灵大峡谷景区" >高德 · 通灵大峡谷</a><a class="btn primary nav" data-place="靖西市鹅泉风景区" >高德 · 鹅泉</a></div>
     </section>
 
     <section id="photos" class="section">
-      <div class="photo-callout"><h3>📷 旅途相册</h3><p>把沿途照片按天放进行程里。每张照片都可以写一句备注，点开可看大图；当日照片也会同步显示在对应的每日行程卡片底部。</p><small>照片会自动压缩；连接云同步后上传到家庭云相册，未连接时仍保存在当前手机。</small></div>
+      <div class="photo-callout"><h3>📷 旅途相册</h3><p>把沿途照片按天放进行程里。每张照片都可以写一句备注，点开可看大图；当日照片也会同步显示在对应的每日行程卡片底部。</p><small>照片会自动压缩；连接云同步后上传到旅行云相册，未连接时仍保存在当前手机。</small></div>
       <div class="photo-toolbar">
         <div class="photo-toolbar-row">
-          <select id="photoFilter" class="photo-select" aria-label="筛选照片"><option value="all">查看：全部照片</option><option value="d1">第1天 · 杭州→兰州→西宁</option><option value="d2">第2天 · 西宁→青海湖→茶卡</option><option value="d3">第3天 · 茶卡→大柴旦→翡翠湖</option><option value="d4">第4天 · 大柴旦→敦煌→鸣沙山</option><option value="d5">第5天 · 莫高窟·敦煌休息</option><option value="d6">第6天 · 敦煌→嘉峪关</option><option value="d7">第7天 · 嘉峪关→丹霞→张掖</option><option value="d8">第8天 · 张掖→兰州→杭州</option></select>
-          <select id="photoTargetDay" class="photo-select" aria-label="照片加入哪一天"><option value="d1">添加到：第1天</option><option value="d2">添加到：第2天</option><option value="d3">添加到：第3天</option><option value="d4">添加到：第4天</option><option value="d5">添加到：第5天</option><option value="d6">添加到：第6天</option><option value="d7">添加到：第7天</option><option value="d8">添加到：第8天</option></select><select id="photoTargetCategory" class="photo-select" aria-label="照片类型"><option value="scenery">🌄 风景</option><option value="food">🍜 美食</option></select><select id="photoTargetMeal" class="meal-select" aria-label="选择哪一餐" style="display:none"><option value="breakfast">早餐</option><option value="lunch">午餐</option><option value="dinner">晚餐</option><option value="other">其他</option></select>
+          <select id="photoFilter" class="photo-select" aria-label="筛选照片"><option value="all">查看：全部照片</option><option value="d1">第1天 · 10/1 深圳 → 玉林</option><option value="d2">第2天 · 10/2 玉林 → 大新县城</option><option value="d3">第3天 · 10/3 大新 → 德天瀑布 → 靖西</option><option value="d4">第4天 · 10/4 靖西 → 通灵大峡谷 → 靖西</option><option value="d5">第5天 · 10/5 靖西 → 鹅泉 → 南宁</option><option value="d6">第6天 · 10/6 南宁 → 梧州龙圩</option><option value="d7">第7天 · 10/7 梧州 → 深圳</option></select>
+          <select id="photoTargetDay" class="photo-select" aria-label="照片加入哪一天"><option value="d1">添加到：第1天</option><option value="d2">添加到：第2天</option><option value="d3">添加到：第3天</option><option value="d4">添加到：第4天</option><option value="d5">添加到：第5天</option><option value="d6">添加到：第6天</option><option value="d7">添加到：第7天</option></select><select id="photoTargetCategory" class="photo-select" aria-label="照片类型"><option value="scenery">🌄 风景</option><option value="food">🍜 美食</option></select><select id="photoTargetMeal" class="meal-select" aria-label="选择哪一餐" style="display:none"><option value="breakfast">早餐</option><option value="lunch">午餐</option><option value="dinner">晚餐</option><option value="other">其他</option></select>
         </div>
         <div class="photo-toolbar-row">
           <button class="photo-btn primary" id="photoAddBtn" type="button">＋ 导入照片</button>
@@ -372,141 +286,38 @@ catch(e){document.documentElement.dataset.fontSize='normal';}
         <input type="file" id="photoBackupInput" accept="application/json" hidden>
       </div>
       <div id="photoGallery"></div>
-      <div class="photo-sync-note"><strong>纪念保存：</strong>“导出相册备份”仍可作为离线保险。连接云同步后，照片原图（压缩版）和备注会存入家庭云相册，家人登录同一家庭账号即可看到。</div>
+      <div class="photo-sync-note"><strong>纪念保存：</strong>“导出相册备份”仍可作为离线保险。连接云同步后，照片原图（压缩版）和备注会存入旅行云相册，同伴登录同一旅行账号即可看到。</div>
     </section>
 
     <section id="transport" class="section">
-      <div class="callout"><h3>交通逻辑</h3><p>杭州飞兰州 → 高铁到西宁 → 西宁取车 → 张掖异地还车 → 高铁回兰州 → 飞杭州。这样不需要最后再穿祁连山回西宁。</p></div>
-      <div class="panel"><h3>✈️ 飞机</h3>
-        <div class="row"><div class="l">8/24 杭州 → 兰州</div><div class="r">计划 MF8255<br>09:15 → 12:15</div></div>
-        <div class="row"><div class="l">8/31 兰州 → 杭州</div><div class="r">计划 MU2446<br>17:55 → 20:40</div></div>
-        <div class="source">航班时刻可能调整，出发前以航空公司/出票信息为准。</div>
-      </div>
-      <div class="panel"><h3>🚄 高铁 / 动车</h3>
-        <div class="row"><div class="l">8/24 兰州西 → 西宁</div><div class="r">D2657<br>15:49 → 16:48</div></div>
-        <div class="row"><div class="l">8/31 张掖西 → 兰州西</div><div class="r">D2682<br>09:09 → 12:27</div></div>
-        <div class="actions"><a class="btn primary" href="https://www.12306.cn/" target="_blank">12306</a></div>
-      </div>
-      <div class="panel"><h3>🚙 租车</h3>
-        <div class="row"><div class="l">取车</div><div class="r">8/24 约 17:10<br>西宁站附近</div></div>
-        <div class="row"><div class="l">还车</div><div class="r">8/30 约 20:30<br>张掖西站附近</div></div>
-        <div class="row"><div class="l">车型</div><div class="r">RAV4 / CR-V / 途岳 / 途观L / H6 同级燃油 SUV</div></div>
-        <div class="row"><div class="l">平台</div><div class="r">优先比较一嗨、神州<br>看“含保障后的总价 + 异地还车费”</div></div>
-        <div class="note">两位驾驶员都登记。取车时绕车一圈录像：轮胎、轮毂、玻璃、保险杠、油量、里程都拍清楚。</div>
-      </div>
+<div class="callout"><h3>🚗 驾驶安排</h3><p>深圳自有车辆往返，约 2,200–2,400 km。玉林、大新拆分去程，南宁、梧州拆分回程。轻松体现在景点少和下午留白，首尾长途仍会累。</p></div><div class="panel"><h3>每日基础车程</h3><div class="row"><div class="l">10/1 · 深圳 → 玉林</div><div class="r">480–540 km<br>基础驾驶 6–7 h</div></div><div class="row"><div class="l">10/2 · 玉林 → 大新县城</div><div class="r">400–430 km<br>基础驾驶 4.5–5.5 h</div></div><div class="row"><div class="l">10/3 · 大新 → 德天瀑布 → 靖西</div><div class="r">150–180 km<br>基础驾驶 3–4 h</div></div><div class="row"><div class="l">10/4 · 靖西 → 通灵大峡谷 → 靖西</div><div class="r">70–100 km<br>基础驾驶 1.5–2 h</div></div><div class="row"><div class="l">10/5 · 靖西 → 鹅泉 → 南宁</div><div class="r">280–320 km<br>基础驾驶 3.5–4.5 h</div></div><div class="row"><div class="l">10/6 · 南宁 → 梧州龙圩</div><div class="r">340–380 km<br>基础驾驶 4–5 h</div></div><div class="row"><div class="l">10/7 · 梧州 → 深圳</div><div class="r">380–430 km<br>基础驾驶 5–6 h</div></div><div class="note">以上为规划区间，不是实时导航；不含餐饮、服务区休息、接驳和严重拥堵，国庆可能明显延长。</div></div><div class="panel"><h3>轮换与路况</h3><div class="row"><div class="l">主驾驶员</div><div class="r">负责拥堵、陌生山路、景区出入口等复杂路段</div></div><div class="row"><div class="l">女生接替</div><div class="r">白天、车流少且自己有把握时短段接替；在服务区停车后换人</div></div><div class="row"><div class="l">休息</div><div class="r">约每驾驶 1.5–2 小时停一次；不让疲劳驾驶成为完成行程的条件</div></div><div class="row"><div class="l">出发前</div><div class="r">检查轮胎、雨刷、刹车和 ETC；燃油/电量充足，核实酒店停车/充电条件</div></div><div class="note">如果长途仍超过舒适程度，可改为高铁到南宁再租车；这需要重新调整首尾两天和车票，不与当前自驾版混用。</div></div>
     </section>
 
     <section id="hotels" class="section">
-      <div class="panel"><h3>🏨 7 晚住宿</h3>
-        <div class="row"><div class="l">8/24 西宁</div><div class="r">西宁海湖新区国投广场亚朵S<br>家庭房</div></div>
-        <div class="row"><div class="l">8/25 茶卡</div><div class="r">茶卡盐湖君道酒店<br>三人房 / 亲子房</div></div>
-        <div class="row"><div class="l">8/26 大柴旦</div><div class="r">丽呈华廷（翡翠步行街店）<br>优先三床房</div></div>
-        <div class="row"><div class="l">8/27–8/28 敦煌</div><div class="r">沙州夜市北门亚朵<br>家庭房 · 连住两晚</div></div>
-        <div class="row"><div class="l">8/29 嘉峪关</div><div class="r">全季（迎宾湖店）<br>家庭房</div></div>
-        <div class="row"><div class="l">8/30 张掖</div><div class="r">建国璞隐（张掖西站大佛寺店）<br>家庭房</div></div>
-        <div class="note">订房统一填“3 位成人 / 1 间房”，优先选择可取消、含 3 份早餐、免费停车的房价。</div>
-      </div>
+<div class="panel"><h3>🏨 6 晚住宿 · 5 家连锁候选</h3><div class="row"><div class="l">10/1 · 玉林</div><div class="r">玉林国际会展中心希尔顿欢朋酒店<br>民主南路 336 号<br>1 晚 · 转场住宿，入住后就近吃饭</div></div><div class="row"><div class="l">10/2 · 大新县城</div><div class="r">维也纳国际酒店（大新德天广场店）<br>桂圆路 65 号<br>1 晚 · 位于县城，非瀑布门口；装修较早，订前看近期客评</div></div><div class="row"><div class="l">10/3–10/4 · 靖西</div><div class="r">宜尚酒店（百色靖西锦绣古镇店）<br>绣球大道 1101 号<br>2 晚 · 同房连住两晚，10/5 退房</div></div><div class="row"><div class="l">10/5 · 南宁</div><div class="r">南宁江南金凯路亚朵酒店<br>金凯路 59 号<br>1 晚 · 回程中转，优先安静房型</div></div><div class="row"><div class="l">10/6 · 梧州龙圩</div><div class="r">麗枫酒店（梧州高铁南站苍海公园店）<br>政贤路 136 号<br>1 晚 · 住龙圩区，方便次日返深</div></div><div class="note">统一按 2 位成人 / 1 间大床房查询，优先可取消、含双早和停车方便。候选门店已核对，国庆房态、价格、停车政策仍以实时订单/酒店确认为准，未代订。</div></div><div class="panel"><h3>查看门店与房态</h3><div class="source"><a href="https://www.hilton.com.cn/zh-cn/hotels/uynedhx-hampton-by-hilton-yulin-international-convention-and-exhibition-center" target="_blank" rel="noopener noreferrer">玉林国际会展中心希尔顿欢朋酒店 ↗</a></div><div class="source"><a href="https://hotels.ctrip.com/hotels/11840466.html" target="_blank" rel="noopener noreferrer">维也纳国际酒店（大新德天广场店） ↗</a></div><div class="source"><a href="https://hotels.ctrip.com/hotels/109455576.html" target="_blank" rel="noopener noreferrer">宜尚酒店（百色靖西锦绣古镇店） ↗</a></div><div class="source"><a href="https://hotels.corporatetravel.ctrip.com/hotels/115730376.html" target="_blank" rel="noopener noreferrer">南宁江南金凯路亚朵酒店 ↗</a></div><div class="source"><a href="https://hotels.ctrip.com/hotels/120203215.html" target="_blank" rel="noopener noreferrer">麗枫酒店（梧州高铁南站苍海公园店） ↗</a></div></div><div class="panel"><h3>可选住宿升级</h3><div class="note">10/2 如更重视田园景观，可考虑广西崇左丽世度假村，替换大新县城住宿。它属于度假酒店，价格通常高于亚朵档，须重算当日与次日路线；当前主线仍按大新县城安排。</div><div class="source"><a href="https://www.luxresorts.cn/中国-酒店/中国/广西崇左丽世度假村" target="_blank" rel="noopener noreferrer">丽世官方介绍 ↗</a></div></div>
     </section>
 
     <section id="todo" class="section">
-      <div class="panel"><h3>✅ 出发前待办</h3>
-        <div class="check"><input type="checkbox" id="c1"><label for="c1">锁定莫高窟 8/28 常规参观票<small>优先 09:00–09:30 左右；实名分时预约</small></label></div>
-        <div class="check"><input type="checkbox" id="c2"><label for="c2">购买 8/24 杭州 → 兰州机票</label></div>
-        <div class="check"><input type="checkbox" id="c3"><label for="c3">购买 8/31 兰州 → 杭州机票</label></div>
-        <div class="check"><input type="checkbox" id="c4"><label for="c4">12306：兰州西 → 西宁 D2657</label></div>
-        <div class="check"><input type="checkbox" id="c5"><label for="c5">12306：张掖西 → 兰州西 D2682</label></div>
-        <div class="check"><input type="checkbox" id="c6"><label for="c6">预订西宁取、张掖还 SUV<small>确认异地还车费和第二驾驶员</small></label></div>
-        <div class="check"><input type="checkbox" id="c7"><label for="c7">预订 7 晚酒店<small>敦煌同一家连住两晚</small></label></div>
-        <div class="check"><input type="checkbox" id="c8"><label for="c8">预约青海湖、茶卡、翡翠湖、鸣沙山、嘉峪关、七彩丹霞</label></div>
-        <div class="check"><input type="checkbox" id="c9"><label for="c9">证件与驾驶资料<small>身份证、驾驶证、租车订单、酒店/门票二维码</small></label></div>
-        <div class="check"><input type="checkbox" id="c10"><label for="c10">车上补给<small>矿泉水、纸巾、垃圾袋、防晒、润唇膏、充电线</small></label></div>
-      </div>
+<div class="panel"><h3>✅ 出发前待办</h3><div class="check"><input type="checkbox" id="c1"><label for="c1">预约 10/3 德天瀑布<small>优先约 10:00 时段；在“中旅趣边关”核实实名订单、接驳和停车</small></label></div><div class="check"><input type="checkbox" id="c2"><label for="c2">确认 10/4 通灵开放及门票<small>古龙山仅作为替换选项；漂流另核实实名分时预约</small></label></div><div class="check"><input type="checkbox" id="c3"><label for="c3">预订 6 晚酒店<small>2 人 1 间；靖西 10/3–10/5 连住；确认可取消条款</small></label></div><div class="check"><input type="checkbox" id="c4"><label for="c4">核实每家酒店的停车条件<small>大新门店位于县城，需预留去德天的车程</small></label></div><div class="check"><input type="checkbox" id="c5"><label for="c5">检查车辆和补能安排<small>轮胎、刹车、雨刷、ETC；新能源车提前查沿线充电</small></label></div><div class="check"><input type="checkbox" id="c6"><label for="c6">确认驾驶分工<small>主驾承担复杂路况；女生只接少车且有把握的路段</small></label></div><div class="check"><input type="checkbox" id="c7"><label for="c7">带齐证件与订单<small>两人身份证、驾驶证、行驶证；保存酒店和门票订单</small></label></div><div class="check"><input type="checkbox" id="c8"><label for="c8">准备峡谷装备<small>防滑鞋、雨衣、防水袋、驱蚊用品、轻便备用衣物</small></label></div><div class="check"><input type="checkbox" id="c9"><label for="c9">每天确认天气与交通公告<small>特别关注强降雨、峡谷/漂流停运、德天道路施工</small></label></div><div class="check"><input type="checkbox" id="c10"><label for="c10">出发前备份行程和相册<small>水、零食、充电线备齐；确认两台手机均能查看行程</small></label></div></div>
     </section>
 
 
     <section id="costs" class="section">
-      <div class="cost-summary">
-        <div class="sum-title">TRIP BUDGET · 实时汇总</div>
-        <div class="sum-total" id="grandTotal">¥0</div>
-        <div class="cost-grid single">
-          <div class="cost-stat"><small>预算余额</small><strong id="budgetRemain" class="budget-ok">¥20,000</strong></div>
-        </div>
-        <div class="budget-line"><span>旅行总预算</span><div><span>¥ </span><input id="budgetInput" class="budget-input" type="number" inputmode="decimal" min="0" step="1" value="20000"></div></div>
-      </div>
-
-      <div class="cost-group" data-category="transport">
-        <div class="cost-group-head"><h3>✈️🚄🚙 交通</h3><div class="cost-group-total">小计 <span>¥0</span></div></div>
-        <div class="cost-table-head"><span>项目</span><span>单价</span><span>数量</span><span>小计</span></div>
-        <div class="cost-item" data-id="flight-out"><div class="cost-name">杭州 → 兰州机票<small>单价按每人</small></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" inputmode="numeric" min="0" value="3"><div class="cost-subtotal">¥0</div></div>
-        <div class="cost-item" data-id="airport-lzx"><div class="cost-name">中川机场 → 兰州西<small>单价按每人</small></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" inputmode="numeric" min="0" value="3"><div class="cost-subtotal">¥0</div></div>
-        <div class="cost-item" data-id="train-lzx-xn"><div class="cost-name">兰州西 → 西宁<small>D2657，单价按每人</small></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" inputmode="numeric" min="0" value="3"><div class="cost-subtotal">¥0</div></div>
-        <div class="cost-item" data-id="rental"><div class="cost-name">SUV 租车<small>车辆租金</small></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div>
-        <div class="cost-item" data-id="rental-extra"><div class="cost-name">租车保障 / 异地还车费</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div>
-        <div class="cost-item" data-id="fuel"><div class="cost-name">油费</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div>
-        <div class="cost-item" data-id="road"><div class="cost-name">高速 / 停车</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div>
-        <div class="cost-item" data-id="train-zy-lz"><div class="cost-name">张掖西 → 兰州西<small>D2682，单价按每人</small></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="3" min="0"><div class="cost-subtotal">¥0</div></div>
-        <div class="cost-item" data-id="lzx-airport"><div class="cost-name">兰州西 → 中川机场<small>单价按每人</small></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="3" min="0"><div class="cost-subtotal">¥0</div></div>
-        <div class="cost-item" data-id="flight-back"><div class="cost-name">兰州 → 杭州机票<small>单价按每人</small></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="3" min="0"><div class="cost-subtotal">¥0</div></div>
-        <button class="cost-add" type="button" data-add-category="transport">＋ 新增项目</button>
-      </div>
-
-      <div class="cost-group" data-category="hotel">
-        <div class="cost-group-head"><h3>🏨 住宿</h3><div class="cost-group-total">小计 <span>¥0</span></div></div>
-        <div class="cost-table-head"><span>酒店</span><span>每晚房价</span><span>晚数</span><span>小计</span></div>
-        <div class="cost-item" data-id="hotel-xining"><div class="cost-name">8/24 西宁 · 亚朵S</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div>
-        <div class="cost-item" data-id="hotel-chaka"><div class="cost-name">8/25 茶卡 · 君道</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div>
-        <div class="cost-item" data-id="hotel-dachaidan"><div class="cost-name">8/26 大柴旦 · 丽呈华廷</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div>
-        <div class="cost-item" data-id="hotel-dunhuang"><div class="cost-name">8/27–28 敦煌 · 亚朵</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="2" min="0"><div class="cost-subtotal">¥0</div></div>
-        <div class="cost-item" data-id="hotel-jiayuguan"><div class="cost-name">8/29 嘉峪关 · 全季</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div>
-        <div class="cost-item" data-id="hotel-zhangye"><div class="cost-name">8/30 张掖 · 建国璞隐</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div>
-        <button class="cost-add" type="button" data-add-category="hotel">＋ 新增项目</button>
-      </div>
-
-      <div class="cost-group" data-category="tickets">
-        <div class="cost-group-head"><h3>🎟️ 门票 / 景交</h3><div class="cost-group-total">小计 <span>¥0</span></div></div>
-        <div class="cost-table-head"><span>项目</span><span>每人价格</span><span>人数</span><span>小计</span></div>
-        <div class="cost-item" data-id="ticket-qinghai"><div class="cost-name">青海湖</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="3" min="0"><div class="cost-subtotal">¥0</div></div>
-        <div class="cost-item" data-id="ticket-chaka"><div class="cost-name">茶卡盐湖<small>门票 / 小火车等可合并填</small></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="3" min="0"><div class="cost-subtotal">¥0</div></div>
-        <div class="cost-item" data-id="ticket-emerald"><div class="cost-name">大柴旦翡翠湖</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="3" min="0"><div class="cost-subtotal">¥0</div></div>
-        <div class="cost-item" data-id="ticket-mingsha"><div class="cost-name">鸣沙山月牙泉</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="3" min="0"><div class="cost-subtotal">¥0</div></div>
-        <div class="cost-item" data-id="ticket-mogao"><div class="cost-name">莫高窟</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="3" min="0"><div class="cost-subtotal">¥0</div></div>
-        <div class="cost-item" data-id="ticket-jiayuguan"><div class="cost-name">嘉峪关关城</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="3" min="0"><div class="cost-subtotal">¥0</div></div>
-        <div class="cost-item" data-id="ticket-danxia"><div class="cost-name">张掖七彩丹霞</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="3" min="0"><div class="cost-subtotal">¥0</div></div>
-        <button class="cost-add" type="button" data-add-category="tickets">＋ 新增项目</button>
-      </div>
-
-      <div class="cost-group" data-category="food">
-        <div class="cost-group-head"><h3>🍜 餐饮</h3><div class="cost-group-total">小计 <span>¥0</span></div></div>
-        <div class="cost-table-head"><span>日期</span><span>三人当天</span><span>次数</span><span>小计</span></div>
-        <div class="cost-item" data-id="food-d1"><div class="cost-name">Day 1 · 8/24</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div><div class="cost-item" data-id="food-d2"><div class="cost-name">Day 2 · 8/25</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div><div class="cost-item" data-id="food-d3"><div class="cost-name">Day 3 · 8/26</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div><div class="cost-item" data-id="food-d4"><div class="cost-name">Day 4 · 8/27</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div><div class="cost-item" data-id="food-d5"><div class="cost-name">Day 5 · 8/28</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div><div class="cost-item" data-id="food-d6"><div class="cost-name">Day 6 · 8/29</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div><div class="cost-item" data-id="food-d7"><div class="cost-name">Day 7 · 8/30</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div><div class="cost-item" data-id="food-d8"><div class="cost-name">Day 8 · 8/31</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div>
-        <button class="cost-add" type="button" data-add-category="food">＋ 新增项目</button>
-      </div>
-
-      <div class="cost-group" data-category="other">
-        <div class="cost-group-head"><h3>🧾 其他</h3><div class="cost-group-total">小计 <span>¥0</span></div></div>
-        <div class="cost-table-head"><span>项目</span><span>金额</span><span>数量</span><span>小计</span></div>
-        <div class="cost-item" data-id="other-snacks"><div class="cost-name">水 / 零食 / 补给</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div>
-        <div class="cost-item" data-id="other-shopping"><div class="cost-name"><input class="custom-name" value="其他费用 1" aria-label="其他费用名称"></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div>
-        <div class="cost-item" data-id="other-2"><div class="cost-name"><input class="custom-name" value="其他费用 2" aria-label="其他费用名称"></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div>
-        <div class="cost-item" data-id="other-3"><div class="cost-name"><input class="custom-name" value="其他费用 3" aria-label="其他费用名称"></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" value="1" min="0"><div class="cost-subtotal">¥0</div></div>
-        <button class="cost-add" type="button" data-add-category="other">＋ 新增项目</button>
-        <div class="cost-hint">每个分类都可以自己新增项目；新增项目可改名称、价格和数量，也可以删除。所有金额都会自动保存在当前手机/浏览器。单价 × 数量 = 小计；如果某项直接填写总价，把数量保持为 1 即可。</div>
-      </div>
-      <button class="cost-reset" id="costResetBtn">清空全部费用（保留行程）</button>
+<div class="cost-summary"><div class="sum-title">TRIP COSTS · 两人费用实时汇总</div><div class="sum-total" id="grandTotal">¥0</div><div class="cost-grid single"><div class="cost-stat"><small>预算余额</small><strong id="budgetRemain" class="budget-ok">未设上限</strong></div></div><div class="budget-line"><span>总预算（可选）</span><div><span>¥ </span><input id="budgetInput" class="budget-input" type="number" inputmode="decimal" min="0" step="1" value="0" placeholder="0 表示不限"></div></div></div>
+<div class="callout"><h3>按实际付款记账</h3><p>当前不设预算上限，填 0 保持“未设上限”。两人全程可参考约 ¥6,500–11,000：住宿约 ¥2,400–5,400、餐饮约 ¥1,500–2,300、燃油约 ¥1,400–1,900、门票景交停车约 ¥800–1,400。仅为规划估算，不是已付款金额或国庆报价。</p></div>
+<div class="cost-group" data-category="transport"><div class="cost-group-head"><h3>🚗 交通</h3><div class="cost-group-total">小计 <span>¥0</span></div></div><div class="cost-table-head"><span>项目</span><span>单价</span><span>数量</span><span>小计</span></div><div class="cost-item" data-id="fuel"><div class="cost-name">燃油 / 充电<small>累计总金额</small></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" inputmode="numeric" min="0" value="1"><div class="cost-subtotal">¥0</div></div><div class="cost-item" data-id="road"><div class="cost-name">实际通行费<small>按实际发生填写</small></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" inputmode="numeric" min="0" value="1"><div class="cost-subtotal">¥0</div></div><div class="cost-item" data-id="parking"><div class="cost-name">停车费</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" inputmode="numeric" min="0" value="1"><div class="cost-subtotal">¥0</div></div><button class="cost-add" type="button" data-add-category="transport">＋ 新增项目</button></div>
+<div class="cost-group" data-category="hotel"><div class="cost-group-head"><h3>🏨 住宿</h3><div class="cost-group-total">小计 <span>¥0</span></div></div><div class="cost-table-head"><span>项目</span><span>每晚房价</span><span>晚数</span><span>小计</span></div><div class="cost-item" data-id="hotel-0"><div class="cost-name">10/1 · 玉林 · 玉林国际会展中心希尔顿欢朋酒店<small>1 间房</small></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" inputmode="numeric" min="0" value="1"><div class="cost-subtotal">¥0</div></div><div class="cost-item" data-id="hotel-1"><div class="cost-name">10/2 · 大新县城 · 维也纳国际酒店（大新德天广场店）<small>1 间房</small></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" inputmode="numeric" min="0" value="1"><div class="cost-subtotal">¥0</div></div><div class="cost-item" data-id="hotel-2"><div class="cost-name">10/3–10/4 · 靖西 · 宜尚酒店（百色靖西锦绣古镇店）<small>1 间房</small></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" inputmode="numeric" min="0" value="2"><div class="cost-subtotal">¥0</div></div><div class="cost-item" data-id="hotel-3"><div class="cost-name">10/5 · 南宁 · 南宁江南金凯路亚朵酒店<small>1 间房</small></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" inputmode="numeric" min="0" value="1"><div class="cost-subtotal">¥0</div></div><div class="cost-item" data-id="hotel-4"><div class="cost-name">10/6 · 梧州龙圩 · 麗枫酒店（梧州高铁南站苍海公园店）<small>1 间房</small></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" inputmode="numeric" min="0" value="1"><div class="cost-subtotal">¥0</div></div><button class="cost-add" type="button" data-add-category="hotel">＋ 新增项目</button></div>
+<div class="cost-group" data-category="tickets"><div class="cost-group-head"><h3>🎟️ 门票 / 景交</h3><div class="cost-group-total">小计 <span>¥0</span></div></div><div class="cost-table-head"><span>项目</span><span>每人价格</span><span>人数</span><span>小计</span></div><div class="cost-item" data-id="ticket-detian"><div class="cost-name">德天门票 + 必需景交<small>按实际套餐计，避免重复记景交</small></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" inputmode="numeric" min="0" value="2"><div class="cost-subtotal">¥0</div></div><div class="cost-item" data-id="ticket-raft"><div class="cost-name">德天竹筏（可选）</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" inputmode="numeric" min="0" value="2"><div class="cost-subtotal">¥0</div></div><div class="cost-item" data-id="ticket-tongling"><div class="cost-name">通灵大峡谷</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" inputmode="numeric" min="0" value="2"><div class="cost-subtotal">¥0</div></div><div class="cost-item" data-id="ticket-equan"><div class="cost-name">鹅泉</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" inputmode="numeric" min="0" value="2"><div class="cost-subtotal">¥0</div></div><div class="cost-item" data-id="ticket-gulong"><div class="cost-name">古龙山（替换通灵）<small>仅改去古龙山时填 2，并清空未发生的通灵费用</small></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" inputmode="numeric" min="0" value="0"><div class="cost-subtotal">¥0</div></div><button class="cost-add" type="button" data-add-category="tickets">＋ 新增项目</button></div>
+<div class="cost-group" data-category="food"><div class="cost-group-head"><h3>🍜 餐饮</h3><div class="cost-group-total">小计 <span>¥0</span></div></div><div class="cost-table-head"><span>项目</span><span>两人当天</span><span>次数</span><span>小计</span></div><div class="cost-item" data-id="food-d1"><div class="cost-name">Day 1 · 10/1<small>两人当天合计</small></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" inputmode="numeric" min="0" value="1"><div class="cost-subtotal">¥0</div></div><div class="cost-item" data-id="food-d2"><div class="cost-name">Day 2 · 10/2<small>两人当天合计</small></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" inputmode="numeric" min="0" value="1"><div class="cost-subtotal">¥0</div></div><div class="cost-item" data-id="food-d3"><div class="cost-name">Day 3 · 10/3<small>两人当天合计</small></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" inputmode="numeric" min="0" value="1"><div class="cost-subtotal">¥0</div></div><div class="cost-item" data-id="food-d4"><div class="cost-name">Day 4 · 10/4<small>两人当天合计</small></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" inputmode="numeric" min="0" value="1"><div class="cost-subtotal">¥0</div></div><div class="cost-item" data-id="food-d5"><div class="cost-name">Day 5 · 10/5<small>两人当天合计</small></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" inputmode="numeric" min="0" value="1"><div class="cost-subtotal">¥0</div></div><div class="cost-item" data-id="food-d6"><div class="cost-name">Day 6 · 10/6<small>两人当天合计</small></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" inputmode="numeric" min="0" value="1"><div class="cost-subtotal">¥0</div></div><div class="cost-item" data-id="food-d7"><div class="cost-name">Day 7 · 10/7<small>两人当天合计</small></div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" inputmode="numeric" min="0" value="1"><div class="cost-subtotal">¥0</div></div><button class="cost-add" type="button" data-add-category="food">＋ 新增项目</button></div>
+<div class="cost-group" data-category="other"><div class="cost-group-head"><h3>🧾 其他</h3><div class="cost-group-total">小计 <span>¥0</span></div></div><div class="cost-table-head"><span>项目</span><span>单价</span><span>数量</span><span>小计</span></div><div class="cost-item" data-id="other-snacks"><div class="cost-name">水 / 零食 / 补给</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" inputmode="numeric" min="0" value="1"><div class="cost-subtotal">¥0</div></div><div class="cost-item" data-id="other-shopping"><div class="cost-name">纪念品 / 其他</div><input class="cost-input" type="number" inputmode="decimal" min="0" placeholder="0"><input class="qty-input" type="number" inputmode="numeric" min="0" value="1"><div class="cost-subtotal">¥0</div></div><button class="cost-add" type="button" data-add-category="other">＋ 新增项目</button></div>
+<div class="cost-hint">单价 × 数量 = 小计。每类可新增、改名和删除自定义项目；填总价时数量设为 1。内容自动保存在当前浏览器，连接云同步后可共享。</div><button class="cost-reset" id="costResetBtn">清空全部费用（保留行程）</button>
     </section>
 
     <section id="tips" class="section">
-      <div class="panel"><h3>🧭 旅行原则</h3>
-        <div class="row"><div class="l">驾驶</div><div class="r">两人轮换；约每 2 小时休息一次；不赶夜路</div></div>
-        <div class="row"><div class="l">高海拔</div><div class="r">青海湖/茶卡/大柴旦阶段降低活动强度；当金山只通过不久停</div></div>
-        <div class="row"><div class="l">敦煌</div><div class="r">连住两晚，Day 5 不再加阳关、玉门关、雅丹</div></div>
-        <div class="row"><div class="l">天气</div><div class="r">盐湖、丹霞、沙漠非常吃天气；每天早上再看实时天气调整 30–60 分钟</div></div>
-      </div>
-      <div class="panel"><h3>🎟️ 已核验的关键信息</h3>
-        <div class="source">莫高窟：2026 旺季（4/1–11/30）08:00–18:00，16:10 停止检票；实名分时预约，常规参观每日限额 6000 张。<br><a href="https://www.dha.ac.cn/info/1020/7498.htm" target="_blank">敦煌研究院 2026 开放公告 ↗</a></div>
-        <div class="source">茶卡盐湖：官网当前暑期页面显示早间开园、晚间停止检票；运营时间可能按月份调整。<br><a href="https://www.chakasl.com/" target="_blank">茶卡盐湖官网 ↗</a></div>
-        <div class="source">动车：D2657 计划 15:49 兰州西发、16:48 到西宁；D2682 计划 09:09 张掖西发、12:27 到兰州西。最终以 12306 当日出票为准。</div>
-      </div>
+<div class="panel"><h3>🧭 轻松游原则</h3><div class="row"><div class="l">风景选择</div><div class="r">德天宽幅瀑布 + 通灵深峡谷优先，鹅泉补充峰林清泉；和浙江常见山水拉开差异</div></div><div class="row"><div class="l">行程密度</div><div class="r">每天最多一个核心景点；靖西连住两晚，10/4 下午休息；不叠加乐业天坑、巴马、桂林绕行</div></div><div class="row"><div class="l">驾驶</div><div class="r">首尾转场仍长；主驾承担复杂路段，约 1.5–2 小时休息一次</div></div><div class="row"><div class="l">雨天</div><div class="r">强降雨、山洪预警或闭园时取消峡谷/漂流；鹅泉也只在开放且安全时去</div></div><div class="row"><div class="l">边境</div><div class="r">本计划在中国境内活动；走开放游线，德天由游客中心接驳</div></div></div>
+<div class="panel"><h3>🔁 可替换的安排</h3><div class="row"><div class="l">更想体验地下河</div><div class="r">10/4 用古龙山替换通灵，不在同一天连刷两个峡谷；另核实漂流开放和预约</div></div><div class="row"><div class="l">德天未预约成功</div><div class="r">先联系景区核实余票/可改时段，再调整大新、靖西酒店；不要无票直接开到现场</div></div><div class="row"><div class="l">天气不佳或体力不足</div><div class="r">取消可选竹筏和鹅泉；峡谷日改为酒店休息，保留转场缓冲</div></div></div>
+<div class="panel"><h3>🎟️ 预约与出发前核实</h3><div class="source">德天：查“中旅趣边关”小程序的实名分时票和游客中心接驳。节前通知列有 08:00 / 10:00 / 13:00 / 15:00 时段，具体以订单为准；咨询 0771-3690199。<a href="https://www.sohu.com/a/1079359470_121106875" target="_blank" rel="noopener noreferrer">9/22 国庆提示转载 ↗</a></div><div class="source">德天周边道路有施工、分时单向放行提示，出发前再次核对。<a href="https://www.gxnews.com.cn/staticpages/20260814/newgx6a7e82a8-21980860.shtml" target="_blank" rel="noopener noreferrer">广西新闻网交通提示 ↗</a></div><div class="source">通灵 / 古龙山：公众号“广旅古龙山通灵大峡谷景区”；古龙山漂流在“古龙山大峡谷”小程序核实实名分时预约。咨询 0776-6180315 / 0776-6185005。<a href="https://npo586757.npoall.com/news/itemid-306304.html" target="_blank" rel="noopener noreferrer">国庆预约提示转载 ↗</a></div></div>
+<div class="panel"><h3>📖 景区资料与完整计划</h3><div class="source"><a href="https://www.ctg.cn/article/88" target="_blank" rel="noopener noreferrer">中国旅游集团 · 德天瀑布 ↗</a></div><div class="source"><a href="https://gbdsj.gxzf.gov.cn/jingcaizhuanti/pzgx/pscj/bss/t19002244.shtml" target="_blank" rel="noopener noreferrer">广西广电局 · 通灵大峡谷 ↗</a></div><div class="source"><a href="https://gx.weather.com.cn/zt/3477559.shtml" target="_blank" rel="noopener noreferrer">中国天气网 · 鹅泉 ↗</a></div><div class="source"><a href="docs/guangxi-2026-national-day.md" target="_blank" rel="noopener noreferrer">完整七天计划与核验来源 ↗</a><br>整理于 2026-09-26；实时房态、票务、天气和管制以出发前官方公告为准。</div></div>
     </section>
   </main>
 </div>
@@ -515,10 +326,10 @@ catch(e){document.documentElement.dataset.fontSize='normal';}
   <div class="photo-upload-sheet" role="dialog" aria-modal="true" aria-labelledby="photoUploadTitle">
     <div class="photo-upload-head"><div><strong id="photoUploadTitle">＋ 添加旅途照片</strong><small>先选日期和类型，再从相册选择照片。</small></div><button class="photo-upload-close" id="photoUploadClose" type="button" aria-label="关闭">×</button></div>
     <div class="photo-upload-grid">
-      <div class="photo-upload-field"><label for="photoUploadDay">加入哪一天</label><select id="photoUploadDay"><option value="d1">第1天 · 8/24</option><option value="d2">第2天 · 8/25</option><option value="d3">第3天 · 8/26</option><option value="d4">第4天 · 8/27</option><option value="d5">第5天 · 8/28</option><option value="d6">第6天 · 8/29</option><option value="d7">第7天 · 8/30</option><option value="d8">第8天 · 8/31</option></select></div>
+      <div class="photo-upload-field"><label for="photoUploadDay">加入哪一天</label><select id="photoUploadDay"><option value="d1">第1天 · 10/1 深圳 → 玉林</option><option value="d2">第2天 · 10/2 玉林 → 大新县城</option><option value="d3">第3天 · 10/3 大新 → 德天瀑布 → 靖西</option><option value="d4">第4天 · 10/4 靖西 → 通灵大峡谷 → 靖西</option><option value="d5">第5天 · 10/5 靖西 → 鹅泉 → 南宁</option><option value="d6">第6天 · 10/6 南宁 → 梧州龙圩</option><option value="d7">第7天 · 10/7 梧州 → 深圳</option></select></div>
       <div class="photo-upload-field"><label for="photoUploadCategory">照片类型</label><select id="photoUploadCategory"><option value="scenery">🌄 美景</option><option value="food">🍜 美食</option></select></div>
       <div class="photo-upload-field wide" id="photoUploadMealWrap" style="display:none"><label for="photoUploadMeal">这是哪一餐</label><select id="photoUploadMeal"><option value="breakfast">🌅 早餐</option><option value="lunch">☀️ 午餐</option><option value="dinner">🌙 晚餐</option><option value="other">🍵 其他 / 加餐</option></select><small>同一餐次的照片会自动拼成一个宫格。</small></div>
-      <div class="photo-upload-field wide" id="photoUploadSceneryWrap"><label for="photoUploadSceneryNote">美景备注 / 宫格标题</label><input id="photoUploadSceneryNote" maxlength="120" placeholder="例如：青海湖傍晚 / 茶卡盐湖倒影"><small>一次选择的多张美景会使用同一个备注，并自动组成一个宫格；以后也可点开单张照片修改备注。</small></div>
+      <div class="photo-upload-field wide" id="photoUploadSceneryWrap"><label for="photoUploadSceneryNote">美景备注 / 宫格标题</label><input id="photoUploadSceneryNote" maxlength="120" placeholder="例如：德天瀑布 / 鹅泉倒影"><small>一次选择的多张美景会使用同一个备注，并自动组成一个宫格；以后也可点开单张照片修改备注。</small></div>
     </div>
     <div class="photo-upload-actions"><button id="photoUploadCancel" type="button">取消</button><button class="primary" id="photoUploadChoose" type="button">选择照片</button></div>
   </div>
@@ -542,18 +353,18 @@ catch(e){document.documentElement.dataset.fontSize='normal';}
 
 <div class="cloud-overlay" id="cloudOverlay" aria-hidden="true">
   <div class="cloud-sheet" role="dialog" aria-modal="true" aria-labelledby="cloudTitle">
-    <div class="cloud-sheet-head"><div><strong id="cloudTitle">☁️ 家庭云同步</strong><small>行程 / 费用 / 待办自动同步；照片存入私有云相册</small></div><button class="cloud-close" id="cloudCloseBtn" type="button" aria-label="关闭">×</button></div>
-    <div class="cloud-help"><strong>第一次设置：</strong>先按我提供的 Supabase 初始化脚本创建数据库和私有相册。这里只填写 <strong>Project URL</strong> 和 <strong>Publishable key</strong>；不要填写 service_role key。三台手机使用同一个家庭邮箱和密码登录即可共享。</div>
+    <div class="cloud-sheet-head"><div><strong id="cloudTitle">☁️ 旅行云同步</strong><small>行程 / 费用 / 待办自动同步；照片存入私有云相册</small></div><button class="cloud-close" id="cloudCloseBtn" type="button" aria-label="关闭">×</button></div>
+    <div class="cloud-help"><strong>第一次设置：</strong>先按本分支的 <a href="supabase/guangxi.sql" target="_blank" rel="noopener noreferrer">Supabase 初始化脚本</a>创建广西专用数据表和私有相册。这里只填写 <strong>Project URL</strong> 和 <strong>Publishable key</strong>；不要填写 service_role key。两台手机使用同一个旅行邮箱和密码登录即可共享。</div>
     <div class="cloud-grid" style="margin-top:12px">
       <div class="cloud-field wide"><label for="cloudUrlInput">Supabase Project URL</label><input id="cloudUrlInput" inputmode="url" placeholder="https://xxxx.supabase.co"></div>
       <div class="cloud-field wide"><label for="cloudKeyInput">Supabase Publishable key</label><input id="cloudKeyInput" autocomplete="off" placeholder="sb_publishable_... 或 anon key"></div>
-      <div class="cloud-field"><label for="cloudEmailInput">家庭邮箱</label><input id="cloudEmailInput" type="email" autocomplete="username" placeholder="family@example.com"></div>
-      <div class="cloud-field"><label for="cloudPasswordInput">家庭密码</label><input id="cloudPasswordInput" type="password" autocomplete="current-password" placeholder="至少 6 位"></div>
-      <div class="cloud-field wide"><label for="amapKeyInput">高德 Web 服务 Key（用于编辑后重新解析导航地址）</label><input id="amapKeyInput" autocomplete="off" placeholder="可稍后填写；未填写时，地址变化会退化为高德搜索"></div>
+      <div class="cloud-field"><label for="cloudEmailInput">旅行邮箱</label><input id="cloudEmailInput" type="email" autocomplete="username" placeholder="travel@example.com"></div>
+      <div class="cloud-field"><label for="cloudPasswordInput">旅行密码</label><input id="cloudPasswordInput" type="password" autocomplete="current-password" placeholder="至少 6 位"></div>
+      <div class="cloud-field wide"><label for="amapKeyInput">高德 Web 服务 Key（可选，用于解析驾车终点）</label><input id="amapKeyInput" autocomplete="off" placeholder="可留空；未填写时先在高德搜索并确认目的地"></div>
     </div>
-    <div class="cloud-actions"><button id="cloudSaveConfigBtn" type="button">保存配置</button><button class="primary" id="cloudLoginBtn" type="button">登录并连接</button><button id="cloudSignupBtn" type="button">首次注册家庭账号</button><button id="cloudLogoutBtn" type="button">退出登录</button></div>
+    <div class="cloud-actions"><button id="cloudSaveConfigBtn" type="button">保存配置</button><button class="primary" id="cloudLoginBtn" type="button">登录并连接</button><button id="cloudSignupBtn" type="button">首次注册旅行账号</button><button id="cloudLogoutBtn" type="button">退出登录</button></div>
     <div class="cloud-account"><div class="cloud-account-state" id="cloudAccountState">尚未连接</div></div>
-    <div class="cloud-migrate" id="cloudMigrateBox"><strong>已有本机修改？</strong><small>你当前手机已经修改过的行程、费用、待办和本地照片不会因为更新网页而消失。连接云端后点下面按钮，把这台手机现有内容作为家庭云端初始版本。</small><button id="cloudMigrateBtn" type="button">上传本机现有数据和照片到云端</button></div>
+    <div class="cloud-migrate" id="cloudMigrateBox"><strong>已有本机修改？</strong><small>你当前手机已经修改过的行程、费用、待办和本地照片不会因为更新网页而消失。连接云端后点下面按钮，把这台手机现有内容作为旅行云端初始版本。</small><button id="cloudMigrateBtn" type="button">上传本机现有数据和照片到云端</button></div>
     <div class="cloud-actions"><button id="cloudPullBtn" type="button">从云端重新读取</button><button id="cloudFullBackupBtn" type="button">导出本机完整备份</button></div>
   </div>
 </div>
@@ -581,23 +392,23 @@ catch(e){document.documentElement.dataset.fontSize='normal';}
 </div>
 <div class="toast" id="toast">已保存</div>
 <div class="version-stamp" id="versionStamp" aria-label="网页版本信息">
-  <div><strong>网页版本：2026-08-25 08:15 · V4</strong></div>
+  <div><strong>网页版本：2026-09-26 · 广西 V1</strong></div>
   <div class="cloud-read-line">最近云读取：<span id="lastCloudReadStamp">尚未读取</span></div>
 </div>
 <div class="bottom"><div class="bottom-inner"><button class="bigbtn alt" id="editBtn">编辑行程</button><button class="bigbtn alt" id="shareBtn">分享行程</button><button class="bigbtn" id="todayBtn">查看当天</button></div></div>
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-const FONT_KEY='qinggan_font_size_v1';
+const FONT_KEY='guangxi_2026_font_size_v1';
 // Cloud storage keys are declared up front because cost/editor initialization can use them before the cloud module is initialized.
-const CLOUD_CONFIG_KEY='qinggan_cloud_config_v1';
-const CLOUD_LAST_KEY='qinggan_cloud_last_v1';
-const CLOUD_INIT_KEY='qinggan_cloud_initialized_v1';
-const CLOUD_DIRTY_KEY='qinggan_cloud_dirty_v1';
-const CLOUD_LAST_READ_KEY='qinggan_cloud_last_read_v1';
-const CLOUD_LAST_AUTO_POLL_KEY='qinggan_cloud_last_auto_poll_v1';
+const CLOUD_CONFIG_KEY='guangxi_2026_cloud_config_v1';
+const CLOUD_LAST_KEY='guangxi_2026_cloud_last_v1';
+const CLOUD_INIT_KEY='guangxi_2026_cloud_initialized_v1';
+const CLOUD_DIRTY_KEY='guangxi_2026_cloud_dirty_v1';
+const CLOUD_LAST_READ_KEY='guangxi_2026_cloud_last_read_v1';
+const CLOUD_LAST_AUTO_POLL_KEY='guangxi_2026_cloud_last_auto_poll_v1';
 var cloudReady=false, cloudClient=null, cloudUser=null, cloudPushTimer=null, cloudPollTimer=null, cloudApplying=false, cloudLastPhotoRefresh=0, cloudCommentChannel=null, cloudCommentRefreshTimer=null, cloudCommentForegroundRefreshAt=0;
 
-const PAGE_BUILD_STAMP='2026-08-25 08:15 · V4';
+const PAGE_BUILD_STAMP='2026-09-26 · 广西 V1';
 function formatStamp(ts){
   if(!ts)return'尚未读取';
   const d=new Date(Number(ts)||ts);if(Number.isNaN(d.getTime()))return String(ts);
@@ -691,48 +502,31 @@ tabs.forEach(t=>t.addEventListener('click',()=>{
 
 document.querySelectorAll('.day-head').forEach(h=>h.addEventListener('click',()=>{if(document.body.classList.contains('editing')) return;const b=h.nextElementSibling;b.style.display=b.style.display==='none'?'block':'none';}));
 
-const DAY_VIEW_FILTER_KEY='qinggan_day_view_filter_v1';
+const DAY_VIEW_FILTER_KEY='guangxi_2026_day_view_filter_v1';
 function dayKeyForArticle(day){const days=[...document.querySelectorAll('#days .day')];const i=days.indexOf(day);return i>=0?'d'+(i+1):'';}
 function applyDayViewFilter(value,scrollToDay=false){
-  const v=/^d[1-8]$/.test(value)?value:'all';
+  const v=/^d[1-7]$/.test(value)?value:'all';
   document.querySelectorAll('#days .day').forEach(day=>{const show=v==='all'||dayKeyForArticle(day)===v;day.style.display=show?'':'none';});
   const sel=document.getElementById('dayViewFilter');if(sel&&sel.value!==v)sel.value=v;
   try{localStorage.setItem(DAY_VIEW_FILTER_KEY,v);}catch(e){}
   if(scrollToDay&&v!=='all'){const target=[...document.querySelectorAll('#days .day')].find(x=>dayKeyForArticle(x)===v);if(target)target.scrollIntoView({behavior:'smooth',block:'start'});}
 }
 const dayViewFilter=document.getElementById('dayViewFilter');
-if(dayViewFilter){let saved='all';try{saved=localStorage.getItem(DAY_VIEW_FILTER_KEY)||'all';}catch(e){}dayViewFilter.value=/^d[1-8]$/.test(saved)?saved:'all';applyDayViewFilter(dayViewFilter.value,false);dayViewFilter.addEventListener('change',()=>applyDayViewFilter(dayViewFilter.value,true));}
+if(dayViewFilter){let saved='all';try{saved=localStorage.getItem(DAY_VIEW_FILTER_KEY)||'all';}catch(e){}dayViewFilter.value=/^d[1-7]$/.test(saved)?saved:'all';applyDayViewFilter(dayViewFilter.value,false);dayViewFilter.addEventListener('change',()=>applyDayViewFilter(dayViewFilter.value,true));}
 
-const AMAP_NAV_TARGETS={
-  '西宁海湖新区国投广场亚朵S酒店':{lat:36.649859,lng:101.712647,name:'西宁海湖新区国投广场亚朵S酒店'},
-  '青海湖二郎剑景区':{lat:36.578633,lng:100.495767,name:'青海湖二郎剑景区'},
-  '茶卡盐湖景区':{lat:36.759910,lng:99.078336,name:'茶卡盐湖景区'},
-  '茶卡盐湖':{lat:36.759910,lng:99.078336,name:'茶卡盐湖景区'},
-  '大柴旦翡翠湖旅游景区':{lat:37.8428,lng:95.2050,name:'大柴旦翡翠湖旅游景区'},
-  '大柴旦翡翠湖':{lat:37.8428,lng:95.2050,name:'大柴旦翡翠湖旅游景区'},
-  '鸣沙山月牙泉景区':{lat:40.0888,lng:94.6754,name:'鸣沙山月牙泉景区'},
-  '鸣沙山月牙泉':{lat:40.0888,lng:94.6754,name:'鸣沙山月牙泉景区'},
-  '敦煌沙州夜市':{lat:40.140389,lng:94.665799,name:'敦煌沙州夜市'},
-  '莫高窟数字展示中心':{lat:40.162823,lng:94.765090,name:'敦煌莫高窟数字展示中心（正常观影入口）'},
-  '莫高窟':{lat:40.162823,lng:94.765090,name:'敦煌莫高窟数字展示中心（正常观影入口）'},
-  '嘉峪关关城景区':{lat:39.803676,lng:98.224201,name:'嘉峪关关城景区'},
-  '嘉峪关关城':{lat:39.803676,lng:98.224201,name:'嘉峪关关城景区'},
-  '张掖七彩丹霞旅游景区':{lat:38.972010,lng:100.062804,name:'张掖七彩丹霞景区'},
-  '张掖七彩丹霞':{lat:38.972010,lng:100.062804,name:'张掖七彩丹霞景区'},
-  '七彩丹霞':{lat:38.972010,lng:100.062804,name:'张掖七彩丹霞景区'},
-  '张掖西站':{lat:38.9157,lng:100.4092,name:'张掖西站'}
-};
-const NAV_KEY='qinggan_nav_cache_v2';
+// Unverified entrance/hotel coordinates must use Amap search, not a guessed driving endpoint.
+const AMAP_NAV_TARGETS={};
+const NAV_KEY='guangxi_2026_nav_cache_v2';
 let navGeoCache={};
 try{navGeoCache=JSON.parse(localStorage.getItem(NAV_KEY)||'{}')||{};}catch(e){navGeoCache={};}
 function amapDriveURL(target){
   const to=[target.lng,target.lat,target.name].join(',');
-  return 'https://uri.amap.com/navigation?from=&to='+encodeURIComponent(to)+'&mode=car&policy=0&src=qinggan-family-trip&callnative=1';
+  return 'https://uri.amap.com/navigation?from=&to='+encodeURIComponent(to)+'&mode=car&policy=0&src=guangxi-2026-trip&callnative=1';
 }
 function plainEditableText(el){
   if(!el) return '';
   const clone=el.cloneNode(true);clone.querySelectorAll('small,.item-edit-actions').forEach(x=>x.remove());
-  return (clone.textContent||'').replace(/^\s*[🏨📍🚗]\s*/,'').replace(/^(?:出发前往|前往|抵达|到达|到)\s*/,'').replace(/\s+/g,' ').trim();
+  return (clone.textContent||'').replace(/^\s*[🏨📍🚗]\s*/u,'').replace(/^(?:出发前往|前往|抵达|到达|到)\s*/,'').replace(/\s+/g,' ').trim();
 }
 function resolveNavPlace(a){
   const day=a.closest('.day');
@@ -754,13 +548,13 @@ function applyNavTarget(a,target,place){
     a.href=amapDriveURL(t);a.dataset.driveReady='1';
     a.title='高德驾车：当前位置 → '+t.name;a.setAttribute('aria-label','高德驾车，从当前位置前往'+t.name);
   }else{
-    a.href='https://uri.amap.com/search?keyword='+encodeURIComponent(place)+'&callnative=1';
-    delete a.dataset.driveReady;a.title='地址已变化：在高德中重新搜索 '+place;a.setAttribute('aria-label','在高德地图中重新搜索'+place);
+    a.href='https://uri.amap.com/search?keyword='+encodeURIComponent(place)+'&view=map&src=guangxi-2026-trip&callnative=1';
+    delete a.dataset.driveReady;a.title='在高德中确认目的地：'+place;a.setAttribute('aria-label','在高德地图中搜索并确认'+place);
   }
   a.target='_blank';a.rel='noopener noreferrer';a.dataset.currentPlace=place;
 }
 async function geocodeAmapPlace(place){
-  const key=(localStorage.getItem('qinggan_amap_web_key_v1')||'').trim();
+  const key=(localStorage.getItem('guangxi_2026_amap_web_key_v1')||'').trim();
   if(!key||!place) return null;
   try{
     const u='https://restapi.amap.com/v3/geocode/geo?output=JSON&address='+encodeURIComponent(place)+'&key='+encodeURIComponent(key);
@@ -781,7 +575,7 @@ function refreshDynamicNavTargets(forceChanged=false){
       if(!forceChanged && cached?.place===place) target=cached;
       if(!target && AMAP_NAV_TARGETS[place]) target={...AMAP_NAV_TARGETS[place],place};
       const placeChanged=!cached||cached.place!==place;
-      if((placeChanged||forceChanged) && (localStorage.getItem('qinggan_amap_web_key_v1')||'').trim()){
+      if((placeChanged||forceChanged) && (localStorage.getItem('guangxi_2026_amap_web_key_v1')||'').trim()){
         const fresh=await geocodeAmapPlace(place);
         if(fresh){target={...fresh,place};navGeoCache[key]=target;changed=true;}
       }
@@ -798,42 +592,168 @@ function refreshDynamicNavTargets(forceChanged=false){
 function bindNav(){refreshDynamicNavTargets(false);}
 bindNav();
 
-for(let i=1;i<=10;i++){const el=document.getElementById('c'+i);if(!el) continue;const k='qinggan_'+el.id;el.checked=localStorage.getItem(k)==='1';el.addEventListener('change',()=>{localStorage.setItem(k,el.checked?'1':'0');scheduleCloudStatePush();});}
+for(let i=1;i<=10;i++){const el=document.getElementById('c'+i);if(!el) continue;const k='guangxi_2026_'+el.id;el.checked=localStorage.getItem(k)==='1';el.addEventListener('change',()=>{localStorage.setItem(k,el.checked?'1':'0');scheduleCloudStatePush();});}
 
 function ymd(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 const today=ymd(new Date()); const todayCard=document.querySelector('.day[data-date="'+today+'"]'); if(todayCard) todayCard.classList.add('today');
 document.getElementById('todayBtn').addEventListener('click',()=>{document.querySelector('[data-tab="days"]').click();const target=document.querySelector('.day[data-date="'+ymd(new Date())+'"]')||document.querySelector('.day');const key=dayKeyForArticle(target);if(key)applyDayViewFilter(key,false);target.scrollIntoView({behavior:'smooth',block:'start'});});
 
-document.getElementById('shareBtn').addEventListener('click',async()=>{const data={title:'青甘8天家庭自驾',text:'青甘家庭自驾行程：8/24–8/31，杭州-兰州-西宁-青海湖-茶卡-大柴旦-敦煌-嘉峪关-张掖。',url:location.href};try{if(navigator.share) await navigator.share(data);else{await navigator.clipboard.writeText(location.href);showToast('链接已复制');}}catch(e){}});
+document.getElementById('shareBtn').addEventListener('click',async()=>{const data={title:'广西国庆7天轻松自驾',text:'10/1–10/7，深圳往返，德天瀑布、通灵峡谷与鹅泉，两人轻松游。',url:location.href};try{if(navigator.share) await navigator.share(data);else{await navigator.clipboard.writeText(location.href);showToast('链接已复制');}}catch(e){}});
 
 
 
 /* ===== 全程互动地图 ===== */
 var tripMap=null, tripMapReady=false, currentMapDay='all';
-const mapRouteLayers={}, mapAllLayers=[], mapMarkerLayers=[], mapDayLayers={d1:[],d2:[],d3:[],d4:[],d5:[],d6:[],d7:[],d8:[]};
+const mapRouteLayers={}, mapAllLayers=[], mapMarkerLayers=[], mapDayLayers={d1:[],d2:[],d3:[],d4:[],d5:[],d6:[],d7:[]};
 const MAP_POINTS={
-  hgh:{name:'杭州萧山机场',lat:30.2295,lng:120.4345,codes:['1.1','8.4']},
-  lhw:{name:'兰州中川机场',lat:36.5152,lng:103.6208,codes:['1.2','8.3']},
-  lanzhouWest:{name:'兰州西站',lat:36.0664,lng:103.7463,codes:['1.3','8.2']},
-  xining:{name:'西宁',lat:36.6171,lng:101.7782,codes:['1.4','2.1']},
-  qinghai:{name:'青海湖二郎剑景区',lat:36.578633,lng:100.495767,codes:['2.2']},
-  chaka:{name:'茶卡盐湖',lat:36.759910,lng:99.078336,codes:['2.3','3.1']},
-  dachaidan:{name:'大柴旦镇',lat:37.8443,lng:95.3601,codes:['3.2','3.4','4.1']},
-  emerald:{name:'大柴旦翡翠湖',lat:37.8428,lng:95.2050,codes:['3.3']},
-  dunhuang:{name:'敦煌市区 / 酒店',lat:40.1421,lng:94.6619,codes:['4.2','4.4','5.1','5.3','6.1']},
-  mingsha:{name:'鸣沙山月牙泉',lat:40.0888,lng:94.6754,codes:['4.3']},
-  mogao:{name:'莫高窟数字展示中心',lat:40.162823,lng:94.765090,codes:['5.2']},
-  jiayuguan:{name:'嘉峪关关城',lat:39.803676,lng:98.224201,codes:['6.2','7.1']},
-  danxia:{name:'张掖七彩丹霞',lat:38.972010,lng:100.062804,codes:['7.2']},
-  zhangye:{name:'张掖西站',lat:38.9157,lng:100.4092,codes:['7.3','8.1']}
+  "shenzhen": {
+    "name": "深圳市区（出发 / 返回参考点）",
+    "lat": 22.543,
+    "lng": 114.058,
+    "codes": [
+      "1.1",
+      "7.2"
+    ]
+  },
+  "yulin": {
+    "name": "玉林市区",
+    "lat": 22.6348,
+    "lng": 110.1535,
+    "codes": [
+      "1.2",
+      "2.1"
+    ]
+  },
+  "daxin": {
+    "name": "大新县城",
+    "lat": 22.8334,
+    "lng": 107.2008,
+    "codes": [
+      "2.2",
+      "3.1"
+    ]
+  },
+  "detian": {
+    "name": "德天景区（中国一侧示意）",
+    "lat": 22.8564,
+    "lng": 106.7219,
+    "codes": [
+      "3.2"
+    ]
+  },
+  "jingxi": {
+    "name": "靖西市区",
+    "lat": 23.1372,
+    "lng": 106.4139,
+    "codes": [
+      "3.3",
+      "4.1",
+      "4.3",
+      "5.1"
+    ]
+  },
+  "tongling": {
+    "name": "通灵大峡谷（景区参考点）",
+    "lat": 23.023,
+    "lng": 106.64977,
+    "codes": [
+      "4.2"
+    ]
+  },
+  "equan": {
+    "name": "鹅泉（景区参考点）",
+    "lat": 23.1015,
+    "lng": 106.386,
+    "codes": [
+      "5.2"
+    ]
+  },
+  "nanning": {
+    "name": "南宁市区",
+    "lat": 22.817,
+    "lng": 108.366,
+    "codes": [
+      "5.3",
+      "6.1"
+    ]
+  },
+  "wuzhou": {
+    "name": "梧州龙圩区",
+    "lat": 23.40987,
+    "lng": 111.23553,
+    "codes": [
+      "6.2",
+      "7.1"
+    ]
+  }
 };
 const DRIVE_DAYS=[
-  {id:'d2',label:'D2 · 2.1 西宁 → 2.2 青海湖 → 2.3 茶卡',color:'#bd6d3a',pts:['xining','qinghai','chaka']},
-  {id:'d3',label:'D3 · 3.1 茶卡 → 3.2 大柴旦 → 3.3 翡翠湖 → 3.4 大柴旦',color:'#4f7d72',pts:['chaka','dachaidan','emerald','dachaidan']},
-  {id:'d4',label:'D4 · 4.1 大柴旦 → 4.2 敦煌 → 4.3 鸣沙山 → 4.4 敦煌',color:'#8a6a4c',pts:['dachaidan','dunhuang','mingsha','dunhuang']},
-  {id:'d5',label:'D5 · 5.1 敦煌 → 5.2 莫高窟 → 5.3 敦煌',color:'#77658b',pts:['dunhuang','mogao','dunhuang']},
-  {id:'d6',label:'D6 · 6.1 敦煌 → 6.2 嘉峪关',color:'#5b7089',pts:['dunhuang','jiayuguan']},
-  {id:'d7',label:'D7 · 7.1 嘉峪关 → 7.2 七彩丹霞 → 7.3 张掖',color:'#9b6b63',pts:['jiayuguan','danxia','zhangye']}
+  {
+    "id": "d1",
+    "label": "D1 · 深圳 → 玉林",
+    "color": "#75679a",
+    "pts": [
+      "shenzhen",
+      "yulin"
+    ]
+  },
+  {
+    "id": "d2",
+    "label": "D2 · 玉林 → 大新县城",
+    "color": "#bd6d3a",
+    "pts": [
+      "yulin",
+      "daxin"
+    ]
+  },
+  {
+    "id": "d3",
+    "label": "D3 · 大新 → 德天瀑布 → 靖西",
+    "color": "#4f7d72",
+    "pts": [
+      "daxin",
+      "detian",
+      "jingxi"
+    ]
+  },
+  {
+    "id": "d4",
+    "label": "D4 · 靖西 → 通灵大峡谷 → 靖西",
+    "color": "#8a6a4c",
+    "pts": [
+      "jingxi",
+      "tongling",
+      "jingxi"
+    ]
+  },
+  {
+    "id": "d5",
+    "label": "D5 · 靖西 → 鹅泉 → 南宁",
+    "color": "#77658b",
+    "pts": [
+      "jingxi",
+      "equan",
+      "nanning"
+    ]
+  },
+  {
+    "id": "d6",
+    "label": "D6 · 南宁 → 梧州龙圩",
+    "color": "#5b7089",
+    "pts": [
+      "nanning",
+      "wuzhou"
+    ]
+  },
+  {
+    "id": "d7",
+    "label": "D7 · 梧州 → 深圳",
+    "color": "#9b6b63",
+    "pts": [
+      "wuzhou",
+      "shenzhen"
+    ]
+  }
 ];
 /* 高德底图使用 GCJ-02；行程坐标和 OSRM 路线原始数据为 WGS84，显示前统一转换。 */
 function outOfChina(lat,lng){return lng<72.004||lng>137.8347||lat<0.8293||lat>55.8271;}
@@ -862,7 +782,7 @@ async function addDriveRoute(day){
   const coords=day.pts.map(k=>MAP_POINTS[k].lng+','+MAP_POINTS[k].lat).join(';');
   const url='https://router.project-osrm.org/route/v1/driving/'+coords+'?overview=full&geometries=geojson&steps=false';
   try{
-    const res=await fetch(url,{mode:'cors'}); if(!res.ok) throw new Error('HTTP '+res.status);
+    const res=await fetch(url,{mode:'cors',signal:AbortSignal.timeout(12000)}); if(!res.ok) throw new Error('HTTP '+res.status);
     const data=await res.json(); if(!data.routes||!data.routes[0]) throw new Error('no route');
     const latlngs=data.routes[0].geometry.coordinates.map(c=>wgs84ToGcj02(c[1],c[0]));
     const layer=L.polyline(latlngs,{color:day.color,weight:5,opacity:.9,lineCap:'round',lineJoin:'round'}).addTo(tripMap).bindPopup(day.label);
@@ -896,7 +816,7 @@ function applyMapDayFilter(id,scroll=true){
   }
   if(visible.length){const b=L.featureGroup(visible).getBounds();if(b.isValid()) tripMap.fitBounds(b.pad(all?.06:.15),{maxZoom:all?9:11});}
   const status=document.getElementById('mapStatus');
-  if(status) status.textContent=all?'当前显示：全部 8 天行程。':`当前只显示：第 ${dayNumberFromId(currentMapDay)} 天路线和当天行程节点。`;
+  if(status) status.textContent=all?'当前显示：全部 7 天行程。':`当前只显示：第 ${dayNumberFromId(currentMapDay)} 天路线和当天行程节点。`;
   if(scroll) document.getElementById('tripMap')?.scrollIntoView({behavior:'smooth',block:'center'});
 }
 function focusMapDay(id){initTripMap().then(()=>applyMapDayFilter(id,true));}
@@ -908,7 +828,7 @@ async function initTripMap(){
   }
   tripMapReady=true;
   const el=document.getElementById('tripMap'); if(!el) return; el.innerHTML='';
-  tripMap=L.map('tripMap',{zoomControl:true,scrollWheelZoom:true,tap:true,preferCanvas:true}).setView(wgs84ToGcj02(38.2,101.0),5);
+  tripMap=L.map('tripMap',{zoomControl:true,scrollWheelZoom:true,tap:true,preferCanvas:true}).setView(wgs84ToGcj02(23,110),6);
   /* 微信/国内网络下 OSM 瓦片经常无法显示，改用国内可访问性更好的高德底图。 */
   const baseLayer=L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=7&x={x}&y={y}&z={z}',{
     subdomains:'1234',maxZoom:18,minZoom:3,attribution:'© 高德地图'
@@ -922,15 +842,9 @@ async function initTripMap(){
     }
   });
 
-  const markerOrder=['hgh','lhw','lanzhouWest','xining','qinghai','chaka','dachaidan','emerald','dunhuang','mingsha','mogao','jiayuguan','danxia','zhangye'];
+  const markerOrder=Object.keys(MAP_POINTS);
   markerOrder.forEach((key)=>{const p=MAP_POINTS[key];const primary=p.codes[0];const codes=p.codes.join(' / ');const marker=L.marker(mapLatLng(key),{icon:mapPinIcon(primary)}).addTo(tripMap).bindPopup('<strong>'+primary+' · '+p.name+'</strong><br><small>行程编号：'+codes+'</small>');mapAllLayers.push(marker);mapMarkerLayers.push({layer:marker,codes:p.codes,key});});
 
-  addTransportLine(['hgh','lhw'],'flight','D1 · 1.1 杭州萧山机场 → 1.2 兰州中川机场 · 航班','d1');
-  addTransportLine(['lhw','lanzhouWest'],'train','D1 · 1.2 中川机场 → 1.3 兰州西站 · 机场铁路','d1');
-  addTransportLine(['lanzhouWest','xining'],'train','D1 · 1.3 兰州西站 → 1.4 西宁 · 高铁/动车','d1');
-  addTransportLine(['zhangye','lanzhouWest'],'train','D8 · 8.1 张掖西站 → 8.2 兰州西站 · 高铁/动车','d8');
-  addTransportLine(['lanzhouWest','lhw'],'train','D8 · 8.2 兰州西站 → 8.3 中川机场 · 机场铁路','d8');
-  addTransportLine(['lhw','hgh'],'flight','D8 · 8.3 兰州中川机场 → 8.4 杭州萧山机场 · 航班','d8');
 
   const status=document.getElementById('mapStatus'); status.textContent='正在加载自驾道路路线…';
   const result=await Promise.all(DRIVE_DAYS.map(addDriveRoute));
@@ -945,12 +859,36 @@ document.querySelectorAll('[data-map-day]').forEach(card=>card.querySelector('.r
 
 
 /* ===== 旅途照片 / IndexedDB ===== */
-const PHOTO_DB_NAME='qinggan_trip_photos_v1', PHOTO_STORE='photos';
+const PHOTO_DB_NAME='guangxi_2026_trip_photos_v1', PHOTO_STORE='photos';
 const PHOTO_DAY_META={
-  d1:{title:'第1天 · 杭州 → 兰州 → 西宁',date:'8/24'},d2:{title:'第2天 · 西宁 → 青海湖 → 茶卡',date:'8/25'},
-  d3:{title:'第3天 · 茶卡 → 大柴旦 → 翡翠湖',date:'8/26'},d4:{title:'第4天 · 大柴旦 → 敦煌 → 鸣沙山',date:'8/27'},
-  d5:{title:'第5天 · 莫高窟 · 敦煌休息',date:'8/28'},d6:{title:'第6天 · 敦煌 → 嘉峪关',date:'8/29'},
-  d7:{title:'第7天 · 嘉峪关 → 七彩丹霞 → 张掖',date:'8/30'},d8:{title:'第8天 · 张掖 → 兰州 → 杭州',date:'8/31'}
+  "d1": {
+    "title": "第1天 · 深圳 → 玉林",
+    "date": "10/1"
+  },
+  "d2": {
+    "title": "第2天 · 玉林 → 大新县城",
+    "date": "10/2"
+  },
+  "d3": {
+    "title": "第3天 · 大新 → 德天瀑布 → 靖西",
+    "date": "10/3"
+  },
+  "d4": {
+    "title": "第4天 · 靖西 → 通灵大峡谷 → 靖西",
+    "date": "10/4"
+  },
+  "d5": {
+    "title": "第5天 · 靖西 → 鹅泉 → 南宁",
+    "date": "10/5"
+  },
+  "d6": {
+    "title": "第6天 · 南宁 → 梧州龙圩",
+    "date": "10/6"
+  },
+  "d7": {
+    "title": "第7天 · 梧州 → 深圳",
+    "date": "10/7"
+  }
 };
 let photoDBPromise=null, photoRecords=[], currentPhotoIds=[], currentPhotoIndex=0, pendingPhotoDay='d1';
 const PHOTO_CATEGORIES={scenery:'风景',food:'美食'};
@@ -1047,11 +985,11 @@ function renderPhotoGallery(){
 }
 
 /* ===== 评论 / 弹幕 ===== */
-const COMMENT_AUTHOR_KEY='qinggan_comment_author_v1';
-const COMMENT_PROFILE_KEY='qinggan_comment_profile_v2';
-const COMMENT_LOCAL_KEY='qinggan_comments_v1';
-const COMMENT_SEEN_KEY='qinggan_comment_seen_ids_v1';
-const COMMENT_UNREAD_START_KEY='qinggan_comment_unread_start_v1';
+const COMMENT_AUTHOR_KEY='guangxi_2026_comment_author_v1';
+const COMMENT_PROFILE_KEY='guangxi_2026_comment_profile_v2';
+const COMMENT_LOCAL_KEY='guangxi_2026_comments_v1';
+const COMMENT_SEEN_KEY='guangxi_2026_comment_seen_ids_v1';
+const COMMENT_UNREAD_START_KEY='guangxi_2026_comment_unread_start_v1';
 const COMMENT_COLORS=['#e11d48','#ea580c','#ca8a04','#16a34a','#0891b2','#2563eb','#7c3aed','#c026d3','#0f766e','#4f46e5','#be123c','#374151'];
 let commentRecords=[];
 let commentUnreadStart=Number(localStorage.getItem(COMMENT_UNREAD_START_KEY)||0);
@@ -1063,23 +1001,23 @@ function commentProfile(){try{return JSON.parse(localStorage.getItem(COMMENT_PRO
 function commentAuthor(){const p=commentProfile();if(p?.name)return p.name;return (localStorage.getItem(COMMENT_AUTHOR_KEY)||'').trim();}
 function commentColorForName(name){let h=0;for(let i=0;i<(name||'').length;i++)h=(h*31+(name.charCodeAt(i)||0))>>>0;return COMMENT_COLORS[h%COMMENT_COLORS.length];}
 function saveCommentProfile(name,color){localStorage.setItem(COMMENT_PROFILE_KEY,JSON.stringify({name,color}));localStorage.setItem(COMMENT_AUTHOR_KEY,name);}
-function ensureCommentProfile(){return new Promise(resolve=>{const existing=commentProfile();const oldName=existing?.name||commentAuthor();const mask=document.createElement('div');mask.className='comment-profile-mask';const dialog=document.createElement('div');dialog.className='comment-profile-dialog';dialog.innerHTML='<h3>设置评论 ID 和颜色</h3><p>第一次评论时设置一次。以后你的评论都会使用这个颜色。</p><input class="comment-profile-name" maxlength="30" placeholder="例如：爸爸、妈妈、Jinna"><div class="comment-color-title">选择你喜欢的评论颜色</div><div class="comment-color-grid"></div><div class="comment-profile-actions"><button class="secondary" type="button">取消</button><button class="primary" type="button">保存并评论</button></div>';mask.appendChild(dialog);document.body.appendChild(mask);const input=dialog.querySelector('.comment-profile-name');input.value=oldName||'';let selected=existing?.color||commentColorForName(oldName||'旅行者');const grid=dialog.querySelector('.comment-color-grid');COMMENT_COLORS.forEach(c=>{const b=document.createElement('button');b.type='button';b.className='comment-color-choice'+(c===selected?' active':'');b.style.background=c;b.setAttribute('aria-label','选择颜色 '+c);b.addEventListener('click',()=>{selected=c;grid.querySelectorAll('.comment-color-choice').forEach(x=>x.classList.remove('active'));b.classList.add('active');});grid.appendChild(b);});const close=val=>{mask.remove();resolve(val);};dialog.querySelector('.secondary').onclick=()=>close(null);dialog.querySelector('.primary').onclick=()=>{const name=input.value.trim().slice(0,30);if(!name){input.focus();return;}saveCommentProfile(name,selected);close({name,color:selected});};mask.addEventListener('click',e=>{if(e.target===mask)close(null);});input.focus();});}
+function ensureCommentProfile(){return new Promise(resolve=>{const existing=commentProfile();const oldName=existing?.name||commentAuthor();const mask=document.createElement('div');mask.className='comment-profile-mask';const dialog=document.createElement('div');dialog.className='comment-profile-dialog';dialog.innerHTML='<h3>设置评论 ID 和颜色</h3><p>第一次评论时设置一次。以后你的评论都会使用这个颜色。</p><input class="comment-profile-name" maxlength="30" placeholder="例如：你、TA、Jinna"><div class="comment-color-title">选择你喜欢的评论颜色</div><div class="comment-color-grid"></div><div class="comment-profile-actions"><button class="secondary" type="button">取消</button><button class="primary" type="button">保存并评论</button></div>';mask.appendChild(dialog);document.body.appendChild(mask);const input=dialog.querySelector('.comment-profile-name');input.value=oldName||'';let selected=existing?.color||commentColorForName(oldName||'旅行者');const grid=dialog.querySelector('.comment-color-grid');COMMENT_COLORS.forEach(c=>{const b=document.createElement('button');b.type='button';b.className='comment-color-choice'+(c===selected?' active':'');b.style.background=c;b.setAttribute('aria-label','选择颜色 '+c);b.addEventListener('click',()=>{selected=c;grid.querySelectorAll('.comment-color-choice').forEach(x=>x.classList.remove('active'));b.classList.add('active');});grid.appendChild(b);});const close=val=>{mask.remove();resolve(val);};dialog.querySelector('.secondary').onclick=()=>close(null);dialog.querySelector('.primary').onclick=()=>{const name=input.value.trim().slice(0,30);if(!name){input.focus();return;}saveCommentProfile(name,selected);close({name,color:selected});};mask.addEventListener('click',e=>{if(e.target===mask)close(null);});input.focus();});}
 function commentDate(ts){try{return new Date(ts).toLocaleString('zh-CN',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});}catch(e){return '';}}
-async function cloudCommentGetAll(){if(!cloudReady||!cloudUser)return [];const {data,error}=await cloudClient.from('trip_comments').select('id,target_type,target_id,author_name,author_color,body,created_at').eq('user_id',cloudUser.id).order('created_at',{ascending:true});if(error)throw error;return (data||[]).map(x=>({id:x.id,targetType:x.target_type,targetId:x.target_id,author:x.author_name,authorColor:x.author_color||commentColorForName(x.author_name),body:x.body,createdAt:Number(x.created_at)||Date.now()}));}
+async function cloudCommentGetAll(){if(!cloudReady||!cloudUser)return [];const {data,error}=await cloudClient.from('guangxi_trip_comments').select('id,target_type,target_id,author_name,author_color,body,created_at').eq('user_id',cloudUser.id).order('created_at',{ascending:true});if(error)throw error;return (data||[]).map(x=>({id:x.id,targetType:x.target_type,targetId:x.target_id,author:x.author_name,authorColor:x.author_color||commentColorForName(x.author_name),body:x.body,createdAt:Number(x.created_at)||Date.now()}));}
 function localCommentGetAll(){try{return JSON.parse(localStorage.getItem(COMMENT_LOCAL_KEY)||'[]');}catch(e){return [];}}
 function localCommentSaveAll(records=commentRecords){localStorage.setItem(COMMENT_LOCAL_KEY,JSON.stringify(records));}
 function isCommentUnread(c){return !!c&&c.createdAt>=commentUnreadStart&&c.author!==commentAuthor()&&!commentSeenIds.has(c.id);}
 function commentFor(targetType,targetId){return commentRecords.filter(x=>x.targetType===targetType&&x.targetId===targetId);}
 function unreadComments(){return commentRecords.filter(isCommentUnread).sort((a,b)=>a.createdAt-b.createdAt);}
 function markCommentTargetRead(targetType,targetId,rerender=true){let changed=false;for(const c of commentFor(targetType,targetId)){if(!commentSeenIds.has(c.id)){commentSeenIds.add(c.id);changed=true;}}if(changed)saveCommentSeenIds();if(rerender)renderAllComments();}
-function updateCommentUnreadBar(){const bar=document.getElementById('commentUnreadBar'),count=document.getElementById('commentUnreadCount'),hint=document.getElementById('commentUnreadHint');if(!bar||!count)return;const arr=unreadComments();bar.classList.toggle('show',arr.length>0);count.textContent=arr.length+' 条未读评论';if(hint&&arr.length){const authors=[...new Set(arr.map(x=>x.author||'家人'))];hint.textContent=(authors.slice(0,2).join('、')+(authors.length>2?' 等':''))+'有新评论，点击查看第一条';}}
+function updateCommentUnreadBar(){const bar=document.getElementById('commentUnreadBar'),count=document.getElementById('commentUnreadCount'),hint=document.getElementById('commentUnreadHint');if(!bar||!count)return;const arr=unreadComments();bar.classList.toggle('show',arr.length>0);count.textContent=arr.length+' 条未读评论';if(hint&&arr.length){const authors=[...new Set(arr.map(x=>x.author||'同伴'))];hint.textContent=(authors.slice(0,2).join('、')+(authors.length>2?' 等':''))+'有新评论，点击查看第一条';}}
 function renderCommentList(details,targetType,targetId){const list=details.querySelector('.comment-list');if(!list)return;const arr=commentFor(targetType,targetId);if(details.open){for(const c of arr)commentSeenIds.add(c.id);saveCommentSeenIds();}const unread=arr.filter(isCommentUnread);list.innerHTML='';if(!arr.length){list.innerHTML='<div class="comment-empty">还没有评论，第一条留给你。</div>';}else arr.forEach(c=>{const card=document.createElement('div');card.className='comment-card'+(isCommentUnread(c)?' unread':'');const cc=c.authorColor||commentColorForName(c.author||'旅行者');card.style.setProperty('--comment-color',cc);card.innerHTML='<div class="comment-meta"><strong></strong><span></span></div><div class="comment-body"></div>';card.querySelector('strong').textContent=c.author||'旅行者';card.querySelector('span').textContent=commentDate(c.createdAt);card.querySelector('.comment-body').textContent=c.body;list.appendChild(card);});const summary=details.querySelector('summary');if(summary){summary.innerHTML='';const text=document.createElement('span');text.textContent='💬 评论（'+arr.length+'）';summary.appendChild(text);if(unread.length){const badge=document.createElement('span');badge.className='comment-summary-unread';badge.textContent=unread.length+' 未读';summary.appendChild(badge);}}}
 function renderAllComments(){document.querySelectorAll('.day-comment-box').forEach(d=>renderCommentList(d,'day',d.dataset.commentDay));const light=document.getElementById('photoCommentDetails');if(light){const id=light.dataset.commentPhoto;if(id)renderCommentList(light,'photo',id);}updateCommentUnreadBar();}
 function renderAllCommentCounts(){renderAllComments();}
-async function refreshComments(options={}){try{commentRecords=cloudReady?await cloudCommentGetAll():localCommentGetAll();renderAllComments();if(options.toast&&unreadComments().length)showToast('收到新的家庭评论');}catch(e){console.warn('comments',e);commentRecords=localCommentGetAll();renderAllComments();}}
-function scheduleCommentRemoteRefresh(author='家人'){if(!cloudReady)return;clearTimeout(cloudCommentRefreshTimer);cloudCommentRefreshTimer=setTimeout(async()=>{const before=new Set(commentRecords.map(x=>x.id));await refreshComments();const fresh=commentRecords.filter(x=>!before.has(x.id)&&x.author!==commentAuthor());if(fresh.length)showToast('💬 '+(author||fresh[0].author||'家人')+'有新评论');},350);}
+async function refreshComments(options={}){try{commentRecords=cloudReady?await cloudCommentGetAll():localCommentGetAll();renderAllComments();if(options.toast&&unreadComments().length)showToast('收到新的旅行评论');}catch(e){console.warn('comments',e);commentRecords=localCommentGetAll();renderAllComments();}}
+function scheduleCommentRemoteRefresh(author='同伴'){if(!cloudReady)return;clearTimeout(cloudCommentRefreshTimer);cloudCommentRefreshTimer=setTimeout(async()=>{const before=new Set(commentRecords.map(x=>x.id));await refreshComments();const fresh=commentRecords.filter(x=>!before.has(x.id)&&x.author!==commentAuthor());if(fresh.length)showToast('💬 '+(author||fresh[0].author||'同伴')+'有新评论');},350);}
 async function broadcastCommentAdded(rec){if(!cloudCommentChannel)return;try{await cloudCommentChannel.send({type:'broadcast',event:'comment-added',payload:{commentId:rec.id,author:rec.author,targetType:rec.targetType,targetId:rec.targetId,createdAt:rec.createdAt}});}catch(e){console.warn('comment broadcast',e);}}
-async function submitComment(targetType,targetId,details){const textarea=details.querySelector('textarea'),button=details.querySelector('.comment-form button');const text=textarea?.value.trim();if(!text)return;const profile=commentProfile()||await ensureCommentProfile();if(!profile?.name)return;const rec={id:'c_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8),targetType,targetId,author:profile.name,authorColor:profile.color||commentColorForName(profile.name),body:text,createdAt:Date.now()};if(button){button.disabled=true;button.textContent=cloudReady?'上传中…':'保存中…';}try{if(cloudReady){const {error}=await cloudClient.from('trip_comments').insert({id:rec.id,user_id:cloudUser.id,target_type:targetType,target_id:targetId,author_name:rec.author,author_color:rec.authorColor,body:text,created_at:rec.createdAt});if(error)throw error;}else{commentRecords.push(rec);localCommentSaveAll();}if(cloudReady&&!commentRecords.some(x=>x.id===rec.id))commentRecords.push(rec);commentSeenIds.add(rec.id);saveCommentSeenIds();textarea.value='';details.open=true;renderCommentList(details,targetType,targetId);updateCommentUnreadBar();if(cloudReady){await broadcastCommentAdded(rec);showToast('评论已上传云端');}else showToast('评论已保存在本机，登录云端后会补传');}catch(e){console.error(e);alert('评论发送失败：'+(e.message||'请检查网络'));}finally{if(button){button.disabled=false;button.textContent='发送';}}}
+async function submitComment(targetType,targetId,details){const textarea=details.querySelector('textarea'),button=details.querySelector('.comment-form button');const text=textarea?.value.trim();if(!text)return;const profile=commentProfile()||await ensureCommentProfile();if(!profile?.name)return;const rec={id:'c_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8),targetType,targetId,author:profile.name,authorColor:profile.color||commentColorForName(profile.name),body:text,createdAt:Date.now()};if(button){button.disabled=true;button.textContent=cloudReady?'上传中…':'保存中…';}try{if(cloudReady){const {error}=await cloudClient.from('guangxi_trip_comments').insert({id:rec.id,user_id:cloudUser.id,target_type:targetType,target_id:targetId,author_name:rec.author,author_color:rec.authorColor,body:text,created_at:rec.createdAt});if(error)throw error;}else{commentRecords.push(rec);localCommentSaveAll();}if(cloudReady&&!commentRecords.some(x=>x.id===rec.id))commentRecords.push(rec);commentSeenIds.add(rec.id);saveCommentSeenIds();textarea.value='';details.open=true;renderCommentList(details,targetType,targetId);updateCommentUnreadBar();if(cloudReady){await broadcastCommentAdded(rec);showToast('评论已上传云端');}else showToast('评论已保存在本机，登录云端后会补传');}catch(e){console.error(e);alert('评论发送失败：'+(e.message||'请检查网络'));}finally{if(button){button.disabled=false;button.textContent='发送';}}}
 function ensureDayCommentBoxes(){document.querySelectorAll('.day').forEach(day=>{if(!day.querySelector('.day-comment-box')){const d=photoDayFromDayArticle(day),body=day.querySelector('.day-body');const details=document.createElement('details');details.className='comment-box day-comment-box';details.dataset.commentDay=d;details.innerHTML='<summary>💬 评论（0）</summary><div class="comment-list"></div><div class="comment-form"><textarea placeholder="写一句对今天行程的感受……" maxlength="500"></textarea><button type="button">发送</button></div>';body.appendChild(details);details.querySelector('button').addEventListener('click',()=>submitComment('day',d,details));details.addEventListener('toggle',()=>{if(details.open)markCommentTargetRead('day',d);});}});}
 async function refreshPhotos(){try{photoRecords=await photoGetAll();renderPhotoGallery();}catch(e){console.error(e);const host=document.getElementById('photoGallery');if(host)host.innerHTML='<div class="photo-empty">照片读取失败。请检查网络或改用 Safari / Chrome 后再试。</div>';}}
 function syncPhotoUploadControls(){const cat=document.getElementById('photoTargetCategory')?.value||'scenery';const meal=document.getElementById('photoTargetMeal');if(meal)meal.style.display=cat==='food'?'block':'none';}
@@ -1122,8 +1060,8 @@ function closePhotoLightbox(){const lb=document.getElementById('photoLightbox');
 function stepPhoto(delta){if(!currentPhotoIds.length)return;currentPhotoIndex=(currentPhotoIndex+delta+currentPhotoIds.length)%currentPhotoIds.length;updatePhotoLightbox();}
 async function saveCurrentPhotoCaption(){const id=currentPhotoIds[currentPhotoIndex],rec=photoRecordById(id);if(!rec)return;rec.caption=document.getElementById('photoCaptionInput').value.trim();await photoPut(rec);await refreshPhotos();showToast('照片备注已保存');}
 async function deleteCurrentPhoto(){const id=currentPhotoIds[currentPhotoIndex];if(!id||!confirm('删除这张照片吗？'))return;await photoDelete(id);currentPhotoIds.splice(currentPhotoIndex,1);await refreshPhotos();if(!currentPhotoIds.length){closePhotoLightbox();showToast('照片已删除');return;}currentPhotoIndex=Math.min(currentPhotoIndex,currentPhotoIds.length-1);updatePhotoLightbox();showToast('照片已删除');}
-async function exportPhotoBackup(){if(!photoRecords.length){alert('还没有照片可以导出。');return;}showToast('正在生成相册备份…');const records=[];for(const rec of sortedPhotos()){let blob=rec.blob;if(!blob&&cloudReady&&rec.filePath){const dl=await cloudClient.storage.from('trip-photos').download(rec.filePath);if(dl.error)throw dl.error;blob=dl.data;}if(!blob)continue;records.push({id:rec.id,day:rec.day,category:rec.category||'scenery',meal:rec.meal||'dinner',caption:rec.caption||'',name:rec.name||'',createdAt:rec.createdAt||Date.now(),data:await blobToDataURL(blob)});}const payload={type:'qinggan-trip-photo-backup',version:1,exportedAt:new Date().toISOString(),records};const blob=new Blob([JSON.stringify(payload)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='青甘旅行相册备份-'+ymd(new Date())+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500);showToast('相册备份已导出');}
-async function importPhotoBackupFile(file){try{const data=JSON.parse(await file.text());if(data.type!=='qinggan-trip-photo-backup'||!Array.isArray(data.records))throw new Error();if(photoRecords.length&&!confirm('导入会把备份照片合并到当前相册，继续吗？'))return;let n=0;for(const x of data.records){if(!PHOTO_DAY_META[x.day]||!x.data)continue;await photoPut({id:x.id||uidPhoto(),day:x.day,category:x.category||'scenery',meal:x.meal||'dinner',caption:x.caption||'',name:x.name||'',createdAt:x.createdAt||Date.now()+n,blob:dataURLToBlob(x.data)});n++;}await refreshPhotos();showToast('已导入 '+n+' 张照片');}catch(e){console.error(e);alert('相册备份导入失败，请选择本网页导出的相册备份 JSON 文件。');}}
+async function exportPhotoBackup(){if(!photoRecords.length){alert('还没有照片可以导出。');return;}showToast('正在生成相册备份…');const records=[];for(const rec of sortedPhotos()){let blob=rec.blob;if(!blob&&cloudReady&&rec.filePath){const dl=await cloudClient.storage.from('guangxi-trip-photos').download(rec.filePath);if(dl.error)throw dl.error;blob=dl.data;}if(!blob)continue;records.push({id:rec.id,day:rec.day,category:rec.category||'scenery',meal:rec.meal||'dinner',caption:rec.caption||'',name:rec.name||'',createdAt:rec.createdAt||Date.now(),data:await blobToDataURL(blob)});}const payload={type:'guangxi_2026-trip-photo-backup',version:1,exportedAt:new Date().toISOString(),records};const blob=new Blob([JSON.stringify(payload)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='广西旅行相册备份-'+ymd(new Date())+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500);showToast('相册备份已导出');}
+async function importPhotoBackupFile(file){try{const data=JSON.parse(await file.text());if(data.type!=='guangxi_2026-trip-photo-backup'||!Array.isArray(data.records))throw new Error();if(photoRecords.length&&!confirm('导入会把备份照片合并到当前相册，继续吗？'))return;let n=0;for(const x of data.records){if(!PHOTO_DAY_META[x.day]||!x.data)continue;await photoPut({id:x.id||uidPhoto(),day:x.day,category:x.category||'scenery',meal:x.meal||'dinner',caption:x.caption||'',name:x.name||'',createdAt:x.createdAt||Date.now()+n,blob:dataURLToBlob(x.data)});n++;}await refreshPhotos();showToast('已导入 '+n+' 张照片');}catch(e){console.error(e);alert('相册备份导入失败，请选择本网页导出的相册备份 JSON 文件。');}}
 try{setupDayPhotoAreas();ensureDayCommentBoxes();}catch(err){console.error('photo/comment initializer failed',err);}
 document.addEventListener('click',e=>{const add=e.target.closest('.day-photo-add');if(add){choosePhotosForDay(add.dataset.photoDay,add.dataset.photoCategory||'scenery',add.dataset.photoMeal||'dinner');return;}const thumb=e.target.closest('[data-photo-id]');if(thumb&&Date.now()>suppressPhotoClickUntil){openPhoto(thumb.dataset.photoId);}});
 document.getElementById('photoAddBtn')?.addEventListener('click',()=>choosePhotosForDay(document.getElementById('photoTargetDay')?.value||'d1',document.getElementById('photoTargetCategory')?.value||'scenery',document.getElementById('photoTargetMeal')?.value||'dinner'));
@@ -1143,9 +1081,9 @@ document.addEventListener('keydown',e=>{if(!document.getElementById('photoLightb
 refreshPhotos();refreshComments();
 
 /* ===== 费用计算 ===== */
-const COST_KEY='qinggan_trip_costs_v1';
-let costState={budget:20000,items:{},customItems:[]};
-try{costState=JSON.parse(localStorage.getItem(COST_KEY)||'{"budget":20000,"items":{},"customItems":[]}');}catch(e){costState={budget:20000,items:{},customItems:[]};}
+const COST_KEY='guangxi_2026_trip_costs_v1';
+let costState={budget:0,items:{},customItems:[]};
+try{costState=JSON.parse(localStorage.getItem(COST_KEY)||'{"budget":0,"items":{},"customItems":[]}');}catch(e){costState={budget:0,items:{},customItems:[]};}
 if(!costState.items) costState.items={};
 if(!Array.isArray(costState.customItems)) costState.customItems=[];
 const money=n=>'¥'+Number(n||0).toLocaleString('zh-CN',{maximumFractionDigits:2});
@@ -1199,11 +1137,11 @@ function calcCosts(markDirty=true){
   });
   const budget=Number(document.getElementById('budgetInput')?.value||0),remain=budget-grand;
   document.getElementById('grandTotal').textContent=money(grand);
-  const rem=document.getElementById('budgetRemain'); rem.textContent=(remain<0?'超支 ':'')+money(Math.abs(remain)); rem.classList.toggle('budget-over',remain<0);rem.classList.toggle('budget-ok',remain>=0);
+  const rem=document.getElementById('budgetRemain'); rem.textContent=budget>0?(remain<0?'超支 ':'')+money(Math.abs(remain)):'未设上限'; rem.classList.toggle('budget-over',budget>0&&remain<0);rem.classList.toggle('budget-ok',budget<=0||remain>=0);
   if(markDirty===false) saveCostsLocal(); else saveCosts();
 }
 function restoreCosts(){
-  const b=document.getElementById('budgetInput'); if(b) b.value=costState.budget??20000;
+  const b=document.getElementById('budgetInput'); if(b) b.value=costState.budget??0;
   costState.customItems.forEach(item=>createCustomCostRow(item.category||'other',item));
   document.querySelectorAll('.cost-item').forEach(row=>{
     const st=costState.items[row.dataset.id]; if(!st) return;
@@ -1230,10 +1168,10 @@ document.getElementById('costs')?.addEventListener('click',e=>{
     if(row && confirm('删除这个费用项目吗？')){row.remove();calcCosts();showToast('项目已删除');}
   }
 });
-document.getElementById('costResetBtn')?.addEventListener('click',()=>{if(confirm('确定清空所有已填写费用吗？行程内容不会被删除，自定义项目也会保留。')){document.getElementById('budgetInput').value=20000;document.querySelectorAll('.cost-input').forEach(x=>x.value='');document.querySelectorAll('.cost-item .qty-input').forEach(x=>{if(x.closest('[data-custom="1"]'))x.value=1;});calcCosts();showToast('费用已清空');}});
+document.getElementById('costResetBtn')?.addEventListener('click',()=>{if(confirm('确定清空所有已填写费用吗？行程内容不会被删除，自定义项目也会保留。')){document.getElementById('budgetInput').value=0;document.querySelectorAll('.cost-input').forEach(x=>x.value='');document.querySelectorAll('.cost-item .qty-input').forEach(x=>{if(x.closest('[data-custom="1"]'))x.value=1;});calcCosts();showToast('费用已清空');}});
 
 /* ===== 可编辑行程 ===== */
-const EDIT_KEY='qinggan_trip_edits_v3';
+const EDIT_KEY='guangxi_2026_trip_edits_v3';
 let editState={fields:{},timelines:{}};
 try{editState=JSON.parse(localStorage.getItem(EDIT_KEY)||'{"fields":{},"timelines":{}}');}catch(e){editState={fields:{},timelines:{}};}
 if(!editState.fields) editState.fields={}; if(!editState.timelines) editState.timelines={};
@@ -1400,17 +1338,17 @@ editBtn.dataset.coreBound='1';editBtn.addEventListener('click',()=>setEditMode(!
 // Export/import makes it possible to move edits between phones.
 document.getElementById('exportBtn').addEventListener('click',()=>{
   saveState(true);
-  saveCosts(); const payload={type:'qinggan-trip-edits',version:5,exportedAt:new Date().toISOString(),editState,costState,navGeoCache,checks:{}};
+  saveCosts(); const payload={type:'guangxi_2026-trip-edits',version:5,exportedAt:new Date().toISOString(),editState,costState,navGeoCache,checks:{}};
   for(let i=1;i<=10;i++){const el=document.getElementById('c'+i);if(el) payload.checks[el.id]=el.checked;}
-  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='青甘行程修改-'+ymd(new Date())+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);showToast('修改数据已导出');
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='广西行程修改-'+ymd(new Date())+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);showToast('修改数据已导出');
 });
 document.getElementById('importBtn').addEventListener('click',()=>document.getElementById('importFile').click());
 document.getElementById('importFile').addEventListener('change',async e=>{
   const f=e.target.files&&e.target.files[0];if(!f) return;
-  try{const data=JSON.parse(await f.text());if(data.type!=='qinggan-trip-edits'||!data.editState) throw new Error();localStorage.setItem(EDIT_KEY,JSON.stringify(data.editState));if(data.checks) Object.entries(data.checks).forEach(([id,v])=>localStorage.setItem('qinggan_'+id,v?'1':'0'));if(data.costState) localStorage.setItem(COST_KEY,JSON.stringify(data.costState));if(data.navGeoCache)localStorage.setItem(NAV_KEY,JSON.stringify(data.navGeoCache));alert('导入成功，页面将重新加载。');location.reload();}catch(err){alert('导入失败：请选择本网页导出的 JSON 文件。');}finally{e.target.value='';}
+  try{const data=JSON.parse(await f.text());if(data.type!=='guangxi_2026-trip-edits'||!data.editState) throw new Error();localStorage.setItem(EDIT_KEY,JSON.stringify(data.editState));if(data.checks) Object.entries(data.checks).forEach(([id,v])=>localStorage.setItem('guangxi_2026_'+id,v?'1':'0'));if(data.costState) localStorage.setItem(COST_KEY,JSON.stringify(data.costState));if(data.navGeoCache)localStorage.setItem(NAV_KEY,JSON.stringify(data.navGeoCache));alert('导入成功，页面将重新加载。');location.reload();}catch(err){alert('导入失败：请选择本网页导出的 JSON 文件。');}finally{e.target.value='';}
 });
 
-/* ===== 家庭云同步 / Supabase ===== */
+/* ===== 旅行云同步 / Supabase ===== */
 let cloudConfig={url:'',key:'',email:''};
 try{cloudConfig=Object.assign(cloudConfig,JSON.parse(localStorage.getItem(CLOUD_CONFIG_KEY)||'{}'));}catch(e){}
 let cloudLastKnownUpdatedAt=localStorage.getItem(CLOUD_LAST_KEY)||'';
@@ -1423,7 +1361,7 @@ function openCloudSettings(){
   document.getElementById('cloudKeyInput').value=cloudConfig.key||'';
   document.getElementById('cloudEmailInput').value=cloudConfig.email||'';
   document.getElementById('cloudPasswordInput').value='';
-  document.getElementById('amapKeyInput').value=localStorage.getItem('qinggan_amap_web_key_v1')||'';
+  document.getElementById('amapKeyInput').value=localStorage.getItem('guangxi_2026_amap_web_key_v1')||'';
   const box=document.getElementById('cloudOverlay');box.classList.add('open');box.setAttribute('aria-hidden','false');
 }
 function closeCloudSettings(){const box=document.getElementById('cloudOverlay');box.classList.remove('open');box.setAttribute('aria-hidden','true');}
@@ -1432,14 +1370,14 @@ function saveCloudConfigFromForm(){
   cloudConfig.key=(document.getElementById('cloudKeyInput').value||'').trim();
   cloudConfig.email=(document.getElementById('cloudEmailInput').value||'').trim();
   localStorage.setItem(CLOUD_CONFIG_KEY,JSON.stringify(cloudConfig));
-  localStorage.setItem('qinggan_amap_web_key_v1',(document.getElementById('amapKeyInput').value||'').trim());
+  localStorage.setItem('guangxi_2026_amap_web_key_v1',(document.getElementById('amapKeyInput').value||'').trim());
   showToast('云配置已保存');
 }
 async function makeCloudClient(){
   if(cloudClient) return cloudClient;
   if(!cloudConfig.url||!cloudConfig.key) throw new Error('请先填写 Supabase Project URL 和 Publishable key');
   const mod=await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
-  cloudClient=mod.createClient(cloudConfig.url,cloudConfig.key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+  cloudClient=mod.createClient(cloudConfig.url,cloudConfig.key,{auth:{storageKey:'guangxi_2026_supabase_auth_v1',persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
   return cloudClient;
 }
 function currentChecks(){const checks={};for(let i=1;i<=10;i++){const el=document.getElementById('c'+i);if(el)checks[el.id]=!!el.checked;}return checks;}
@@ -1452,30 +1390,30 @@ function applyTripCloudPayload(payload){
   if(payload.editState)localStorage.setItem(EDIT_KEY,JSON.stringify(payload.editState));
   if(payload.costState)localStorage.setItem(COST_KEY,JSON.stringify(payload.costState));
   if(payload.navGeoCache)localStorage.setItem(NAV_KEY,JSON.stringify(payload.navGeoCache));
-  if(payload.checks)Object.entries(payload.checks).forEach(([id,v])=>localStorage.setItem('qinggan_'+id,v?'1':'0'));
+  if(payload.checks)Object.entries(payload.checks).forEach(([id,v])=>localStorage.setItem('guangxi_2026_'+id,v?'1':'0'));
   return true;
 }
 async function localHasMeaningfulData(){
   let meaningful=false;
   try{const e=JSON.parse(localStorage.getItem(EDIT_KEY)||'{}');meaningful=meaningful||Object.keys(e.fields||{}).length>0||Object.keys(e.timelines||{}).length>0;}catch(e){}
-  try{const c=JSON.parse(localStorage.getItem(COST_KEY)||'{}');meaningful=meaningful||(c.budget!==undefined&&Number(c.budget)!==20000)||Object.values(c.items||{}).some(x=>Number(x?.price||0)>0)||((c.customItems||[]).length>0);}catch(e){}
+  try{const c=JSON.parse(localStorage.getItem(COST_KEY)||'{}');meaningful=meaningful||(c.budget!==undefined&&Number(c.budget)!==0)||Object.values(c.items||{}).some(x=>Number(x?.price||0)>0)||((c.customItems||[]).length>0);}catch(e){}
   meaningful=meaningful||Object.values(currentChecks()).some(Boolean);
   try{meaningful=meaningful||(await localPhotoGetAll()).length>0;}catch(e){}
   return meaningful;
 }
 async function fetchCloudState(source='auto'){
   if(!cloudReady||!cloudUser)return null;
-  const {data,error}=await cloudClient.from('trip_state').select('payload,updated_at').eq('user_id',cloudUser.id).maybeSingle();
+  const {data,error}=await cloudClient.from('guangxi_trip_state').select('payload,updated_at').eq('user_id',cloudUser.id).maybeSingle();
   if(error)throw error;markCloudRead(source);return data||null;
 }
 async function cloudPushStateNow(){
   if(!cloudReady||!cloudUser||cloudApplying)return;
   try{
-    setCloudStatus('syncing','☁️ 正在同步','正在把这台手机的修改保存到家庭云端…');
+    setCloudStatus('syncing','☁️ 正在同步','正在把这台手机的修改保存到旅行云端…');
     const payload=collectTripCloudPayload(),updated_at=new Date().toISOString();
-    const {error}=await cloudClient.from('trip_state').upsert({user_id:cloudUser.id,payload,updated_at},{onConflict:'user_id'});
+    const {error}=await cloudClient.from('guangxi_trip_state').upsert({user_id:cloudUser.id,payload,updated_at},{onConflict:'user_id'});
     if(error)throw error;cloudLastKnownUpdatedAt=updated_at;localStorage.setItem(CLOUD_LAST_KEY,updated_at);localStorage.setItem(CLOUD_INIT_KEY,'1');localStorage.removeItem(CLOUD_DIRTY_KEY);
-    setCloudStatus('online','✓ 已同步',cloudConfig.email||'家庭账号已连接');
+    setCloudStatus('online','✓ 已同步',cloudConfig.email||'旅行账号已连接');
   }catch(e){console.error(e);setCloudStatus('error','⚠️ 同步失败',e.message||'请检查网络和 Supabase 设置');}
 }
 function scheduleCloudStatePush(){
@@ -1492,24 +1430,24 @@ async function cloudPullAndMaybeApply(force=false){
     const remote=JSON.stringify(row.payload||{}),local=JSON.stringify(collectTripCloudPayload());
     if(force||remote!==local){
       cloudApplying=true;applyTripCloudPayload(row.payload);cloudLastKnownUpdatedAt=row.updated_at||'';localStorage.setItem(CLOUD_LAST_KEY,cloudLastKnownUpdatedAt);localStorage.setItem(CLOUD_INIT_KEY,'1');localStorage.removeItem(CLOUD_DIRTY_KEY);
-      setCloudStatus('online','✓ 已读取云端','正在载入家人最新修改…');setTimeout(()=>location.reload(),250);return;
+      setCloudStatus('online','✓ 已读取云端','正在载入同伴最新修改…');setTimeout(()=>location.reload(),250);return;
     }
-    cloudLastKnownUpdatedAt=row.updated_at||cloudLastKnownUpdatedAt;setCloudStatus('online','✓ 已同步',cloudConfig.email||'家庭账号已连接');
+    cloudLastKnownUpdatedAt=row.updated_at||cloudLastKnownUpdatedAt;setCloudStatus('online','✓ 已同步',cloudConfig.email||'旅行账号已连接');
   }catch(e){console.error(e);setCloudStatus('error','⚠️ 读取云端失败',e.message||'请检查网络');}
 }
 async function cloudPoll(){
   if(!cloudReady||document.hidden||!autoPollDue())return;
   // Reserve the slot before the request so visibility/online events cannot start a second concurrent poll.
   cloudLastAutoPollAt=Date.now();localStorage.setItem(CLOUD_LAST_AUTO_POLL_KEY,String(cloudLastAutoPollAt));
-  try{const row=await fetchCloudState('auto');await refreshComments();if(!row)return;if(row.updated_at&&row.updated_at!==cloudLastKnownUpdatedAt){const remote=JSON.stringify(row.payload||{}),local=JSON.stringify(collectTripCloudPayload());cloudLastKnownUpdatedAt=row.updated_at;localStorage.setItem(CLOUD_LAST_KEY,row.updated_at);if(remote!==local&&!document.body.classList.contains('editing')&&localStorage.getItem(CLOUD_DIRTY_KEY)!=='1'){cloudApplying=true;applyTripCloudPayload(row.payload);setCloudStatus('syncing','☁️ 收到家人修改','正在更新页面…');setTimeout(()=>location.reload(),300);}}}catch(e){console.warn('cloud poll',e);}
+  try{const row=await fetchCloudState('auto');await refreshComments();if(!row)return;if(row.updated_at&&row.updated_at!==cloudLastKnownUpdatedAt){const remote=JSON.stringify(row.payload||{}),local=JSON.stringify(collectTripCloudPayload());cloudLastKnownUpdatedAt=row.updated_at;localStorage.setItem(CLOUD_LAST_KEY,row.updated_at);if(remote!==local&&!document.body.classList.contains('editing')&&localStorage.getItem(CLOUD_DIRTY_KEY)!=='1'){cloudApplying=true;applyTripCloudPayload(row.payload);setCloudStatus('syncing','☁️ 收到同伴修改','正在更新页面…');setTimeout(()=>location.reload(),300);}}}catch(e){console.warn('cloud poll',e);}
 }
 function teardownCommentRealtime(){if(cloudCommentRefreshTimer){clearTimeout(cloudCommentRefreshTimer);cloudCommentRefreshTimer=null;}if(cloudCommentChannel&&cloudClient){try{cloudClient.removeChannel(cloudCommentChannel);}catch(e){}}cloudCommentChannel=null;}
-function setupCommentRealtime(){teardownCommentRealtime();if(!cloudReady||!cloudUser||!cloudClient)return;try{cloudCommentChannel=cloudClient.channel('qinggan-comments-'+cloudUser.id,{config:{broadcast:{self:false}}}).on('broadcast',{event:'comment-added'},evt=>{const p=evt?.payload||{};if(p.commentId&&commentRecords.some(x=>x.id===p.commentId))return;scheduleCommentRemoteRefresh(p.author||'家人');}).on('postgres_changes',{event:'INSERT',schema:'public',table:'trip_comments',filter:'user_id=eq.'+cloudUser.id},evt=>{const id=evt?.new?.id;if(id&&commentRecords.some(x=>x.id===id))return;scheduleCommentRemoteRefresh(evt?.new?.author_name||'家人');}).subscribe();}catch(e){console.warn('comment realtime unavailable',e);}}
-async function syncLocalCommentsToCloud(){if(!cloudReady||!cloudUser)return 0;const local=localCommentGetAll();if(!local.length)return 0;try{const {data,error}=await cloudClient.from('trip_comments').select('id').eq('user_id',cloudUser.id);if(error)throw error;const exists=new Set((data||[]).map(x=>x.id));const missing=local.filter(x=>x?.id&&!exists.has(x.id));if(!missing.length)return 0;const rows=missing.map(rec=>({id:rec.id,user_id:cloudUser.id,target_type:rec.targetType,target_id:rec.targetId,author_name:rec.author,author_color:rec.authorColor||commentColorForName(rec.author),body:rec.body,created_at:Number(rec.createdAt)||Date.now()}));const up=await cloudClient.from('trip_comments').upsert(rows,{onConflict:'id'});if(up.error)throw up.error;for(const rec of missing)await broadcastCommentAdded(rec);return missing.length;}catch(e){console.warn('local comment migration',e);return 0;}}
+function setupCommentRealtime(){teardownCommentRealtime();if(!cloudReady||!cloudUser||!cloudClient)return;try{cloudCommentChannel=cloudClient.channel('guangxi_2026-comments-'+cloudUser.id,{config:{broadcast:{self:false}}}).on('broadcast',{event:'comment-added'},evt=>{const p=evt?.payload||{};if(p.commentId&&commentRecords.some(x=>x.id===p.commentId))return;scheduleCommentRemoteRefresh(p.author||'同伴');}).on('postgres_changes',{event:'INSERT',schema:'public',table:'guangxi_trip_comments',filter:'user_id=eq.'+cloudUser.id},evt=>{const id=evt?.new?.id;if(id&&commentRecords.some(x=>x.id===id))return;scheduleCommentRemoteRefresh(evt?.new?.author_name||'同伴');}).subscribe();}catch(e){console.warn('comment realtime unavailable',e);}}
+async function syncLocalCommentsToCloud(){if(!cloudReady||!cloudUser)return 0;const local=localCommentGetAll();if(!local.length)return 0;try{const {data,error}=await cloudClient.from('guangxi_trip_comments').select('id').eq('user_id',cloudUser.id);if(error)throw error;const exists=new Set((data||[]).map(x=>x.id));const missing=local.filter(x=>x?.id&&!exists.has(x.id));if(!missing.length)return 0;const rows=missing.map(rec=>({id:rec.id,user_id:cloudUser.id,target_type:rec.targetType,target_id:rec.targetId,author_name:rec.author,author_color:rec.authorColor||commentColorForName(rec.author),body:rec.body,created_at:Number(rec.createdAt)||Date.now()}));const up=await cloudClient.from('guangxi_trip_comments').upsert(rows,{onConflict:'id'});if(up.error)throw up.error;for(const rec of missing)await broadcastCommentAdded(rec);return missing.length;}catch(e){console.warn('local comment migration',e);return 0;}}
 async function refreshCommentsOnForeground(){if(!cloudReady||document.hidden)return;const now=Date.now();if(now-cloudCommentForegroundRefreshAt<30000)return;cloudCommentForegroundRefreshAt=now;await refreshComments();}
 
 async function afterCloudSignedIn(user){
-  cloudUser=user;cloudReady=true;document.getElementById('cloudAccountState').textContent='已登录：'+(user.email||cloudConfig.email||'家庭账号');
+  cloudUser=user;cloudReady=true;document.getElementById('cloudAccountState').textContent='已登录：'+(user.email||cloudConfig.email||'旅行账号');
   if(cloudPollTimer)clearInterval(cloudPollTimer);cloudPollTimer=setInterval(cloudPoll,CLOUD_POLL_INTERVAL_MS);setupCommentRealtime();
   const migratedComments=await syncLocalCommentsToCloud();await refreshPhotos();await refreshComments();if(migratedComments)showToast('已补传 '+migratedComments+' 条本机评论');
 
@@ -1533,74 +1471,74 @@ async function afterCloudSignedIn(user){
     cloudLastKnownUpdatedAt=row.updated_at||cloudLastKnownUpdatedAt;localStorage.setItem(CLOUD_LAST_KEY,cloudLastKnownUpdatedAt);
     if(remote!==local){
       cloudApplying=true;applyTripCloudPayload(row.payload);
-      setCloudStatus('syncing','☁️ 云端有新版本','正在应用最新家庭行程…');
+      setCloudStatus('syncing','☁️ 云端有新版本','正在应用最新旅行行程…');
       setTimeout(()=>location.reload(),220);
     }else{
-      setCloudStatus('online','✓ 已检查云端','当前就是家庭最新版本；下次自动读取约 1 小时后');
+      setCloudStatus('online','✓ 已检查云端','当前就是旅行最新版本；下次自动读取约 1 小时后');
     }
     return;
   }
 
-  if(await localHasMeaningfulData())setCloudStatus('syncing','☁️ 等待首次同步','请确认是否把这台手机现有内容上传为家庭初始版本');
+  if(await localHasMeaningfulData())setCloudStatus('syncing','☁️ 等待首次同步','请确认是否把这台手机现有内容上传为旅行初始版本');
   else{cloudApplying=true;applyTripCloudPayload(row.payload);cloudLastKnownUpdatedAt=row.updated_at||'';localStorage.setItem(CLOUD_LAST_KEY,cloudLastKnownUpdatedAt);localStorage.setItem(CLOUD_INIT_KEY,'1');setTimeout(()=>location.reload(),220);}
 }
 async function initializeCloud(){
   if(!cloudConfig.url||!cloudConfig.key){setCloudStatus('','☁️ 云同步未连接','先在“同步设置”中完成一次 Supabase 配置');return;}
-  try{const c=await makeCloudClient();const {data,error}=await c.auth.getSession();if(error)throw error;if(data?.session?.user)await afterCloudSignedIn(data.session.user);else setCloudStatus('','☁️ 已配置，未登录','打开“同步设置”，用家庭账号登录');}
+  try{const c=await makeCloudClient();const {data,error}=await c.auth.getSession();if(error)throw error;if(data?.session?.user)await afterCloudSignedIn(data.session.user);else setCloudStatus('','☁️ 已配置，未登录','打开“同步设置”，用旅行账号登录');}
   catch(e){console.error(e);setCloudStatus('error','⚠️ 云配置不可用',e.message||'请检查 Project URL / key');}
 }
 async function cloudLogin(signup=false){
   saveCloudConfigFromForm();const email=cloudConfig.email,password=document.getElementById('cloudPasswordInput').value||'';
-  if(!email||password.length<6){alert('请输入家庭邮箱和至少 6 位密码。');return;}
+  if(!email||password.length<6){alert('请输入旅行邮箱和至少 6 位密码。');return;}
   try{
-    setCloudStatus('syncing','☁️ 正在连接','正在验证家庭账号…');const c=await makeCloudClient();
+    setCloudStatus('syncing','☁️ 正在连接','正在验证旅行账号…');const c=await makeCloudClient();
     const result=signup?await c.auth.signUp({email,password}):await c.auth.signInWithPassword({email,password});
     if(result.error)throw result.error;
     if(result.data?.session?.user){await afterCloudSignedIn(result.data.session.user);closeCloudSettings();}
     else{document.getElementById('cloudAccountState').textContent='注册成功。若 Supabase 开启了邮箱确认，请先到邮箱确认后再登录。';setCloudStatus('','☁️ 等待邮箱确认','确认后回到网页登录即可');}
   }catch(e){console.error(e);alert((signup?'注册':'登录')+'失败：'+(e.message||'未知错误'));setCloudStatus('error','⚠️ 连接失败',e.message||'请检查账号和配置');}
 }
-async function cloudLogout(){teardownCommentRealtime();try{if(cloudClient)await cloudClient.auth.signOut();}catch(e){}cloudReady=false;cloudUser=null;if(cloudPollTimer)clearInterval(cloudPollTimer);setCloudStatus('','☁️ 已退出云同步','本机内容仍保留');document.getElementById('cloudAccountState').textContent='已退出登录';await refreshPhotos();await refreshComments();}
+async function cloudLogout(){teardownCommentRealtime();try{if(cloudClient)await cloudClient.auth.signOut({scope:'local'});}catch(e){}cloudReady=false;cloudUser=null;if(cloudPollTimer)clearInterval(cloudPollTimer);setCloudStatus('','☁️ 已退出云同步','本机内容仍保留');document.getElementById('cloudAccountState').textContent='已退出登录';await refreshPhotos();await refreshComments();}
 
 /* 云相册 */
 async function cloudPhotoGetAll(){
   if(!cloudReady||!cloudUser)return localPhotoGetAll();
-  const {data,error}=await cloudClient.from('trip_photos').select('id,day,category,meal,caption,file_path,original_name,created_at,size_bytes').eq('user_id',cloudUser.id).order('created_at',{ascending:true});
+  const {data,error}=await cloudClient.from('guangxi_trip_photos').select('id,day,category,meal,caption,file_path,original_name,created_at,size_bytes').eq('user_id',cloudUser.id).order('created_at',{ascending:true});
   if(error)throw error;const rows=data||[];
-  return Promise.all(rows.map(async x=>{let cloudUrl='';try{const r=await cloudClient.storage.from('trip-photos').createSignedUrl(x.file_path,86400);if(!r.error)cloudUrl=r.data.signedUrl;}catch(e){}return{id:x.id,day:x.day,category:x.category||'scenery',meal:x.meal||'dinner',caption:x.caption||'',name:x.original_name||'',createdAt:Number(x.created_at)||Date.now(),filePath:x.file_path,size:Number(x.size_bytes)||0,cloudUrl};}));
+  return Promise.all(rows.map(async x=>{let cloudUrl='';try{const r=await cloudClient.storage.from('guangxi-trip-photos').createSignedUrl(x.file_path,86400);if(!r.error)cloudUrl=r.data.signedUrl;}catch(e){}return{id:x.id,day:x.day,category:x.category||'scenery',meal:x.meal||'dinner',caption:x.caption||'',name:x.original_name||'',createdAt:Number(x.created_at)||Date.now(),filePath:x.file_path,size:Number(x.size_bytes)||0,cloudUrl};}));
 }
 function photoExt(blob){const t=(blob?.type||'image/jpeg').toLowerCase();if(t.includes('png'))return'png';if(t.includes('webp'))return'webp';return'jpg';}
 async function cloudPhotoPut(rec){
   if(!cloudReady||!cloudUser)throw new Error('云端未连接');
   let path=rec.filePath||'';
-  if(rec.blob){path=path||(`${cloudUser.id}/${rec.id}.${photoExt(rec.blob)}`);const up=await cloudClient.storage.from('trip-photos').upload(path,rec.blob,{contentType:rec.blob.type||'image/jpeg',upsert:true,cacheControl:'3600'});if(up.error)throw up.error;}
+  if(rec.blob){path=path||(`${cloudUser.id}/${rec.id}.${photoExt(rec.blob)}`);const up=await cloudClient.storage.from('guangxi-trip-photos').upload(path,rec.blob,{contentType:rec.blob.type||'image/jpeg',upsert:true,cacheControl:'3600'});if(up.error)throw up.error;}
   if(!path){const old=photoRecords.find(x=>x.id===rec.id);path=old?.filePath||'';}
   if(!path)throw new Error('照片文件路径缺失');
   const row={id:rec.id,user_id:cloudUser.id,day:rec.day,category:rec.category||'scenery',meal:rec.meal||'dinner',caption:rec.caption||'',file_path:path,original_name:rec.name||'',created_at:Number(rec.createdAt)||Date.now(),size_bytes:Number(rec.blob?.size||rec.size||0)};
-  const {error}=await cloudClient.from('trip_photos').upsert(row,{onConflict:'id'});if(error)throw error;return row;
+  const {error}=await cloudClient.from('guangxi_trip_photos').upsert(row,{onConflict:'id'});if(error)throw error;return row;
 }
 async function cloudPhotoDelete(id){
-  const rec=photoRecords.find(x=>x.id===id);if(!rec)return;const {error}=await cloudClient.from('trip_photos').delete().eq('id',id).eq('user_id',cloudUser.id);if(error)throw error;if(rec.filePath){const r=await cloudClient.storage.from('trip-photos').remove([rec.filePath]);if(r.error)console.warn(r.error);}
+  const rec=photoRecords.find(x=>x.id===id);if(!rec)return;const {error}=await cloudClient.from('guangxi_trip_photos').delete().eq('id',id).eq('user_id',cloudUser.id);if(error)throw error;if(rec.filePath){const r=await cloudClient.storage.from('guangxi-trip-photos').remove([rec.filePath]);if(r.error)console.warn(r.error);}
 }
 async function migrateLocalPhotosToCloud(){
   const local=await localPhotoGetAll();if(!local.length)return 0;
-  const {data,error}=await cloudClient.from('trip_photos').select('id').eq('user_id',cloudUser.id);if(error)throw error;const exists=new Set((data||[]).map(x=>x.id));let n=0;
+  const {data,error}=await cloudClient.from('guangxi_trip_photos').select('id').eq('user_id',cloudUser.id);if(error)throw error;const exists=new Set((data||[]).map(x=>x.id));let n=0;
   for(const rec of local){if(exists.has(rec.id))continue;setCloudStatus('syncing','☁️ 正在上传旧照片',`${n+1} / ${local.length}`);await cloudPhotoPut(rec);n++;}
   return n;
 }
 async function migrateLocalToCloud(){
   if(!cloudReady){alert('请先登录云端。');return;}
-  if(!confirm('将这台手机当前的行程、费用、待办和本地照片作为家庭云端版本上传。继续吗？'))return;
-  try{setCloudStatus('syncing','☁️ 正在迁移','先保存行程和费用…');await cloudPushStateNow();const n=await migrateLocalPhotosToCloud();await refreshPhotos();localStorage.setItem(CLOUD_INIT_KEY,'1');localStorage.removeItem(CLOUD_DIRTY_KEY);setCloudStatus('online','✓ 本机内容已上传',`已迁移 ${n} 张本地照片；以后修改会自动同步`);showToast('已迁移到家庭云端');}
+  if(!confirm('将这台手机当前的行程、费用、待办和本地照片作为旅行云端版本上传。继续吗？'))return;
+  try{setCloudStatus('syncing','☁️ 正在迁移','先保存行程和费用…');await cloudPushStateNow();const n=await migrateLocalPhotosToCloud();await refreshPhotos();localStorage.setItem(CLOUD_INIT_KEY,'1');localStorage.removeItem(CLOUD_DIRTY_KEY);setCloudStatus('online','✓ 本机内容已上传',`已迁移 ${n} 张本地照片；以后修改会自动同步`);showToast('已迁移到旅行云端');}
   catch(e){console.error(e);alert('迁移失败：'+(e.message||'未知错误'));setCloudStatus('error','⚠️ 迁移失败',e.message||'请检查网络');}
 }
 async function exportFullLocalBackup(){
   try{
     saveStateLocal(true);saveCostsLocal();const records=[];let photos=[];
     if(cloudReady)photos=await cloudPhotoGetAll();else photos=await localPhotoGetAll();
-    for(const rec of photos){let blob=rec.blob;if(!blob&&cloudReady&&rec.filePath){const dl=await cloudClient.storage.from('trip-photos').download(rec.filePath);if(dl.error)throw dl.error;blob=dl.data;}if(blob)records.push({id:rec.id,day:rec.day,category:rec.category||'scenery',meal:rec.meal||'dinner',caption:rec.caption||'',name:rec.name||'',createdAt:rec.createdAt||Date.now(),data:await blobToDataURL(blob)});}
-    const payload={type:'qinggan-trip-full-backup',version:1,exportedAt:new Date().toISOString(),editState,costState,navGeoCache,checks:currentChecks(),photos:records};
-    const blob=new Blob([JSON.stringify(payload)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='青甘旅行完整备份-'+ymd(new Date())+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500);showToast('完整备份已导出');
+    for(const rec of photos){let blob=rec.blob;if(!blob&&cloudReady&&rec.filePath){const dl=await cloudClient.storage.from('guangxi-trip-photos').download(rec.filePath);if(dl.error)throw dl.error;blob=dl.data;}if(blob)records.push({id:rec.id,day:rec.day,category:rec.category||'scenery',meal:rec.meal||'dinner',caption:rec.caption||'',name:rec.name||'',createdAt:rec.createdAt||Date.now(),data:await blobToDataURL(blob)});}
+    const payload={type:'guangxi_2026-trip-full-backup',version:1,exportedAt:new Date().toISOString(),editState,costState,navGeoCache,checks:currentChecks(),photos:records};
+    const blob=new Blob([JSON.stringify(payload)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='广西旅行完整备份-'+ymd(new Date())+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500);showToast('完整备份已导出');
   }catch(e){console.error(e);alert('完整备份失败：'+(e.message||'未知错误'));}
 }
 
