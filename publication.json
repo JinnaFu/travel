@@ -1,0 +1,12 @@
+{
+  "qinggan": {
+    "branch": "main",
+    "commit": "5577de292d2c91df40ea8dfa0c77d16d4cd0f810",
+    "path": "/"
+  },
+  "guangxi": {
+    "branch": "guangxi-national-day-2026",
+    "commit": "ff7146e36ef4133067cccc41a3fad54ead93782b",
+    "path": "/guangxi/"
+  }
+}
