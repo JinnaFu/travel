@@ -38,6 +38,7 @@ for (const [destination, ref, file] of files) {
   writeFileSync(path, read(ref, file));
 }
 writeFileSync(resolve(output, '.nojekyll'), '');
+writeFileSync(resolve(output, '.gitattributes'), 'guangxi/assets/vendor/leaflet/** -text\n');
 writeFileSync(resolve(output, 'publication.json'), JSON.stringify({
   qinggan: { branch: 'main', commit: qinggan, path: '/' },
   guangxi: { branch: 'guangxi-national-day-2026', commit: guangxi, path: '/guangxi/' },
