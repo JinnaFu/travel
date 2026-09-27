@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#f6f3ed" />
 <title>广西国庆 7 天轻松自驾 · 2026.10.01–10.07</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
 <style>
 :root{
   --bg:#f6f3ed;--card:#fffdf9;--ink:#24231f;--muted:#77736a;--line:#e8e1d7;
@@ -392,11 +391,10 @@ catch(e){document.documentElement.dataset.fontSize='normal';}
 </div>
 <div class="toast" id="toast">已保存</div>
 <div class="version-stamp" id="versionStamp" aria-label="网页版本信息">
-  <div><strong>网页版本：2026-09-26 · 广西 V1</strong></div>
+  <div><strong>网页版本：2026-09-27 · 广西 V2</strong></div>
   <div class="cloud-read-line">最近云读取：<span id="lastCloudReadStamp">尚未读取</span></div>
 </div>
 <div class="bottom"><div class="bottom-inner"><button class="bigbtn alt" id="editBtn">编辑行程</button><button class="bigbtn alt" id="shareBtn">分享行程</button><button class="bigbtn" id="todayBtn">查看当天</button></div></div>
-<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 const FONT_KEY='guangxi_2026_font_size_v1';
 // Cloud storage keys are declared up front because cost/editor initialization can use them before the cloud module is initialized.
@@ -408,7 +406,7 @@ const CLOUD_LAST_READ_KEY='guangxi_2026_cloud_last_read_v1';
 const CLOUD_LAST_AUTO_POLL_KEY='guangxi_2026_cloud_last_auto_poll_v1';
 var cloudReady=false, cloudClient=null, cloudUser=null, cloudPushTimer=null, cloudPollTimer=null, cloudApplying=false, cloudLastPhotoRefresh=0, cloudCommentChannel=null, cloudCommentRefreshTimer=null, cloudCommentForegroundRefreshAt=0;
 
-const PAGE_BUILD_STAMP='2026-09-26 · 广西 V1';
+const PAGE_BUILD_STAMP='2026-09-27 · 广西 V2';
 function formatStamp(ts){
   if(!ts)return'尚未读取';
   const d=new Date(Number(ts)||ts);if(Number.isNaN(d.getTime()))return String(ts);
@@ -820,12 +818,35 @@ function applyMapDayFilter(id,scroll=true){
   if(scroll) document.getElementById('tripMap')?.scrollIntoView({behavior:'smooth',block:'center'});
 }
 function focusMapDay(id){initTripMap().then(()=>applyMapDayFilter(id,true));}
+// Load the map only when requested. A slow map asset must never block the itinerary.
+let tripMapAssetsPromise=null;
+function loadTripMapAssets(){
+  if(tripMapAssetsPromise)return tripMapAssetsPromise;
+  const pending=[];
+  function asset(tag,path){
+    return new Promise((resolve,reject)=>{
+      const el=document.createElement(tag);pending.push(el);
+      const timer=setTimeout(()=>finish(new Error('地图资源加载超时')),12000);
+      function finish(error){clearTimeout(timer);el.onload=null;el.onerror=null;error?reject(error):resolve();}
+      el.onload=()=>finish();el.onerror=()=>finish(new Error('地图资源加载失败'));
+      if(tag==='link'){el.rel='stylesheet';el.href=path;}else{el.async=true;el.src=path;}
+      document.head.appendChild(el);
+    });
+  }
+  tripMapAssetsPromise=Promise.all([
+    asset('link','assets/vendor/leaflet/leaflet.css'),
+    asset('script','assets/vendor/leaflet/leaflet.js')
+  ]).then(()=>{if(typeof L==='undefined')throw new Error('地图组件不可用');})
+    .catch(error=>{pending.forEach(el=>el.remove());tripMapAssetsPromise=null;throw error;});
+  return tripMapAssetsPromise;
+}
 async function initTripMap(){
   if(tripMapReady){setTimeout(()=>tripMap.invalidateSize(),40);return;}
-  if(typeof L==='undefined'){
-    const el=document.getElementById('tripMap'); if(el) el.innerHTML='<div class="map-loading">地图组件加载失败。请确认手机有网络后刷新页面。</div>';
-    document.getElementById('mapStatus').textContent='地图组件未能加载。'; return;
+  try{await loadTripMapAssets();}catch(error){
+    const el=document.getElementById('tripMap');if(el)el.innerHTML='<div class="map-loading">地图暂时无法加载，行程、费用和相册仍可使用。可点“显示全程”重试，或使用下方高德按钮。</div>';
+    document.getElementById('mapStatus').textContent=error.message;return;
   }
+  if(tripMapReady){setTimeout(()=>tripMap.invalidateSize(),40);return;}
   tripMapReady=true;
   const el=document.getElementById('tripMap'); if(!el) return; el.innerHTML='';
   tripMap=L.map('tripMap',{zoomControl:true,scrollWheelZoom:true,tap:true,preferCanvas:true}).setView(wgs84ToGcj02(23,110),6);
