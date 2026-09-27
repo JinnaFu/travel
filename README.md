@@ -19,7 +19,27 @@
 
 这是静态页面，不需要构建。切到本分支后，通过本地静态服务器打开 `index.html`；地图及云功能需要联网。
 
-若要同时保留青甘与广西两个在线站点，将本分支部署到独立站点 / 预览地址。不要将本分支合并进 `main`，也不要把现有青甘站点的发布源切换到本分支。分享按钮复制的是当前页面地址，应在广西版部署地址上使用。
+手机直接打开：[广西行程网页](https://jinnafu.github.io/travel/guangxi/)；原来的[青甘行程网页](https://jinnafu.github.io/travel/)保留原地址。GitHub 的分支链接展示源码，不能直接作为行程网页使用。
+
+源码继续分别放在 `main`（青甘）与 `guangxi-national-day-2026`（广西）。`gh-pages` 只存放发布副本：根目录是青甘，`guangxi/` 是广西；GitHub Pages 的发布源为 `gh-pages` 的根目录。两版不互相合并，浏览器数据也分别保存。
+
+后续源码更新后，需要重新发布，源码分支的推送不会自动更新线上页面。首次准备发布工作区：
+
+```sh
+git worktree add ../travel-pages gh-pages
+```
+
+在广西源码分支提交并推送修改后，执行：
+
+```sh
+git fetch origin
+node scripts/build-pages.mjs ../travel-pages
+git -C ../travel-pages add .
+git -C ../travel-pages commit -m "Publish travel pages"
+git -C ../travel-pages push origin gh-pages
+```
+
+已经存在发布工作区时跳过 `worktree add`。构建脚本会核对分支、干净工作区和已推送状态，保持青甘首页与 `main` 中的文件一致；`publication.json` 记录两版源码提交。分享按钮使用当前网页地址。
 
 ## 云同步初始化
 
