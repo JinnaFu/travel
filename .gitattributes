@@ -1,0 +1,2 @@
+# Preserve the official distribution bytes and their published integrity hashes.
+assets/vendor/leaflet/** -text

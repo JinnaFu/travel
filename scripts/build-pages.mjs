@@ -30,6 +30,8 @@ const files = [
   ['guangxi/docs/guangxi-2026-national-day.md', guangxi, 'docs/guangxi-2026-national-day.md'],
   ['guangxi/supabase/guangxi.sql', guangxi, 'supabase/guangxi.sql'],
 ];
+const assets = git(['ls-tree', '-r', '--name-only', guangxi, '--', 'assets/vendor/leaflet']).split(/\r?\n/).filter(Boolean);
+for (const file of assets) files.push([`guangxi/${file}`, guangxi, file]);
 for (const [destination, ref, file] of files) {
   const path = resolve(output, destination);
   mkdirSync(dirname(path), { recursive: true });
