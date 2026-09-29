@@ -72,7 +72,7 @@ try{
   await page('Fetch.enable',{patterns:['*cdn.jsdelivr.net/*','*/assets/vendor/leaflet/*','*router.project-osrm.org/*'].map(urlPattern=>({urlPattern,requestStage:'Request'}))});
   await page('Page.navigate',{url:base+'/index.html'});
   await until(`document.getElementById('editBtn')?.dataset.coreBound==='1'`,'itinerary initializes with CDN unavailable');
-  assert.equal(await evaluate(`document.querySelectorAll('.day').length`),7);
+  assert.equal(await evaluate(`document.querySelectorAll('.day').length`),5);
   assert.equal(await evaluate(`document.querySelector('h1').getBoundingClientRect().height>0`),true);
   assert.equal(requests.length,0,'Initial UI makes no map/CDN requests');
   console.log('PASS: initial mobile UI works with all CDN requests stalled');
@@ -93,7 +93,7 @@ try{
 
   assetMode='allow';
   await evaluate(`document.querySelector('[data-tab="map"]').click()`);
-  await until(`tripMapReady&&Object.keys(mapRouteLayers).length===7`,'retry loads local map and seven fallback routes');
+  await until(`tripMapReady&&Object.keys(mapRouteLayers).length===5`,'retry loads local map and five fallback routes');
   assert.equal(await evaluate(`document.querySelectorAll('.leaflet-container').length`),1);
   assert.equal(requests.some(url=>url.includes('cdn.jsdelivr.net')),false);
   assert.deepEqual(errors,[]);

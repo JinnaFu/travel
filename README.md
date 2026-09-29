@@ -1,71 +1,61 @@
-# 广西国庆七天轻松自驾
+# 广东国庆五天轻松自驾
 
-本分支：`guangxi-national-day-2026`。`main` 保留原来的青甘路线；广西版使用独立的 `index.html`，不在青甘页面增加入口或混入广西行程。
+2026 年 10 月 1—5 日，情侣两人，深圳 → 珠海御温泉 → 顺德 → 广州增城白江湖 → 惠州小径湾 → 深圳。五天四晚，风景优先，连锁酒店为主，不设预算上限。白水寨替换方案和小径湾加住一晚的六天选项放在「提醒」中，默认日历保持五天。
 
-2026 年 10 月 1–7 日，情侣两人从深圳出发，自有车辆往返：深圳 → 玉林 → 大新 → 德天瀑布 → 靖西（连住两晚、通灵大峡谷）→ 鹅泉 → 南宁 → 梧州 → 深圳。每天最多一个核心景点，住宿优先连锁酒店，费用默认不设预算上限。
+- 手机直接打开：[广东行程网页](https://jinnafu.github.io/travel/guangdong/)
+- 独立源码分支：`guangdong-national-day-2026`
+- [完整行程、酒店候选与来源](docs/guangdong-2026-national-day.md)
 
-[完整行程、酒店候选与核验来源](docs/guangxi-2026-national-day.md)
+GitHub 仓库和分支页面用于查看源码。查看旅行界面请使用上面的网页链接。
 
-## 与青甘版相同的功能
+## 功能
 
-- 每日行程编辑、时间轮盘、节点新增 / 排序 / 删除、按天筛选、查看当天。
-- 互动地图、按天看路线、高德导航入口；酒店和景区先在高德确认准确位置，再开始驾车导航。配置可选的高德 Web 服务 Key 后可解析驾车终点。
-- 每日相册、风景备注分组、美食餐次分组、宫格、长按拖动排序、大图查看、照片备注与删除、相册备份导入导出。
-- 每天与照片的评论、昵称 / 颜色、未读提示、云端实时评论。
-- 交通、住宿、待办、费用计算、自定义费用、预算余额、三档字号、分享、行程修改导入导出。
-- Supabase 登录 / 注册、自动同步、手动读取、本机数据迁移、私有云相册、完整备份。
+沿用现有网站的八个栏目：每日行程、地图、相册、交通、住宿、待办、费用、提醒。保留时间轮盘、行程编辑与节点排序、按天筛选、高德导航、美景 / 美食相册、照片备注和排序、每日 / 照片评论、未读提示、费用计算、自定义项目、字号、分享、导入导出和云同步设置。
 
-## 运行与发布
+地图组件随网站发布并按需加载，外部地图服务不可用不会阻塞行程。费用初始为零；御温泉套餐整笔计入住宿，已包含的温泉、庙会与早餐不重复记账。
 
-这是静态页面，不需要构建。切到本分支后，通过本地静态服务器打开 `index.html`；地图及云功能需要联网。
+## 独立数据
 
-地图组件随网站一起发布，只在打开“地图”时加载。外部地图服务加载缓慢或不可用时，行程、费用、相册等功能仍能先显示；地图加载失败后可以重试。地图底图和道路查询仍需联网，云同步也仍需配置并联网。
+| 数据 | 广东版 |
+| --- | --- |
+| 本机设置、行程、费用、评论 | `guangdong_2026_*` |
+| IndexedDB 相册 | `guangdong_2026_trip_photos_v1` |
+| 登录会话 | `guangdong_2026_supabase_auth_v1` |
+| 云数据表 | `guangdong_trip_state`、`guangdong_trip_photos`、`guangdong_trip_comments` |
+| 私有相册 bucket | `guangdong-trip-photos` |
 
-手机直接打开：[广西行程网页](https://jinnafu.github.io/travel/guangxi/)；原来的[青甘行程网页](https://jinnafu.github.io/travel/)保留原地址。GitHub 的分支链接展示源码，不能直接作为行程网页使用。
+备份类型也使用广东专属前缀，拒绝导入其他路线备份。青甘、广西的源码、网页和存储保留各自独立范围。
 
-源码继续分别放在 `main`（青甘）与 `guangxi-national-day-2026`（广西）。`gh-pages` 只存放发布副本：根目录是青甘，`guangxi/` 是广西；GitHub Pages 的发布源为 `gh-pages` 的根目录。两版不互相合并，浏览器数据也分别保存。
+## 云同步
 
-后续源码更新后，需要重新发布，源码分支的推送不会自动更新线上页面。首次准备发布工作区：
+本机编辑、记账、照片、评论与备份可直接使用。两台手机共享数据需要先在自己的 Supabase 项目运行 [初始化 SQL](supabase/guangdong.sql)，再在网页「同步设置」填写 Project URL 和 Publishable / anon key，并登录同一旅行账号。不要使用 service_role key。SQL 只创建广东专用对象，按登录账号启用行级访问限制和私有照片目录权限。
 
-```sh
-git worktree add ../travel-pages gh-pages
-```
+本次未提供远程 Supabase 配置，未执行远程初始化；云表、bucket、实时订阅通过模拟客户端验证隔离范围，未进行真实账号联网验证。
 
-在广西源码分支提交并推送修改后，执行：
+## 发布三个独立网址
+
+| 源码分支 | 发布网址 |
+| --- | --- |
+| `main`（青甘） | https://jinnafu.github.io/travel/ |
+| `guangxi-national-day-2026`（广西） | https://jinnafu.github.io/travel/guangxi/ |
+| `guangdong-national-day-2026`（广东） | https://jinnafu.github.io/travel/guangdong/ |
+
+GitHub Pages 从 `gh-pages` 根目录发布。`gh-pages` 仅存放发布副本；源码分支互不合并。以后发布请使用本分支的三路线构建脚本，它会按各自远程分支读取文件并记录三个来源提交。
+
+提交并推送广东源码后，在本分支运行（发布工作区须事先通过 `git worktree add ../travel-pages gh-pages` 创建）：
 
 ```sh
 git fetch origin
 node scripts/build-pages.mjs ../travel-pages
 git -C ../travel-pages add .
-git -C ../travel-pages commit -m "Publish travel pages"
-git -C ../travel-pages push origin gh-pages
+git -C ../travel-pages commit -m "Publish Guangdong itinerary"
+git push origin gh-pages
 ```
 
-已经存在发布工作区时跳过 `worktree add`。构建脚本会核对分支、干净工作区和已推送状态，保持青甘首页与 `main` 中的文件一致；`publication.json` 记录两版源码提交。分享按钮使用当前网页地址。
+构建要求源码与发布工作区干净、广东源码已推送，并核实 `gh-pages` 与远程同步。已有青甘、广西 HTML 和地图资源从对应分支逐字节读取，广东发布在独立子目录。
 
-## 云同步初始化
+## 验证
 
-1. 在 Supabase 项目的 SQL Editor 中运行 [supabase/guangxi.sql](supabase/guangxi.sql)。可以沿用原 Supabase 项目及账号，广西数据使用独立表和私有 bucket。
-2. 打开页面“同步设置”，填写该项目的 Project URL 和 Publishable / anon key。不要使用 service_role key。
-3. 两台手机用同一个旅行邮箱账号登录。首次使用可以注册，并按项目要求完成邮箱确认；在第一台手机点击“上传本机现有数据和照片到云端”。
-4. 第二台手机登录后读取云端。行程修改自动上传；原版的一小时自动读取节奏、手动同步和评论实时提示均保留。
+`node tests/map-loading.mjs` 验证手机页面不被地图加载失败或超时阻塞、重试后五天路线可用。需要本机 Chrome，可用 `CHROME_PATH` 指定可执行文件。
 
-未提供远程 Supabase 配置，因此此分支没有代执行初始化或进行真实账号联机测试。未配置时，本机编辑、照片、评论、费用与备份仍可使用。
-
-验证：Chrome 中检查了全部八个栏目、320 / 390 / 1440 像素布局、时间与行程编辑、照片压缩和排序、行程及相册备份恢复、评论与未读提示、费用和本机持久化。地图使用真实 Leaflet 验证七天筛选及道路服务失败时的回退；云数据表、相册 bucket 与实时订阅通过模拟客户端检查了隔离范围。
-
-手机加载回归测试：运行 `node tests/map-loading.mjs`（需要 Chrome，可通过 `CHROME_PATH` 指定路径）。测试会模拟 CDN 卡住、地图文件失败及超时，确认行程和费用仍可操作，并验证地图重试恢复。Leaflet 1.9.4 发布文件、图标、源码映射与许可证保存在 `assets/vendor/leaflet/`。
-
-## 两条路线的数据隔离
-
-| 数据 | 广西版 | 青甘版 |
-| --- | --- | --- |
-| 本机设置 / 行程 / 费用 / 评论 | `guangxi_2026_*` | 保留原 `qinggan_*` |
-| IndexedDB 相册 | `guangxi_2026_trip_photos_v1` | 保留原数据库 |
-| 登录会话 | `guangxi_2026_supabase_auth_v1` | 保留原会话键 |
-| 行程 / 相册 / 评论表 | `guangxi_trip_state` / `guangxi_trip_photos` / `guangxi_trip_comments` | 保留原 `trip_*` |
-| 私有相册 bucket | `guangxi-trip-photos` | 保留原 `trip-photos` |
-
-备份文件类型也按路线区分，广西页不接受青甘版的行程或相册备份。SQL 只操作广西专用对象；行级权限按登录账号限制访问，私有照片按账号目录限制读写。
-
-初始化方式参考 [Supabase RLS](https://supabase.com/docs/guides/database/postgres/row-level-security) 与 [Storage 访问控制](https://supabase.com/docs/guides/storage/security/access-control)。地图点用于全程走向示意，不作为酒店或停车入口精确坐标；参考点来源：[玉林](https://mapcarta.com/Yulin_%28Guangxi%29)、[靖西](https://mapcarta.com/Jingxi)、[德天中国一侧](https://mapcarta.com/Detian)、[通灵](https://mapcarta.com/N8251029617)、[鹅泉附近](https://www.fallingrain.com/world/CH/16/Equan.html)、[龙圩](https://mapcarta.com/N4950956079)。
+`node tests/guangdong-features.mjs` 验证五天四晚数据、八个栏目、编辑 / 时间轮盘、导航、地图筛选、相册 / 评论、记账、备份与跨路线隔离，以及 320 / 390 / 1440 像素布局。该测试使用临时浏览器资料目录，不接触个人浏览器数据。
