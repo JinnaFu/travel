@@ -8,5 +8,10 @@
     "branch": "guangxi-national-day-2026",
     "commit": "f21051a9d99675f21f0a453c9e1d3077274d580e",
     "path": "/guangxi/"
+  },
+  "guangdong": {
+    "branch": "guangdong-national-day-2026",
+    "commit": "a2af39697bceb3e41288696c201c7c157f249e22",
+    "path": "/guangdong/"
   }
 }
